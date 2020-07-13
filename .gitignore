@@ -1,0 +1,11 @@
+CMakeLists.txt
+lemin.dSYM/
+objects/
+cmake-build-debug
+CMakeLists.txt
+lemin.dSYM/
+objects/
+cmake-build-debug/
+.idea/
+.DS_Store
+
