@@ -659,7 +659,7 @@ int 	not_equal_room(t_room *room, t_rooms *buf)
 	return (0);
 }
 
-void	delete_output_forks(t_room* rooms, t_room *room)
+void	delete_output_forks(t_room *room)
 {
 	t_list *pathes; //список путей, content-size -- длина пути
 	t_path *path;
@@ -688,7 +688,7 @@ void	delete_all_output_forks(t_room *rooms)
 		if (buf->status != END && buf->status != START && buf->count_output > 1)
 		{
 			ft_printf("FORK IN {red}%s{eoc}\n", buf->name);
-			delete_output_forks(rooms, buf);
+			delete_output_forks(buf);
 		}
 	}
 	free_list(&list_names);
@@ -740,7 +740,7 @@ void	perform_pathes(t_list *pathes, int ants)
 		while (buf && ants)
 		{
 			ft_printf("Path%02d: %d > %d Move? ", p_num, ants, get_expr_pathes(pathes, buf));
-			if (ants > get_expr_pathes(pathes, buf))
+			if (ants > (int)get_expr_pathes(pathes, buf))
 			{
 				ft_printf("YES\n");
 				ants--;
