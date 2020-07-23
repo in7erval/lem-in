@@ -19,38 +19,43 @@ static int  ft_links(t_room **head)
 		else if (ft_iscomment(buffer))
 			continue;
 		else if (ft_islinks(buffer))
-			{									// Найдена связь
+		{									// Найдена связь
 				parts = ft_strsplit(buffer, '-');
-				add_union(*head, parts[0], parts[1]);
-			}
+				add_union(*head, ft_strdup(parts[0]), ft_strdup(parts[1]));
+				ft_freesplit(parts);
+		}
 		else
 			return (0);
 	} 
 	return (1);
 }
 
-static int  ft_rooms(t_room **head)
+static int  ft_rooms(t_room **head) //added ft_strdup for room name to free parts
 {
 	char	*buffer;
 	char	**parts;
 	int		signal;
 
+	signal = 0;
 	while (get_next_line(0, &buffer) > 0)
 	{
-		if ((signal = ft_isknowncommand(buffer)))
+		if (signal == 0)
+			signal = ft_isknowncommand(buffer); //signal перезаписывался на сл строке после обозначения ##start или #end
+		if (signal != 0)
 			continue;							// Найден вход/выход
 		else if (ft_iscomment(buffer))
 			continue;
 		else if (ft_isrooms(buffer))	
-			{									// Найдена комната
+		{									// Найдена комната
 				parts = ft_strsplit(buffer, ' ');
-				push_back_room(head, new_room(parts[0], ft_atoi(parts[1]), ft_atoi(parts[2])));
+				push_back_room(head, new_room(ft_strdup(parts[0]), ft_atoi(parts[1]), ft_atoi(parts[2])));
 				if (signal)
 				{
 					find_room_by_name(*head, parts[0])->status = signal;
 					signal = 0;
 				}
-			}
+				ft_freesplit(parts);
+		}
 		else if (ft_islinks(buffer))
 			return (1);
 		else

@@ -94,7 +94,7 @@ void	print_list(t_room *list)
 	buf = list;
 	while (buf)
 	{
-		ft_printf("{cyan}------ name: {green}%s{cyan} ------{eoc}\nx: %d y: %d level: %d\n{yellow_bg}{red}{bold}  UNION{eoc} with: {yellow}", buf->name, buf->x, buf->y, buf->bfs_level);
+		ft_printf("{cyan}------ name: {green}%s{cyan} ------{eoc}\nstatus: %d\nx: %d y: %d level: %d\n{yellow_bg}{red}{bold}  UNION{eoc} with: {yellow}", buf->name, buf->status, buf->x, buf->y, buf->bfs_level);
 		u = buf->union_room;
 		while (u)
 		{
@@ -784,14 +784,19 @@ int main()
 		ft_printf("True\n");
 	else
 		ft_printf("Error\n");
-	return (0);
+	//return (0);
 
-	/*perform_test(8 , &rooms);
+	//perform_test(8 , &rooms);
 
 	t_queue *queue;
 	t_room *start_room;
 
+	print_list(rooms);
 	start_room = find_start_room(rooms);
+	if (start_room == NULL) {
+		ft_printf("%s\n", "start_room doesn't exist!");
+		return (0);
+	}
 	queue = NULL;
 	add_elem_queue(&queue, start_room);
 	start_room->bfs_level = 0;
@@ -838,7 +843,7 @@ int main()
 	perform_pathes(pathes, 20);
 	free_pathes(&pathes);
 	free_rooms(&rooms);
-	return 0;*/
+	return 0;
 }
 
 void	perform_test(int num, t_room **rooms)

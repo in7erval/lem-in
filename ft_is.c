@@ -9,7 +9,7 @@ int		ft_isknowncommand(char *str)
 	return (0);
 }
 
-int		ft_iscomment(char *str)
+int		ft_iscomment(const char *str)
 {
 	if (*str == '#')
 		return (COMMON);
@@ -34,6 +34,36 @@ int		ft_isants(char *str)				// 0037 +15
 	return (1);
 }
 
+static int		count_of_words(const char *str, char c)
+{
+	int		i;
+
+	i = 0;
+	if (str == NULL)
+		return (0);
+	while (*str)
+	{
+		if (*str != c && (*(str + 1) == c || *(str + 1) == '\0'))
+				i++;
+		str++;
+	}
+	return (i);
+}
+
+int		ft_isrooms(char *str) //add count_of_words and ft_freesplit
+{
+	char	**parts;
+
+	parts = ft_strsplit(str, ' ');
+	if (count_of_words(str, ' ') != 3)
+		return (0);
+	if (parts[0][0] == 'L' || !ft_isinteger(parts[1]) || !ft_isinteger(parts[2]))
+		return (0);
+	ft_freesplit(parts);
+	return (1);
+}
+
+/*
 int		ft_isrooms(char *str)
 {
 	char	**parts;
@@ -50,7 +80,22 @@ int		ft_isrooms(char *str)
 	free(parts);
 	return (1);
 }
+*/
 
+int		ft_islinks(char *str)
+{
+	char	**parts;
+
+	parts = ft_strsplit(str, '-');
+	if (count_of_words(str, '-') != 2)
+		return (0);
+	if (parts[0][0] == 'L' || parts[1][0] == 'L')
+		return (0);
+	ft_freesplit(parts);
+	return (1);
+}
+
+/*
 int		ft_islinks(char *str)
 {
 	char	**parts;
@@ -67,3 +112,4 @@ int		ft_islinks(char *str)
 	free(parts);
 	return (1);
 }
+*/

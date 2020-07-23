@@ -25,7 +25,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./
 
-SOURCES_LEMIN_LIST = main.c queue.c path.c
+SOURCES_LEMIN_LIST = main.c queue.c path.c ft_is.c ft_parse.c
 # SOURCES_CHECKER_LIST = checker.c
 # SOURCES_CHECKER_VISUAL_LIST = checker_visual.c drawing.c drawing_help.c drawing_help_2.c drawing_put_color.c
 # SOURCES_LIST = help.c solve.c operations.c checker_helper.c help_2.c help_init.c help_stack.c help_stack_2.c \

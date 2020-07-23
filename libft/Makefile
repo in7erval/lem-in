@@ -86,6 +86,7 @@ SOURCES_LIST = ft_atoi.c \
     ft_strnstr.c \
     ft_strrchr.c \
     ft_strsplit.c \
+    ft_freesplit.c \
     ft_strstr.c \
     ft_strsub.c \
     ft_strtrim.c \
@@ -162,7 +163,7 @@ $(OBJECTS_DIRECTORY):
 	@echo "$(BOLD_YELLOW)$(NAME)$(RESET): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
-	@clang $(FLAGS) -I $(HEADERS_DIRECTORY) $< -o $@
+	@gcc $(FLAGS) -I $(HEADERS_DIRECTORY) $< -o $@
 	@echo "$(CLEAR_LINE)$(GREEN)Compiling file [$(CYAN)$<$(GREEN)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(RESET)$(BEGIN_LINE)"
 
 

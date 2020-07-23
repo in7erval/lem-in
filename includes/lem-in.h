@@ -82,7 +82,7 @@ t_room *find_room_by_name(t_room *rooms, char *name);
 void	add_union(t_room *rooms, char *room1_name, char *room2_name);
 
 int		ft_isknowncommand(char *str);
-int		ft_iscomment(char *str);
+int		ft_iscomment(const char *str);
 int		ft_isants(char *str);
 int		ft_isrooms(char *str);
 int		ft_islinks(char *str);
