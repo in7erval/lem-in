@@ -76,4 +76,18 @@ size_t	get_length_path(t_path *path);
 
 
 
+t_room	*new_room(char *name, int x, int y);
+void	push_back_room(t_room **head, t_room *room);
+t_room *find_room_by_name(t_room *rooms, char *name);
+void	add_union(t_room *rooms, char *room1_name, char *room2_name);
+
+int		ft_isknowncommand(char *str);
+int		ft_iscomment(char *str);
+int		ft_isants(char *str);
+int		ft_isrooms(char *str);
+int		ft_islinks(char *str);
+
+int		ft_parse();
+
+
 #endif //LEMIN_LEM_IN_H

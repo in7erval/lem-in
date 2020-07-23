@@ -780,8 +780,13 @@ int main()
 
 	rooms = NULL;
 
+	if (ft_parse(&rooms))
+		ft_printf("True\n");
+	else
+		ft_printf("Error\n");
+	return (0);
 
-	perform_test(8 , &rooms);
+	/*perform_test(8 , &rooms);
 
 	t_queue *queue;
 	t_room *start_room;
@@ -833,7 +838,7 @@ int main()
 	perform_pathes(pathes, 20);
 	free_pathes(&pathes);
 	free_rooms(&rooms);
-	return 0;
+	return 0;*/
 }
 
 void	perform_test(int num, t_room **rooms)

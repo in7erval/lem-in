@@ -23,6 +23,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 SOURCES_DIRECTORY = ./
 SOURCES_LIST = ft_atoi.c \
     ft_atoi_base.c \
+    ft_atoi_pos.c \
     ft_bzero.c \
     ft_count_of_digits.c \
     ft_create_node.c \
@@ -30,6 +31,7 @@ SOURCES_LIST = ft_atoi.c \
     ft_isalpha.c \
     ft_isascii.c \
     ft_isdigit.c \
+    ft_isinteger.c \
     ft_isprint.c \
     ft_istrchr.c \
     ft_itoa.c \
@@ -160,7 +162,7 @@ $(OBJECTS_DIRECTORY):
 	@echo "$(BOLD_YELLOW)$(NAME)$(RESET): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
-	@gcc $(FLAGS) -I $(HEADERS_DIRECTORY) $< -o $@
+	@clang $(FLAGS) -I $(HEADERS_DIRECTORY) $< -o $@
 	@echo "$(CLEAR_LINE)$(GREEN)Compiling file [$(CYAN)$<$(GREEN)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(RESET)$(BEGIN_LINE)"
 
 
