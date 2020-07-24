@@ -163,7 +163,7 @@ $(OBJECTS_DIRECTORY):
 	@echo "$(BOLD_YELLOW)$(NAME)$(RESET): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
-	@gcc $(FLAGS) -I $(HEADERS_DIRECTORY) $< -o $@
+	@clang $(FLAGS) -I $(HEADERS_DIRECTORY) $< -o $@
 	@echo "$(CLEAR_LINE)$(GREEN)Compiling file [$(CYAN)$<$(GREEN)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(RESET)$(BEGIN_LINE)"
 
 

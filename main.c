@@ -175,6 +175,35 @@ t_room *find_room_by_name(t_room *rooms, char *name)
 }
 
 
+t_room *find_room_by_signal(t_room *rooms, int signal)
+{
+	t_room *buf;
+
+	buf = rooms;
+	while (buf)
+	{
+		if (buf->status == signal)
+			return buf;
+		buf = buf->next;
+	}
+	return NULL;
+}
+
+t_room *find_room_by_coordinates(t_room *rooms, int x, int y)
+{
+	t_room *buf;
+
+	buf = rooms;
+	while (buf)
+	{
+		if (buf->x == x && buf->y == y)
+			return buf;
+		buf = buf->next;
+	}
+	return NULL;
+}
+
+
 int 	is_in_union(t_room *room, t_room *check_room)
 {
 	t_rooms *head;
@@ -784,7 +813,7 @@ int main()
 		ft_printf("True\n");
 	else
 		ft_printf("Error\n");
-	//return (0);
+	return (0);
 
 	//perform_test(8 , &rooms);
 

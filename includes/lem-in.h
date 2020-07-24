@@ -79,7 +79,10 @@ size_t	get_length_path(t_path *path);
 t_room	*new_room(char *name, int x, int y);
 void	push_back_room(t_room **head, t_room *room);
 t_room *find_room_by_name(t_room *rooms, char *name);
+t_room *find_room_by_signal(t_room *rooms, int signal);
+t_room *find_room_by_coordinates(t_room *rooms, int x, int y);
 void	add_union(t_room *rooms, char *room1_name, char *room2_name);
+int 	is_in_union(t_room *room, t_room *check_room);
 
 int		ft_isknowncommand(char *str);
 int		ft_iscomment(const char *str);
