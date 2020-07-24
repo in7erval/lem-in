@@ -71,7 +71,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS_DIRECTORY) $(CREATE_HEADERS_DIRECTORY) $(OBJECTS) $(OBJECTS_LEMIN)
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS_LEMIN) -o $(NAME)
-	@echo "$(BOLD_CYAN)push_swap $(GREEN)is compiled$(RESET)"
+	@echo "$(BOLD_CYAN)$(NAME) $(GREEN)is compiled$(RESET)"
 
 # $(NAME_CHECKER): $(LIBFT) $(OBJECTS_DIRECTORY) $(CREATE_HEADERS_DIRECTORY) $(OBJECTS) $(OBJECTS_CHECKER)
 # 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) $(OBJECTS_CHECKER) -o $(NAME_CHECKER)
@@ -97,7 +97,7 @@ $(LIBFT):
 
 clean:
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
+#	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(GREEN)object files $(RED)deleted$(RESET)"
 	@echo "$(GREEN)$(OBJECTS_DIRECTORY) $(RED)deleted$(RESET)"
@@ -105,8 +105,8 @@ clean:
 fclean: clean
 	@rm -f $(LIBFT)
 	@echo "$(GREEN)$(LIBFT) $(RED)deleted$(RESET)"
-	# @rm -f $(MINILIBX)
-	# @echo "$(GREEN)$(MINILIBX) $(RED)deleted$(RESET)"
+#	@rm -f $(MINILIBX)
+#	@echo "$(GREEN)$(MINILIBX) $(RED)deleted$(RESET)"
 	@rm -f $(NAME)
 	@echo "$(GREEN)$(NAME) $(RED)deleted$(RESET)"
 
