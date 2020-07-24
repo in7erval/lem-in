@@ -9,3 +9,5 @@ cmake-build-debug/
 .idea/
 .DS_Store
 lem-in
+libft/libft.a
+libft/objects/
