@@ -94,7 +94,7 @@ void	print_list(t_room *list)
 	buf = list;
 	while (buf)
 	{
-		ft_printf("{cyan}------ name: {green}%s{cyan} ------{eoc}\nstatus: %d\nx: %d y: %d level: %d\n{yellow_bg}{red}{bold}  UNION{eoc} with: {yellow}", buf->name, buf->status, buf->x, buf->y, buf->bfs_level);
+		ft_printf("{cyan}{bold}-------- name: {eoc}{green}{black_bg}{underline}{bold}%s{eoc}{cyan}{bold} --------{eoc}\nstatus: %d\nx: %d y: %d level: %d\n{red}{bold}  UNION{eoc} with: {yellow}", buf->name, buf->status, buf->x, buf->y, buf->bfs_level);
 		u = buf->union_room;
 		while (u)
 		{
@@ -102,7 +102,7 @@ void	print_list(t_room *list)
 			u = u->next;
 		}
 		ft_printf("{eoc}\n");
-		ft_printf("{magenta_bg}{white}{bold}ALIGNED{eoc} with: {magenta}");
+		ft_printf("{white}{bold}ALIGNED{eoc} with: {magenta}");
 		u = buf->aligned_union_room;
 		while (u)
 		{
@@ -111,6 +111,7 @@ void	print_list(t_room *list)
 		}
 		ft_printf("{eoc}\n");
 		ft_printf("input_links: {red}%d{eoc} | output_links: {red}%d{eoc}\n", buf->count_input, buf->count_output);
+		ft_printf("{cyan}{bold}---------------------------{eoc}\n\n");
 		buf = buf->next;
 	}
 }
@@ -171,7 +172,7 @@ t_room *find_room_by_name(t_room *rooms, char *name)
 			return buf;
 		buf = buf->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
 
@@ -186,7 +187,7 @@ t_room *find_room_by_signal(t_room *rooms, int signal)
 			return buf;
 		buf = buf->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
 t_room *find_room_by_coordinates(t_room *rooms, int x, int y)
@@ -200,7 +201,7 @@ t_room *find_room_by_coordinates(t_room *rooms, int x, int y)
 			return buf;
 		buf = buf->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
 
@@ -218,19 +219,20 @@ int 	is_in_union(t_room *room, t_room *check_room)
 	return (0);
 }
 
-void	add_union(t_room *rooms, char *room1_name, char *room2_name)
+int	add_union(t_room *rooms, char *room1_name, char *room2_name)
 {
 	t_room *room1;
 	t_room *room2;
 
 	room1 = find_room_by_name(rooms, room1_name);
 	room2 = find_room_by_name(rooms, room2_name);
-	if (room1 == NULL || room2 == NULL) // todo: error_management if room doesn't exist
-		return ;
+	if (room1 == NULL || room2 == NULL || (room1 == room2))
+		return (1);
 	if (!is_in_union(room1, room2))
 		add_room_to_rooms_union(&(room1->union_room), room2);
 	if (!is_in_union(room2, room1))
 		add_room_to_rooms_union(&(room2->union_room), room1);
+	return (0);
 }
 
 t_room *find_start_room(t_room *rooms)
@@ -617,7 +619,7 @@ void	delete_all_input_forks(t_room *rooms)
 			break ;
 		if (buf->status != END && buf->status != START && buf->count_input > 1)
 		{
-			ft_printf("FORK IN {red}%s{eoc}\n", buf->name);
+			ft_printf("INPUT FORK IN {red}%s{eoc}\n", buf->name);
 			delete_input_forks(buf);
 		}
 	}
@@ -732,7 +734,7 @@ void	delete_all_output_forks(t_room *rooms)
 			break ;
 		if (buf->status != END && buf->status != START && buf->count_output > 1)
 		{
-			ft_printf("FORK IN {red}%s{eoc}\n", buf->name);
+			ft_printf("OUTPUT FORK IN {red}%s{eoc}\n", buf->name);
 			delete_output_forks(buf);
 		}
 	}
@@ -812,8 +814,10 @@ int main()
 	if (ft_parse(&rooms))
 		ft_printf("True\n");
 	else
+	{
 		ft_printf("Error\n");
-	return (0);
+		return (0);
+	}
 
 	//perform_test(8 , &rooms);
 
@@ -826,50 +830,74 @@ int main()
 		ft_printf("%s\n", "start_room doesn't exist!");
 		return (0);
 	}
+	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
 	queue = NULL;
 	add_elem_queue(&queue, start_room);
 	start_room->bfs_level = 0;
 	bfs(rooms, queue);
 	print_list(rooms);
-
-	delete_useless_links(rooms);
-	ft_printf("\nAFTER DELETE_USELESS_LINKS:\n");
 	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	print_list(rooms);
+	delete_useless_links(rooms);
+	if (1)
+	{
+		ft_printf("\nAFTER DELETE_USELESS_LINKS:\n");
+		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+		print_list(rooms);
+	}
 
 	align_all_links(rooms);
 	count_all_input_output_links(rooms);
-	ft_printf("\nAFTER ALIGN AND COUNT LINKS:\n");
-	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	print_list(rooms);
+	if (1)
+	{
+		ft_printf("\nAFTER ALIGN AND COUNT LINKS:\n");
+		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+		print_list(rooms);
+	}
 
 	while (delete_all_dead_ends(rooms) == 1)
 		count_all_input_output_links(rooms);
-	ft_printf("\nAFTER DELETE_DEAD_ENDS:\n");
-	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	print_list(rooms);
+	if (1)
+	{
+		ft_printf("\nAFTER DELETE_DEAD_ENDS:\n");
+		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+		print_list(rooms);
+	}
 
 
 	delete_all_input_forks(rooms);
 	count_all_input_output_links(rooms);
-	ft_printf("\nAFTER DELETE_INPUT_FORKS\n");
-	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	print_list(rooms);
+	while (delete_all_dead_ends(rooms) == 1)
+		count_all_input_output_links(rooms);
+	if (1)
+	{
+		ft_printf("\nAFTER DELETE_INPUT_FORKS\n");
+		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+		print_list(rooms);
+	}
 
 	delete_all_output_forks(rooms);
 	count_all_input_output_links(rooms);
-	ft_printf("\nAFTER DELETE_OUTPUT_FORKS\n");
-	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	print_list(rooms);
+	if (1)
+	{
+		ft_printf("\nAFTER DELETE_OUTPUT_FORKS\n");
+		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+		print_list(rooms);
+	}
 
-	ft_printf("\nPATHES FROM START TO END\n");
-	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+	if (1)
+	{
+		ft_printf("\nPATHES FROM START TO END\n");
+		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+	}
 	pathes = get_pathes(get_start_room(rooms));
 	print_pathes(pathes);
 
-	ft_printf("\nPERFORM PATHES\n");
-	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	perform_pathes(pathes, 20);
+	if (0)
+	{
+		ft_printf("\nPERFORM PATHES\n");
+		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+		perform_pathes(pathes, 20);
+	}
 	free_pathes(&pathes);
 	free_rooms(&rooms);
 	return 0;

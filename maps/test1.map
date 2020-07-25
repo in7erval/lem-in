@@ -1,0 +1,19 @@
+#test1
+10
+##start
+room_0 10 0
+room_1 11 0
+room_2 12 0
+room_3 13 0
+room_4 14 0
+##end
+room_5 15 0
+room_0-room_1
+room_0-room_2
+room_0-room_3
+room_2-room_1
+room_2-room_3
+room_4-room_1
+room_3-room_4
+room_2-room_4
+room_4-room_5

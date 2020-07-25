@@ -11,3 +11,5 @@ cmake-build-debug/
 lem-in
 libft/libft.a
 libft/objects/
+maps_checker/
+maps_checker1/
