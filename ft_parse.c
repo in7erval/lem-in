@@ -1,22 +1,16 @@
 #include "lem-in.h"
 
-/*
-A room will never start with the character L nor the character #.
-The rooms’ coordinates will always be integers.
-Any unknown command will be ignored. (##)
-
-*/
-
-static int  ft_links(char **map, t_room **head, char *buffer)		// Могут ли повторяться линки?
-{
+static int  ft_links(t_map **map, t_room **head, char *buffer)		// Могут ли повторяться линки? - Походу не могут
+{																	// Map must have no duplicates of links. There are no links that connect the same points.
 	char	**parts;
 
+	ft_map_add(map, ft_strdup(buffer));
 	parts = ft_strsplit(buffer, '-');
-	/*if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
+	if (!find_room_by_name(*head, parts[0]) || !find_room_by_name(*head, parts[1]) || is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
 	{
 		ft_freesplit(parts);
 		return (0);
-	}*/
+	}
 	add_union(*head, ft_strdup(parts[0]), ft_strdup(parts[1]));
 	ft_freesplit(parts);
 	while (get_next_line(0, &buffer) > 0)
@@ -27,13 +21,13 @@ static int  ft_links(char **map, t_room **head, char *buffer)		// Могут л�
 			continue;
 		else if (ft_islinks(buffer))
 		{
-				*map = ft_stradd(*map, ft_strcat(buffer, "\n"));
+				ft_map_add(map, ft_strdup(buffer));
 				parts = ft_strsplit(buffer, '-');
-				/*if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
+				if (!find_room_by_name(*head, parts[0]) || !find_room_by_name(*head, parts[1]) || is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
 				{
 					ft_freesplit(parts);
 					return (0);
-				}*/
+				}
 				add_union(*head, ft_strdup(parts[0]), ft_strdup(parts[1]));
 				ft_freesplit(parts);
 		}
@@ -43,11 +37,11 @@ static int  ft_links(char **map, t_room **head, char *buffer)		// Могут л�
 	return (1);
 }
 
-static int	ft_rooms_extension(char **map, t_room **head, char *buffer, int signal)
+static int	ft_rooms_extension(t_map **map, t_room **head, char *buffer, int signal)
 {
 	char	**parts;
 
-	*map = ft_stradd(*map, ft_strcat(buffer, "\n"));
+	ft_map_add(map, ft_strdup(buffer));
 	parts = ft_strsplit(buffer, ' ');
 	if (find_room_by_name(*head, parts[0]) || find_room_by_coordinates(*head, ft_atoi(parts[1]), ft_atoi(parts[2])))
 	{
@@ -69,7 +63,7 @@ static int	ft_rooms_extension(char **map, t_room **head, char *buffer, int signa
 	return (0);
 }
 
-static int  ft_rooms(char **map, t_room **head)
+static int  ft_rooms(t_map **map, t_room **head)
 {
 	char	*buffer;
 	char	**parts;
@@ -79,7 +73,7 @@ static int  ft_rooms(char **map, t_room **head)
 	while (get_next_line(0, &buffer) > 0)
 	{
 		if (ft_isknowncommand(buffer) && !signal && (signal = ft_isknowncommand(buffer)))
-			*map = ft_stradd(*map, ft_strcat(buffer, "\n"));
+			ft_map_add(map, ft_strdup(buffer));
 		else if (ft_isknowncommand(buffer))						
 			return (0);										
 		else if (ft_iscomment(buffer))
@@ -97,7 +91,7 @@ static int  ft_rooms(char **map, t_room **head)
 	return (1);
 }
 
-static int  ft_ants(char **map)
+static int  ft_ants(t_map **map)
 {
 	char	*buffer;
 
@@ -109,7 +103,7 @@ static int  ft_ants(char **map)
 			continue;
 		else if (ft_isants(buffer))
 		{
-			*map = ft_stradd(*map, ft_strcat(buffer, "\n"));
+			ft_map_add(map, ft_strdup(buffer));
 			return (ft_atoi_pos(buffer));
 		}
 		else
@@ -120,12 +114,12 @@ static int  ft_ants(char **map)
 
 int	 		ft_parse(t_room **head)
 {
-	char	*map;
+	t_map	*map;
 
-	map = (char*)malloc(sizeof(char));
+	map = NULL;
 	if (ft_ants(&map) && ft_rooms(&map, head) && ft_validate(head))
 	{
-		ft_printf("%s\n", map);
+		ft_map_show(map);
 		free(map);
 		return (1);
 	}

@@ -89,7 +89,7 @@ int		ft_islinks(char *str)
 	parts = ft_strsplit(str, '-');
 	if (count_of_words(str, '-') != 2)
 		return (0);
-	if (parts[0][0] == 'L' || parts[1][0] == 'L')
+	if (parts[0][0] == 'L' || parts[1][0] == 'L' || !ft_strcmp(parts[0], parts[1]))
 		return (0);
 	ft_freesplit(parts);
 	return (1);

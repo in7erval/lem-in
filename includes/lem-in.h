@@ -10,6 +10,12 @@
 
 typedef struct s_rooms t_rooms;
 
+typedef struct		s_map
+{
+	char 			*str;
+	struct s_map	*next;
+}					t_map;
+
 typedef	struct		s_room
 {
 	char			*name; // Название комнаты
@@ -83,6 +89,11 @@ t_room *find_room_by_signal(t_room *rooms, int signal);
 t_room *find_room_by_coordinates(t_room *rooms, int x, int y);
 int		add_union(t_room *rooms, char *room1_name, char *room2_name);
 int 	is_in_union(t_room *room, t_room *check_room);
+
+
+void	ft_map_clean(t_map **head);
+void	ft_map_show(t_map *head);
+void	ft_map_add(t_map **head, char *str);
 
 int		ft_isknowncommand(char *str);
 int		ft_iscomment(const char *str);

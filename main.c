@@ -812,13 +812,14 @@ int main()
 	rooms = NULL;
 
 	if (ft_parse(&rooms))
-		ft_printf("True\n");
+		ft_printf("\nTrue\n");
 	else
 	{
-		ft_printf("Error\n");
+		ft_printf("\nError\n");
 		return (0);
 	}
 
+	return (0);
 	//perform_test(8 , &rooms);
 
 	t_queue *queue;
