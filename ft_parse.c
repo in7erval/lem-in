@@ -12,11 +12,11 @@ static int  ft_links(t_room **head, char *buffer)
 	char	**parts;
 
 	parts = ft_strsplit(buffer, '-');							//	В buffer прошлая строка
-	if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
+	/*if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
 	{
 		ft_freesplit(parts);
 		return (0);
-	}
+	}*/
 	add_union(*head, ft_strdup(parts[0]), ft_strdup(parts[1]));
 	ft_freesplit(parts);
 	while (get_next_line(0, &buffer) > 0)
@@ -28,11 +28,11 @@ static int  ft_links(t_room **head, char *buffer)
 		else if (ft_islinks(buffer))
 		{									// Найдена связь
 				parts = ft_strsplit(buffer, '-');
-				if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
+				/*if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
 				{
 					ft_freesplit(parts);
 					return (0);
-				}
+				}*/
 				add_union(*head, ft_strdup(parts[0]), ft_strdup(parts[1]));
 				ft_freesplit(parts);
 		}
