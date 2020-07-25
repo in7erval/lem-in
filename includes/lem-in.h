@@ -90,6 +90,7 @@ int		ft_isants(char *str);
 int		ft_isrooms(char *str);
 int		ft_islinks(char *str);
 
+int     ft_validate(t_room **head);
 int		ft_parse();
 
 

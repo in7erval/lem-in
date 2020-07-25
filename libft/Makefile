@@ -63,6 +63,7 @@ SOURCES_LIST = ft_atoi.c \
     ft_putstr_buf.c \
     ft_putstr_fd.c \
     ft_str_to_upper.c \
+    ft_stradd.c \
     ft_strcat.c \
     ft_strchr.c \
     ft_strclr.c \
