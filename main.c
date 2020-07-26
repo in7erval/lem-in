@@ -209,6 +209,8 @@ int 	is_in_union(t_room *room, t_room *check_room)
 {
 	t_rooms *head;
 
+	if (room == NULL || check_room == NULL || room == check_room)
+		return (0);
 	head = room->union_room;
 	while (head)
 	{
