@@ -25,7 +25,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./sources/
 
-SOURCES_LEMIN_LIST = main.c ft_queue.c ft_path.c ft_is.c ft_parse.c ft_validate.c ft_map.c \
+SOURCES_LEMIN_LIST = main.c ft_queue.c ft_path.c ft_is.c ft_parse.c ft_map.c \
 					ft_bfs_align_dead_ends.c ft_count.c ft_delete_elem.c ft_delete_forks.c \
 					ft_get.c ft_path_funcs.c ft_print_rooms.c ft_room.c ft_room_funcs.c \
 					ft_room_union.c 

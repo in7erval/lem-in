@@ -7,7 +7,7 @@ static int 	ft_links_extension(t_map **map, t_room **head, char *buffer)
 	ft_map_add(map, ft_strdup(buffer));
 	parts = ft_strsplit(buffer, '-');
 	free(buffer);
-	if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1]))) //added check for null in is_in_union
+	if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
 	{
 		ft_freesplit(parts);
 		return (1);
@@ -17,8 +17,8 @@ static int 	ft_links_extension(t_map **map, t_room **head, char *buffer)
 	return (0);
 }
 
-static int  ft_links(t_map **map, t_room **head, char *buffer)	// Могут ли повторяться линки? - Походу не могут
-{																// Map must have no duplicates of links. There are no links that connect the same points.
+static int  ft_links(t_map **map, t_room **head, char *buffer)
+{
 	if (ft_links_extension(map, head, buffer))
 		return (0);
 	while (get_next_line(0, &buffer) > 0)
@@ -86,11 +86,11 @@ static int  ft_rooms(t_map **map, t_room **head)
 		}
 		else if (ft_isrooms(buffer))
 		{
-			if (ft_rooms_extension(map, head, buffer, signal))	// Не вижу смысла делать так как было, потому что функция возвращает либо 1, либо 0,
-				return (0);										// но если функция вернет 1 (и запишет в сигнал), то этот сигнал уже нигде не
-			signal = 0;											// будет использоваться, поскольку выполнится return (0); Соответственно, сигнал всегда будет 0
-		}														// В будущем для сокращения строк можно передавать сигнал по ссылке и присваить ему 0 в ft_rooms_extension
-		else if (ft_islinks(buffer) && !signal && find_room_by_signal(*head, START) && find_room_by_signal(*head, END))	
+			if (ft_rooms_extension(map, head, buffer, signal))
+				return (0);
+			signal = 0;
+		}
+		else if (ft_islinks(buffer) && !signal && find_room_by_signal(*head, START) && find_room_by_signal(*head, END))
 			return (ft_links(map, head, buffer));																	
 		else
 		{
@@ -134,8 +134,8 @@ int	 		ft_parse(t_room **head, int *num_ants)
 
 	map = NULL;
 	*num_ants = ft_ants(&map);
-	if (*num_ants && ft_rooms(&map, head) && ft_validate(head))
-	{
+	if (*num_ants && ft_rooms(&map, head))
+	{										// There is no reason for validation function anymore
 		ft_map_show(map);
 		ft_map_clean(&map);
 		return (1);

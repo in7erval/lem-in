@@ -103,7 +103,6 @@ int		ft_islinks(char *str);
 /*
  * ft_parse.c
  */
-int     ft_validate(t_room **head);
 int		ft_parse(t_room **head, int *num_ant);
 
 /*

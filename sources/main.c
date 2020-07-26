@@ -18,8 +18,8 @@ int main()
 		ft_printf("\nError\n");
 		return (0);
 	}
-	free_rooms(&rooms);
-	return (0);
+	//free_rooms(&rooms);
+	//return (0);
 	//perform_test(8 , &rooms);
 
 	t_queue *queue;
@@ -27,10 +27,10 @@ int main()
 
 	print_list(rooms);
 	start_room = find_start_room(rooms);
-	if (start_room == NULL) {
-		ft_printf("%s\n", "start_room doesn't exist!");
-		return (0);
-	}
+	/*if (start_room == NULL) {								//
+		ft_printf("%s\n", "start_room doesn't exist!");		//	Проверяется в парсере
+		return (0);											//
+	}*/
 	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
 	queue = NULL;
 	add_elem_queue(&queue, start_room);
@@ -91,6 +91,13 @@ int main()
 		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
 	}
 	pathes = get_pathes(get_start_room(rooms));
+	if (!pathes)									// No path checking
+	{
+		ft_printf("\nError\n");
+		free_rooms(&rooms);
+	return 0;
+		
+	}
 	print_pathes(pathes);
 
 	if (0)
