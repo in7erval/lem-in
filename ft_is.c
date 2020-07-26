@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include "lem-in.h"
 
 int		ft_isknowncommand(char *str)
@@ -50,66 +51,34 @@ static int		count_of_words(const char *str, char c)
 	return (i);
 }
 
-int		ft_isrooms(char *str) //add count_of_words and ft_freesplit
-{
-	char	**parts;
-
-	parts = ft_strsplit(str, ' ');
-	if (count_of_words(str, ' ') != 3)
-		return (0);
-	if (parts[0][0] == 'L' || !ft_isinteger(parts[1]) || !ft_isinteger(parts[2]))
-		return (0);
-	ft_freesplit(parts);
-	return (1);
-}
-
-/*
 int		ft_isrooms(char *str)
 {
 	char	**parts;
-	int		i;
 
+	if (count_of_words(str, ' ') != 3)
+		return (0);
 	parts = ft_strsplit(str, ' ');
-	i = 0;
-	while (parts[i] != NULL)
-		i++;
-	if (i != 3)
-		return (0);
 	if (parts[0][0] == 'L' || !ft_isinteger(parts[1]) || !ft_isinteger(parts[2]))
+	{
+		ft_freesplit(parts);
 		return (0);
-	free(parts);
-	return (1);
-}
-*/
-
-int		ft_islinks(char *str)
-{
-	char	**parts;
-
-	parts = ft_strsplit(str, '-');
-	if (count_of_words(str, '-') != 2)
-		return (0);
-	if (parts[0][0] == 'L' || parts[1][0] == 'L' || !ft_strcmp(parts[0], parts[1]))
-		return (0);
+	}
 	ft_freesplit(parts);
 	return (1);
 }
 
-/*
 int		ft_islinks(char *str)
 {
 	char	**parts;
-	int		i;
 
+	if (count_of_words(str, '-') != 2)
+		return (0);
 	parts = ft_strsplit(str, '-');
-	i = 0;
-	while (parts[i] != NULL)
-		i++;
-	if (i != 2)
+	if (parts[0][0] == 'L' || parts[1][0] == 'L' || !ft_strcmp(parts[0], parts[1]))
+	{
+		ft_freesplit(parts);
 		return (0);
-	if (parts[0][0] == 'L' || parts[1][0] == 'L')
-		return (0);
-	free(parts);
+	}
+	ft_freesplit(parts);
 	return (1);
 }
-*/
