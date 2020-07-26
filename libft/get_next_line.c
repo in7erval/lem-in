@@ -117,7 +117,7 @@ int		get_next_line(const int fd, char **line)
 		newline = ft_strchr(node->content, '\n');
 	}
 	if ((!node || (rt == 0 && ft_strlen(node->content) == 0
-			&& ft_free_node_fd(&list, fd))) && !(*line = NULL))
+				   && ft_free_node_fd(&list, fd))) && !(*line = NULL))
 		return (0);
 	ft_write_line(newline, line, node);
 	return (1);

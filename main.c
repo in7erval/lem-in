@@ -20,7 +20,7 @@ t_room	*new_room(char *name, int x, int y)
 	room->aligned_union_room = NULL;
 	room->count_input = 0;
 	room->count_output = 0;
-	return room;
+	return (room);
 }
 
 void	push_back_room(t_room **head, t_room *room)
@@ -44,14 +44,17 @@ void	free_rooms_list(t_rooms **list)
 	t_rooms *kill;
 	t_rooms *buf;
 
-	buf = *list;
-	while (buf)
+	if (list && *list)
 	{
-		kill = buf;
-		buf = buf->next;
-		free(kill);
+		buf = *list;
+		while (buf)
+		{
+			kill = buf;
+			buf = buf->next;
+			free(kill);
+		}
+		*list = NULL;
 	}
-	*list = NULL;
 }
 
 void	free_list(t_list **list)
@@ -59,14 +62,17 @@ void	free_list(t_list **list)
 	t_list *kill;
 	t_list *buf;
 
-	buf = *list;
-	while (buf)
+	if (list && *list)
 	{
-		kill = buf;
-		buf = buf->next;
-		free(kill);
+		buf = *list;
+		while (buf)
+		{
+			kill = buf;
+			buf = buf->next;
+			free(kill);
+		}
+		*list = NULL;
 	}
-	*list = NULL;
 }
 
 void	free_rooms(t_room **rooms)
@@ -74,16 +80,20 @@ void	free_rooms(t_room **rooms)
 	t_room *kill;
 	t_room *buf;
 
-	buf = *rooms;
-	while (buf)
+	if (rooms && *rooms)
 	{
-		kill = buf;
-		free_rooms_list(&(kill->union_room));
-		free_rooms_list(&(kill->aligned_union_room));
-		buf = buf->next;
-		free(kill);
+		buf = *rooms;
+		while (buf)
+		{
+			kill = buf;
+			free_rooms_list(&(kill->union_room));
+			free_rooms_list(&(kill->aligned_union_room));
+			free(kill->name);
+			buf = buf->next;
+			free(kill);
+		}
+		*rooms = NULL;
 	}
-	*rooms = NULL;
 }
 
 void	print_list(t_room *list)
@@ -810,17 +820,19 @@ int main()
 {
 	t_room *rooms;
 	t_list	*pathes;
+	int 	num_ants;
 
 	rooms = NULL;
-
-	if (ft_parse(&rooms))
+	num_ants = 0;
+	if (ft_parse(&rooms, &num_ants))
 		ft_printf("\nTrue\n");
 	else
 	{
+		free_rooms(&rooms);
 		ft_printf("\nError\n");
 		return (0);
 	}
-
+	free_rooms(&rooms);
 	return (0);
 	//perform_test(8 , &rooms);
 

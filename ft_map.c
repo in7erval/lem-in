@@ -46,16 +46,12 @@ void	ft_map_add(t_map **head, char *str)
     t_map   *current;
 
     if (!(*head))
-    {
         *head = ft_map_create(str);
-        current = *head;
-    }
     else
     {
         current = *head;
         while (current->next)
 			current = current->next;
 		current->next = ft_map_create(str);
-		current = current->next;
     }
 }

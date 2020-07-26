@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include "lem-in.h"
 
 int		ft_isknowncommand(char *str)

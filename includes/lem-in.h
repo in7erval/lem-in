@@ -102,7 +102,7 @@ int		ft_isrooms(char *str);
 int		ft_islinks(char *str);
 
 int     ft_validate(t_room **head);
-int		ft_parse();
+int		ft_parse(t_room **head, int *num_ant);
 
 
 #endif //LEMIN_LEM_IN_H
