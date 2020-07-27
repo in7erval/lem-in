@@ -25,21 +25,21 @@ int main()
 	t_queue *queue;
 	t_room *start_room;
 
-	print_list(rooms);
+	//print_list(rooms);
 	start_room = find_start_room(rooms);
 	/*if (start_room == NULL) {								//
 		ft_printf("%s\n", "start_room doesn't exist!");		//	Проверяется в парсере
 		return (0);											//
 	}*/
-	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+	//ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
 	queue = NULL;
 	add_elem_queue(&queue, start_room);
 	start_room->bfs_level = 0;
 	bfs(rooms, queue);
-	print_list(rooms);
-	ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+	//print_list(rooms);
+	//ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
 	delete_useless_links(rooms);
-	if (1)
+	if (0)
 	{
 		ft_printf("\nAFTER DELETE_USELESS_LINKS:\n");
 		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
@@ -48,7 +48,7 @@ int main()
 
 	align_all_links(rooms);
 	count_all_input_output_links(rooms);
-	if (1)
+	if (0)
 	{
 		ft_printf("\nAFTER ALIGN AND COUNT LINKS:\n");
 		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
@@ -57,7 +57,7 @@ int main()
 
 	while (delete_all_dead_ends(rooms) == 1)
 		count_all_input_output_links(rooms);
-	if (1)
+	if (0)
 	{
 		ft_printf("\nAFTER DELETE_DEAD_ENDS:\n");
 		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
@@ -69,7 +69,7 @@ int main()
 	count_all_input_output_links(rooms);
 	while (delete_all_dead_ends(rooms) == 1)
 		count_all_input_output_links(rooms);
-	if (1)
+	if (0)
 	{
 		ft_printf("\nAFTER DELETE_INPUT_FORKS\n");
 		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
@@ -78,14 +78,14 @@ int main()
 
 	delete_all_output_forks(rooms);
 	count_all_input_output_links(rooms);
-	if (1)
+	if (0)
 	{
 		ft_printf("\nAFTER DELETE_OUTPUT_FORKS\n");
 		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
 		print_list(rooms);
 	}
 
-	if (1)
+	if (0)
 	{
 		ft_printf("\nPATHES FROM START TO END\n");
 		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
@@ -97,10 +97,10 @@ int main()
 		free_rooms(&rooms);
 		return 0;
 	}
-	pathes = sort_pathes(&pathes);
+	pathes = sort_pathes(pathes);
 	print_pathes(pathes);
 
-	if (0)
+	if (1)
 	{
 		ft_printf("\nPERFORM PATHES\n");
 		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");

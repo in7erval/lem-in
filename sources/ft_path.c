@@ -43,14 +43,18 @@ void free_path(t_path **path)
 	t_path *buf;
 	t_path *kill;
 
-	buf = *path;
-	while (buf)
+	if (path && *path)
 	{
-		kill = buf;
-		buf = buf->next;
-		free(kill);
+		buf = *path;
+		while (buf)
+		{
+			kill = buf;
+			buf = buf->next;
+			free_ants(&(kill->ants));
+			free(kill);
+		}
+		*path = NULL;
 	}
-	*path = NULL;
 }
 
 t_path *get_path_to_end(t_room *room)

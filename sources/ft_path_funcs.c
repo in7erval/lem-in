@@ -198,34 +198,6 @@ int 	get_number_ants_in_path(t_path *path)
 	return (count);
 }
 
-t_ant 	*new_ant(int number)
-{
-	t_ant	*ant;
-
-	ant = (t_ant *)malloc(sizeof(t_ant));
-	if (ant)
-	{
-		ant->number = number;
-		ant->next = NULL;
-		ant->room_number = 0;
-	}
-	return (ant);
-}
-
-void	push_back_ant(t_ant **ants, t_ant *ant)
-{
-	t_ant *buf;
-
-	if (*ants == NULL)
-		*ants = ant;
-	else
-	{
-		buf = *ants;
-		while (buf->next)
-			buf = buf->next;
-		buf->next = ant;
-	}
-}
 
 t_room *get_room_by_roomnumber(t_path *path, int room_number)
 {
@@ -258,93 +230,80 @@ int		get_max_room_number(t_path *path)
 	return (num);
 }
 
-t_ant 	*get_ant_by_room_number(t_path *path, int number)
-{
-	t_ant *ants;
-
-	ants = path->ants;
-	while (ants)
-	{
-		if (ants->room_number == number)
-			return (ants);
-		ants = ants->next;
-	}
-	return (NULL);
-}
-
-void	null_all_ants(t_list *list)
-{
-	t_path *p;
-
-	while (list)
-	{
-		p = (t_path *)(list->content);
-		p->ants = NULL;
-		list = list->next;
-	}
-}
-
-void	perform_pathes(t_list *pathes, int num_ants) //todo: free ants!!!!!
+void	markup_ants(t_list *pathes, int num_ants)
 {
 	t_list	*buf_path;
 	t_list 	*buf_next_path;
-	t_list 	*sorted_pathes;
 	int 	i;
 
-	sorted_pathes = sort_path(pathes);
-	pathes = sorted_pathes;
-	null_all_ants(sorted_pathes);
-	buf_path = sorted_pathes;
+	null_all_ants(pathes);
+	buf_path = pathes;
 	push_back_ant(&(((t_path *)(buf_path->content))->ants), new_ant(1));
 	i = 1;
 	while (i < num_ants)
 	{
-		buf_next_path = sorted_pathes->next;
+		buf_next_path = pathes->next;
 		if (buf_next_path == NULL)
-			buf_next_path = sorted_pathes;
-		if (get_number_ants_in_path(buf_path->content) + buf_path->content_size > get_number_ants_in_path(buf_next_path->content) + buf_next_path->content_size)
+			buf_next_path = pathes;
+		if (get_number_ants_in_path(buf_path->content) + buf_path->content_size >
+			get_number_ants_in_path(buf_next_path->content) + buf_next_path->content_size)
 			push_back_ant(&(((t_path *)(buf_next_path->content))->ants), new_ant(i + 1));
 		else
 			push_back_ant(&(((t_path *)(buf_path->content))->ants), new_ant(i + 1));
 		buf_path = buf_next_path;
 		i++;
 	}
-	t_list *buf;
-	int 	count_finish_ants;
-	t_path	*buf_p;
-	int 	room_number;
-	t_ant	*ant;
-	t_room 	*room;
+}
 
+int		perform_and_print(t_list *buf, int *first, int *count_finish_ants, int num_ants)
+{
+	t_path *buf_p;
+	int room_number;
+	t_ant *ant;
+	t_room *room;
+
+	buf_p = (t_path *)(buf->content);
+	room_number = get_max_room_number(buf_p);
+	while (room_number >= 0)
+	{
+		ant = get_ant_by_room_number(buf_p, room_number);
+		room = get_room_by_roomnumber(buf_p, room_number + 1);
+		if (!ant)
+			break;
+		if (*first == 0)
+			ft_printf(" ");
+		else
+			*first = 0;
+		ft_printf("L%d-%s", ant->number, room->name);
+		ant->room_number = (room->status == END) ? -1 : ant->room_number + 1;
+		if (room->status == END)
+			(*count_finish_ants)++;
+		if (*count_finish_ants == num_ants)
+			return (1);
+		room_number--;
+	}
+	return (0);
+}
+
+void	perform_pathes(t_list *pathes, int num_ants) //todo: free ants!!!!!
+{
+	t_list	*buf;
+	int 	count_finish_ants;
+	int 	first;
+
+	markup_ants(pathes, num_ants);
 	count_finish_ants = 0;
-	buf = sorted_pathes;
+	buf = pathes;
 	while (count_finish_ants < num_ants)
 	{
-		buf = sorted_pathes;
+		buf = pathes;
+		first = 1;
 		while (buf)
 		{
-			buf_p = (t_path *)(buf->content);
-			room_number = get_max_room_number(buf_p);
-			while (room_number >= 0)
-			{
-				ant = get_ant_by_room_number(buf_p, room_number);
-				room = get_room_by_roomnumber(buf_p, room_number + 1);
-				if (!ant)
-					break;
-				ft_printf("L%d-%s ", ant->number, room->name);
-				ant->room_number = (room->status == END) ? -1 : ant->room_number + 1;
-				if (room->status == END)
-					count_finish_ants++;
-				if (count_finish_ants == num_ants)
-					break;
-				room_number--;
-
-			}
-			if (count_finish_ants == num_ants)
+			if (perform_and_print(buf, &first, &count_finish_ants, num_ants) == 1)
 				break;
 			buf = buf->next;
 		}
 		ft_printf("\n");
 	}
-
 }

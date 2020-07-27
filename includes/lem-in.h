@@ -195,6 +195,16 @@ void	perform_pathes(t_list *pathes, int ants);
 t_list	*sort_pathes(t_list *pathes);
 
 /*
+ * ft_ant.c
+ */
+t_ant 	*new_ant(int number);
+void	push_back_ant(t_ant **ants, t_ant *ant);
+t_ant 	*get_ant_by_room_number(t_path *path, int number);
+void	null_all_ants(t_list *list);
+void	free_ants(t_ant **ants);
+
+
+/*
  * ft_print_rooms.c
  */
 void	print_list(t_room *list);
