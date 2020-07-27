@@ -46,9 +46,17 @@ typedef struct		s_queue
 	struct s_queue	*prev;
 }					t_queue;
 
+typedef struct		s_ant
+{
+	int				number;
+	int				room_number;
+	struct s_ant	*next;
+}					t_ant;
+
 typedef struct		s_path
 {
 	t_room 			*room;
+	t_ant			*ants;
 	struct s_path	*next;
 }					t_path;
 
@@ -184,6 +192,7 @@ void 	free_pathes(t_list **pathes);
 t_path *get_min_len_path(t_list *pathes);
 size_t 	get_expr_pathes(t_list *pathes, t_list *path);
 void	perform_pathes(t_list *pathes, int ants);
+t_list	*sort_pathes(t_list *pathes);
 
 /*
  * ft_print_rooms.c

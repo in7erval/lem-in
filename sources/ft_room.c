@@ -49,7 +49,7 @@ void	free_rooms(t_room **rooms)
 			kill = buf;
 			free_rooms_list(&(kill->union_room));
 			free_rooms_list(&(kill->aligned_union_room));
-			free(kill->name);
+			//free(kill->name); //todo: UNCOMMENT IT!
 			buf = buf->next;
 			free(kill);
 		}

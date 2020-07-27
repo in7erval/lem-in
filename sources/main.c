@@ -95,9 +95,9 @@ int main()
 	{
 		ft_printf("\nError\n");
 		free_rooms(&rooms);
-	return 0;
-		
+		return 0;
 	}
+	pathes = sort_pathes(&pathes);
 	print_pathes(pathes);
 
 	if (0)

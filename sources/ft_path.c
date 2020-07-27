@@ -8,6 +8,7 @@ t_path *new_elem_path(t_room *room)
 	path = (t_path *)malloc(sizeof(t_path));
 	path->room = room;
 	path->next = NULL;
+	path->ants = NULL;
 	return (path);
 }
 
