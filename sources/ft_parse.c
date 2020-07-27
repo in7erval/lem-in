@@ -7,7 +7,8 @@ static int 	ft_links_extension(t_map **map, t_room **head, char *buffer)
 	ft_map_add(map, ft_strdup(buffer));
 	parts = ft_strsplit(buffer, '-');
 	free(buffer);
-	if (is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
+	if (!find_room_by_name(*head, parts[0]) || !find_room_by_name(*head, parts[1])
+	|| is_in_union(find_room_by_name(*head, parts[0]), find_room_by_name(*head, parts[1])))
 	{
 		ft_freesplit(parts);
 		return (1);
