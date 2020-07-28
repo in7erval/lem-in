@@ -46,6 +46,7 @@ static int	ft_rooms_extension(t_map **map, t_room **head, char *buffer, int sign
 {
 	char	**parts;
 
+	ft_clean_rooms(&buffer);
 	ft_map_add(map, ft_strdup(buffer));
 	parts = ft_strsplit(buffer, ' ');
 	free(buffer);
@@ -115,8 +116,9 @@ static int  ft_ants(t_map **map)
 		}
 		else if (ft_isants(buffer))
 		{
+			ft_clean_ants(&buffer);
 			ft_map_add(map, ft_strdup(buffer));
-			num_ants = ft_atoi_pos(buffer);
+			num_ants = ft_atoi(buffer);
 			free(buffer);
 			return (num_ants);
 		}

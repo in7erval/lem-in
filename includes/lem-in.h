@@ -71,6 +71,9 @@ typedef struct		s_path
 #define PAINTED 2
 
 
+void		ft_clean_ants(char **str);			//	new
+void		ft_clean_rooms(char **str);			//
+
 /*
  * ft_queue.c
  */

@@ -18,7 +18,10 @@ int		ft_iscomment(const char *str)
 
 int		ft_isants(char *str)				// 0037 +15
 {
-	int		length;
+	if (ft_isinteger(str) && ft_atoi(str) > 0)
+		return (1);
+	return (0);
+	/*int		length;
 
 	length = 0;
 	while (*str)
@@ -31,7 +34,7 @@ int		ft_isants(char *str)				// 0037 +15
 	str--;
 	if (length == 0 || (length == 1 && *str == '0'))
 		return (0);
-	return (1);
+	return (1);*/
 }
 
 static int		count_of_words(const char *str, char c)
