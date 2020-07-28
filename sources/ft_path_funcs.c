@@ -242,7 +242,7 @@ void	markup_ants(t_list *pathes, int num_ants)
 	i = 1;
 	while (i < num_ants)
 	{
-		buf_next_path = pathes->next;
+		buf_next_path = buf_path->next;
 		if (buf_next_path == NULL)
 			buf_next_path = pathes;
 		if (get_number_ants_in_path(buf_path->content) + buf_path->content_size >
@@ -285,6 +285,27 @@ int		perform_and_print(t_list *buf, int *first, int *count_finish_ants, int num_
 	return (0);
 }
 
+void	print_ants(t_list *pathes)
+{
+	t_path *buf;
+	t_ant	*ant;
+
+	while (pathes)
+	{
+
+		buf = (t_path *)pathes->content;
+		ft_printf("{red}%s {eoc}", buf->next->room->name);
+		ant = buf->ants;
+		while (ant)
+		{
+			ft_printf("{bold}{yellow}%d {eoc}", ant->number);
+			ant = ant->next;
+		}
+		ft_printf("\n");
+		pathes = pathes->next;
+	}
+}
+
 void	perform_pathes(t_list *pathes, int num_ants) //todo: free ants!!!!!
 {
 	t_list	*buf;
@@ -292,6 +313,7 @@ void	perform_pathes(t_list *pathes, int num_ants) //todo: free ants!!!!!
 	int 	first;
 
 	markup_ants(pathes, num_ants);
+	//print_ants(pathes);
 	count_finish_ants = 0;
 	buf = pathes;
 	while (count_finish_ants < num_ants)

@@ -111,7 +111,7 @@ int		ft_islinks(char *str);
 /*
  * ft_parse.c
  */
-int		ft_parse(t_room **head, int *num_ant);
+int	 		ft_parse(t_room **head, int *num_ants, t_map **map);
 
 /*
  * ft_delete_elem.c

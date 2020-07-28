@@ -7,9 +7,19 @@ int main()
 	t_room *rooms;
 	t_list	*pathes;
 	int 	num_ants;
+	t_map	*map;
 
+	map = NULL;
 	rooms = NULL;
 	num_ants = 0;
+	if (!ft_parse(&rooms, &num_ants, &map))
+	{
+		ft_map_clean(&map);
+		free_rooms(&rooms);
+		ft_putstr_fd("Error\n", 1);
+		return (0);
+	}
+	/*
 	if (ft_parse(&rooms, &num_ants))
 		ft_printf("\nTrue\n");
 	else
@@ -17,7 +27,7 @@ int main()
 		free_rooms(&rooms);
 		ft_printf("\nError\n");
 		return (0);
-	}
+	}*/
 	//free_rooms(&rooms);
 	//return (0);
 	//perform_test(8 , &rooms);
@@ -93,18 +103,20 @@ int main()
 	pathes = get_pathes(get_start_room(rooms));
 	if (!pathes)									// No path checking
 	{
-		ft_printf("\nError\n");
+		ft_putstr_fd("Error\n", 1);
+		ft_map_clean(&map);
 		free_rooms(&rooms);
 		return 0;
 	}
 	pathes = sort_pathes(pathes);
-	print_pathes(pathes);
-
+	ft_map_show(map);
+	//print_pathes(pathes);
+	ft_printf("\n");
 	if (1)
 	{
-		ft_printf("\nPERFORM PATHES\n");
-		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-		perform_pathes(pathes, 20);
+		//ft_printf("\nPERFORM PATHES\n");
+		//ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
+		perform_pathes(pathes, num_ants);
 	}
 	free_pathes(&pathes);
 	free_rooms(&rooms);

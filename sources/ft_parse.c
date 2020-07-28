@@ -129,18 +129,10 @@ static int  ft_ants(t_map **map)
 	return (0);
 }
 
-int	 		ft_parse(t_room **head, int *num_ants)
+int	 		ft_parse(t_room **head, int *num_ants, t_map **map)
 {
-	t_map	*map;
-
-	map = NULL;
-	*num_ants = ft_ants(&map);
-	if (*num_ants && ft_rooms(&map, head))
-	{										// There is no reason for validation function anymore
-		ft_map_show(map);
-		ft_map_clean(&map);
+	*num_ants = ft_ants(map);
+	if (*num_ants && ft_rooms(map, head)) // There is no reason for validation function anymore
 		return (1);
-	}
-	ft_map_clean(&map);
 	return (0);
 }

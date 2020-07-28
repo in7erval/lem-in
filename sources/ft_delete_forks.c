@@ -99,7 +99,7 @@ void	delete_all_input_forks(t_room *rooms)
 			break ;
 		if (buf->status != END && buf->status != START && buf->count_input > 1)
 		{
-			ft_printf("INPUT FORK IN {red}%s{eoc}\n", buf->name);
+			//ft_printf("INPUT FORK IN {red}%s{eoc}\n", buf->name);
 			delete_input_forks(buf);
 		}
 	}
@@ -134,7 +134,7 @@ void	delete_all_output_forks(t_room *rooms)
 			break ;
 		if (buf->status != END && buf->status != START && buf->count_output > 1)
 		{
-			ft_printf("OUTPUT FORK IN {red}%s{eoc}\n", buf->name);
+			//ft_printf("OUTPUT FORK IN {red}%s{eoc}\n", buf->name);
 			delete_output_forks(buf);
 		}
 	}
