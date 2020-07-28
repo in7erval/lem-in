@@ -25,6 +25,7 @@ static int  ft_links(t_map **map, t_room **head, char *buffer)
 	while (get_next_line(0, &buffer) > 0)
 		if (ft_iscomment(buffer))
 		{
+			ft_map_add(map, ft_strdup(buffer));
 			free(buffer);
 			continue;
 		}
@@ -83,6 +84,7 @@ static int  ft_rooms(t_map **map, t_room **head)
 		}
 		else if (ft_iscomment(buffer))
 		{
+			ft_map_add(map, ft_strdup(buffer));
 			free(buffer);
 			continue;
 		}
@@ -111,6 +113,7 @@ static int  ft_ants(t_map **map)
 	while (get_next_line(0, &buffer) > 0)
 		if (ft_iscomment(buffer))
 		{
+			ft_map_add(map, ft_strdup(buffer));
 			free(buffer);
 			continue;
 		}
