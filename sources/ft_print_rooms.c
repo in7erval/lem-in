@@ -1,10 +1,11 @@
 #include "lem-in.h"
 
-void	print_list(t_room *list)
+void	print_list(t_room *list, char *str)
 {
 	t_room *buf;
 	t_rooms *u;
 
+	ft_printf("\n%s\n––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n", str);
 	buf = list;
 	while (buf)
 	{

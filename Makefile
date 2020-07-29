@@ -28,7 +28,7 @@ SOURCES_DIRECTORY = ./sources/
 SOURCES_LEMIN_LIST = main.c ft_queue.c ft_path.c ft_is.c ft_parse.c ft_map.c \
 					ft_bfs_align_dead_ends.c ft_count.c ft_delete_elem.c ft_delete_forks.c \
 					ft_get.c ft_path_funcs.c ft_print_rooms.c ft_room.c ft_room_funcs.c \
-					ft_room_union.c ft_ant.c
+					ft_room_union.c ft_ant.c ft_cleaner.c
 # SOURCES_CHECKER_LIST = checker.c
 # SOURCES_CHECKER_VISUAL_LIST = checker_visual.c drawing.c drawing_help.c drawing_help_2.c drawing_put_color.c
 # SOURCES_LIST = help.c solve.c operations.c checker_helper.c help_2.c help_init.c help_stack.c help_stack_2.c \

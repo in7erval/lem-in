@@ -176,7 +176,7 @@ void	bfs(t_room *rooms, t_queue *queue);
 void	delete_useless_links(t_room* rooms);
 t_rooms	*copy_links(t_rooms *links);
 void	align_all_links(t_room *rooms);
-int		delete_all_dead_ends(t_room *rooms);
+void	delete_all_dead_ends(t_room *rooms);
 
 /*
  * ft_get.c
@@ -184,8 +184,6 @@ int		delete_all_dead_ends(t_room *rooms);
 t_list	*get_names(t_room *rooms);
 t_room *get_same_level(t_room *rooms, t_list **names, int level);
 int 	get_highest_bfs_level(t_room *rooms);
-t_room *get_start_room(t_room *rooms);
-t_room *find_start_room(t_room *rooms);
 
 /*
  * ft_path_funcs.c
@@ -210,7 +208,7 @@ void	free_ants(t_ant **ants);
 /*
  * ft_print_rooms.c
  */
-void	print_list(t_room *list);
+void	print_list(t_room *list, char *str);
 
 
 #endif //LEMIN_LEM_IN_H

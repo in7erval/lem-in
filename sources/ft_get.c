@@ -75,18 +75,3 @@ t_room *get_start_room(t_room *rooms)
 	}
 	return (NULL);
 }
-
-
-t_room *find_start_room(t_room *rooms)
-{
-	t_room *room;
-
-	room = rooms;
-	while (room)
-	{
-		if (room->status == START)
-			return (room);
-		room = room->next;
-	}
-	return (NULL);
-}

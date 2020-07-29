@@ -2,9 +2,50 @@
 
 void perform_test(int num, t_room **rooms);
 
+int ft_clean_error(t_room **rooms, t_map **map)
+{
+	ft_map_clean(map);
+	free_rooms(rooms);
+	ft_putstr_fd("Error\n", 2);
+	return (1);
+}
+
+int ft_markup_rooms(t_room *rooms)
+{
+	t_queue *queue;
+	t_room *start_room;
+
+	start_room = find_room_by_signal(rooms, START);
+	queue = NULL;
+	add_elem_queue(&queue, start_room);
+	start_room->bfs_level = 0;
+	bfs(rooms, queue);
+	if (find_room_by_signal(rooms, END)->status == -1) //no path
+		return (1);
+	return (0);
+}
+
+void ft_beautify_rooms(t_room *rooms)
+{
+	delete_useless_links(rooms);
+	//print_list(rooms, "AFTER DELETE_USELESS_LINKS:");
+	align_all_links(rooms);
+	count_all_input_output_links(rooms);
+	//print_list(rooms, "AFTER ALIGN AND COUNT LINKS:");
+	delete_all_dead_ends(rooms);
+	//print_list(rooms, "AFTER DELETE_DEAD_ENDS:");
+	delete_all_input_forks(rooms);
+	count_all_input_output_links(rooms);
+	delete_all_dead_ends(rooms);
+	//print_list(rooms, "AFTER DELETE_INPUT_FORKS");
+	delete_all_output_forks(rooms);
+	count_all_input_output_links(rooms);
+	//print_list(rooms, "AFTER DELETE_OUTPUT_FORKS");
+}
+
 int main()
 {
-	t_room *rooms;
+	t_room	*rooms;
 	t_list	*pathes;
 	int 	num_ants;
 	t_map	*map;
@@ -13,111 +54,21 @@ int main()
 	rooms = NULL;
 	num_ants = 0;
 	if (!ft_parse(&rooms, &num_ants, &map))
-	{
-		ft_map_clean(&map);
-		free_rooms(&rooms);
-		ft_putstr_fd("Error\n", 1);
-		return (0);
-	}
-	/*
-	if (ft_parse(&rooms, &num_ants))
-		ft_printf("\nTrue\n");
-	else
-	{
-		free_rooms(&rooms);
-		ft_printf("\nError\n");
-		return (0);
-	}*/
-	//free_rooms(&rooms);
-	//return (0);
+		return (ft_clean_error(&rooms, &map));
+
 	//perform_test(8 , &rooms);
-
-	t_queue *queue;
-	t_room *start_room;
-
-	//print_list(rooms);
-	start_room = find_start_room(rooms);
-	/*if (start_room == NULL) {								//
-		ft_printf("%s\n", "start_room doesn't exist!");		//	Проверяется в парсере
-		return (0);											//
-	}*/
-	//ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	queue = NULL;
-	add_elem_queue(&queue, start_room);
-	start_room->bfs_level = 0;
-	bfs(rooms, queue);
-	//print_list(rooms);
-	//ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	delete_useless_links(rooms);
-	if (0)
-	{
-		ft_printf("\nAFTER DELETE_USELESS_LINKS:\n");
-		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-		print_list(rooms);
-	}
-
-	align_all_links(rooms);
-	count_all_input_output_links(rooms);
-	if (0)
-	{
-		ft_printf("\nAFTER ALIGN AND COUNT LINKS:\n");
-		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-		print_list(rooms);
-	}
-
-	while (delete_all_dead_ends(rooms) == 1)
-		count_all_input_output_links(rooms);
-	if (0)
-	{
-		ft_printf("\nAFTER DELETE_DEAD_ENDS:\n");
-		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-		print_list(rooms);
-	}
-
-
-	delete_all_input_forks(rooms);
-	count_all_input_output_links(rooms);
-	while (delete_all_dead_ends(rooms) == 1)
-		count_all_input_output_links(rooms);
-	if (0)
-	{
-		ft_printf("\nAFTER DELETE_INPUT_FORKS\n");
-		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-		print_list(rooms);
-	}
-
-	delete_all_output_forks(rooms);
-	count_all_input_output_links(rooms);
-	if (0)
-	{
-		ft_printf("\nAFTER DELETE_OUTPUT_FORKS\n");
-		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-		print_list(rooms);
-	}
-
-	if (0)
-	{
-		ft_printf("\nPATHES FROM START TO END\n");
-		ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-	}
-	pathes = get_pathes(get_start_room(rooms));
+	//print_list(rooms, "BEGINNING");
+	if (ft_markup_rooms(rooms))
+		return (ft_clean_error(&rooms, &map));
+	//print_list(rooms, "AFTER MARKUP:");
+	ft_beautify_rooms(rooms);
+	pathes = sort_pathes(get_pathes(find_room_by_signal(rooms, START)));
 	if (!pathes)									// No path checking
-	{
-		ft_putstr_fd("Error\n", 1);
-		ft_map_clean(&map);
-		free_rooms(&rooms);
-		return 0;
-	}
-	pathes = sort_pathes(pathes);
+		return (ft_clean_error(&rooms, &map));
 	ft_map_show(map);
 	//print_pathes(pathes);
 	ft_printf("\n");
-	if (1)
-	{
-		//ft_printf("\nPERFORM PATHES\n");
-		//ft_printf("––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n");
-		perform_pathes(pathes, num_ants);
-	}
+	perform_pathes(pathes, num_ants);
 	free_pathes(&pathes);
 	free_rooms(&rooms);
 	return 0;

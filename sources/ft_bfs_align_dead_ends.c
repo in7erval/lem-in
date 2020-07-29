@@ -72,22 +72,26 @@ void	align_all_links(t_room *rooms)
 	}
 }
 
-int		delete_all_dead_ends(t_room *rooms)
+void	delete_all_dead_ends(t_room *rooms)
 {
 	t_room *buf;
 	int 	flag;
 
-	flag = 0;
-	buf = rooms;
-	while (buf)
+	flag = 1;
+	while (flag)
 	{
-		if  (ft_delete_elem(&(buf->union_room), buf, check_dead_end) == 1)
-			flag = 1;
-		if  (ft_delete_elem(&(buf->aligned_union_room), buf, check_dead_end) == 1)
-			flag = 1;
-		buf = buf->next;
+		flag = 0;
+		buf = rooms;
+		while (buf)
+		{
+			if (ft_delete_elem(&(buf->union_room), buf, check_dead_end) == 1)
+				flag = 1;
+			if (ft_delete_elem(&(buf->aligned_union_room), buf, check_dead_end) == 1)
+				flag = 1;
+			buf = buf->next;
+		}
+		count_all_input_output_links(rooms);
 	}
-	return (flag);
 }
 
 
