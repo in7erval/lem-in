@@ -24,242 +24,87 @@ void			ft_clean_ants(char **str)
 	*str = buffer;
 }
 
-static size_t	ft_newstrlen(char *str)		// with \0
+size_t 			ft_strlen_number(char *number)
 {
-	size_t		length;
-	size_t		minus;
-	char		*buf;
+	size_t size;
 
-	length = 0;
-	minus = 0;
-	buf = str;
-	while (*buf != ' ')
+	size = 0;
+	if (*number == '+')
+		number++;
+	if (*number == '-')
 	{
-		buf++;
-		length++;
+		number++;
+		size++;
 	}
-	buf++;
-	length++;
-	if (*buf == '+')
-		buf++;
-	else if (*buf == '-')
+	while (*number == '0')
+		number++;
+	while (*number)
 	{
-		buf++;
-		minus++;
+		size++;
+		number++;
 	}
-	while (*buf == '0')
-		buf++;
-	if (*buf == ' ')
-	{
-		length++;
-		minus = 0;
-	}
-	while (*buf != ' ')
-	{
-		buf++;
-		length++;
-	}
-
-	buf++;
-	length = length + minus + 1;
-	minus = 0;
-	if (*buf == '+')
-		buf++;
-	else if (*buf == '-')
-	{
-		buf++;
-		minus++;
-	}
-	while (*buf == '0')
-		buf++;
-	if (*buf == '\0')
-	{
-		length++;
-		minus = 0;
-	}
-	while (*buf != '\0')
-	{
-		buf++;
-		length++;
-	}
-	return (length + minus + 1);
+	return (size);
 }
 
-/*void			ft_clean_rooms(char **str)
+char 			*ft_clean_number(char *number)
 {
-	char	*new_str;
-	char	*buffer;
-	char	minus;
-	char	*buf;
+	char *pure;
+	char *start;
 
-	new_str = (char*)malloc(ft_newstrlen(*str) * sizeof(char));
-	buffer = new_str;
-	minus = '\0';
-	buf = *str;
-
-	while (*buf != ' ')
+	pure = ft_strnew(ft_strlen_number(number));
+	start = pure;
+	if (*number == '+')
+		number++;
+	if (*number == '-')
 	{
-		*new_str = *buf;
-		new_str++;
-		buf++;
+		*(pure++) = '-';
+		number++;
 	}
-	*new_str = *buf;
-	new_str++;
-	buf++;
-
-	if (*buf == '+')
-		buf++;
-	else if (*buf == '-')
+	while (*number == '0')
+		number++;
+	while (*number)
 	{
-		minus = '-';
-		buf++;
+		*pure = *number;
+		number++;
+		pure++;
 	}
-	while (*buf == '0')
-		buf++;
-	if (*buf == ' ')
-	{
-		*new_str = '0';
-		new_str++;
-	}
-	else if (minus == '-')
-	{
-		*new_str = '-';
-		new_str++;
-	}
-	minus = '\0';
-	while (*buf != ' ')
-	{
-		*new_str = *buf;
-		new_str++;
-		buf++;
-	}
-	*new_str = *buf;
-	new_str++;
-	buf++;
-
-	if (*buf == '+')
-		buf++;
-	else if (*buf == '-')
-	{
-		minus = '-';
-		buf++;
-	}
-	while (*buf == '0')
-		buf++;
-	if (*buf == '\0')
-	{
-		*new_str = '0';
-		new_str++;
-	}
-	else if (minus == '-')
-	{
-		*new_str = '-';
-		new_str++;
-	}
-	minus = '\0';
-	while (*buf != '\0')
-	{
-		*new_str = *buf;
-		new_str++;
-		buf++;
-	}
-	*new_str = '\0';
-	
-	free(*str);
-	*str = buffer;
-}*/
-
-void			ft_clean_rooms_extenstion(char **buf, char **new_str, char symbol)
-{
-	char	*buffer;
-	char	*string;
-	char	minus;
-
-	buffer = *buf;
-	string = *new_str;
-	if ((*buffer == '+' || *buffer == '-') && buffer++)
-		minus = *(buffer-1);
-	while (*buffer == '0')
-		buffer++;
-	if (*buffer == symbol && string++)
-		*(string-1) = '0';
-	else if (minus == '-' && string++)
-		*(string-1) = '-';
-	while (*buffer != symbol)
-	{
-		*string = *buffer;
-		string++;
-		buffer++;
-	}
-	/*if (symbol == ' ')
-	{
-		*string = *buffer;
-		string++;
-		buffer++;
-	}
-	else
-		*string = symbol;*/
+	return (start);
 }
 
-void			ft_clean_rooms(char **str)				//82
+char			*ft_strjoin_three(char *str1, char *str2, char *str3)
 {
-	char	*new_str;
-	char	*buffer;
-	char	minus;
-	char	*buf;
+	char *new_str;
+	char *start;
 
-	new_str = (char*)malloc(ft_newstrlen(*str) * sizeof(char));
-	buffer = new_str;
-	minus = '\0';
-	buf = *str;
+	new_str = ft_strnew(ft_strlen(str1) + ft_strlen(str2) + ft_strlen(str3) + 2);
+	start = new_str;
+	while (*str1)
+		*(new_str++) = *(str1++);
+	*(new_str++) = ' ';
+	while (*str2)
+		*(new_str++) = *(str2++);
+	*(new_str++) = ' ';
+	while (*str3)
+		*(new_str++) = *(str3++);
+	return (start);
+}
 
-	while (*buf != ' ')
-	{
-		*new_str = *buf;
-		new_str++;
-		buf++;
-	}
-	*new_str = *buf;
-	new_str++;
-	buf++;
-	
-	if ((*buf == '+' || *buf == '-') && buf++)
-		minus = *(buf-1);
-	while (*buf == '0')
-		buf++;
-	if (*buf == ' ' && new_str++)
-		*(new_str-1) = '0';
-	else if (minus == '-' && new_str++)
-		*(new_str-1) = '-';
-	minus = '\0';
-	while (*buf != ' ')
-	{
-		*new_str = *buf;
-		new_str++;
-		buf++;
-	}
-	//ft_clean_rooms_extenstion(&buf, &new_str, ' ');
-	*new_str = *buf;
-	new_str++;
-	buf++;
+void			ft_clean_rooms(char **str)
+{
+	char **split;
+	char *new_str;
+	char *x;
+	char *y;
+	char *del;
 
-	if ((*buf == '+' || *buf == '-') && buf++)
-		minus = *(buf-1);
-	while (*buf == '0')
-		buf++;
-	if (*buf == '\0' && new_str++)
-		*(new_str-1) = '0';
-	else if (minus == '-' && new_str++)
-		*(new_str-1) = '-';
-	while (*buf != '\0')
-	{
-		*new_str = *buf;
-		new_str++;
-		buf++;
-	}
-	//ft_clean_rooms_extenstion(&buf, &new_str, '\0');
-	*new_str = '\0';
-	
-	free(*str);
-	*str = buffer;
+	split = ft_strsplit(*str, ' ');
+	x = ft_clean_number(split[1]);
+	y = ft_clean_number(split[2]);
+	new_str = ft_strjoin_three(split[0], x, y);
+	ft_freesplit(split);
+	free(x);
+	free(y);
+	del = *str;
+	*str = new_str;
+	free(del);
 }
