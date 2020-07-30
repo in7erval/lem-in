@@ -44,15 +44,31 @@ void ft_beautify_rooms(t_lemin *lemin)
 
 }
 
+void	ft_bonus(int argc, char **argv, int *c_bonus, int *p_bonus)
+{
+	if (argc == 2 && !ft_strcmp(argv[1], "-c"))
+		*c_bonus = 1;
+	else if (argc == 2 && !ft_strcmp(argv[1], "-p"))
+		*p_bonus = 1;
+	else if ((argc == 2 && (!ft_strcmp(argv[1], "-cp") || !ft_strcmp(argv[1], "-pc"))) ||
+		(argc == 3 && ((!ft_strcmp(argv[1], "-c") && !ft_strcmp(argv[2], "-p"))
+		|| (!ft_strcmp(argv[1], "-p") && !ft_strcmp(argv[2], "-c")))))
+	{
+		*c_bonus = 1;
+		*p_bonus = 1;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	t_lemin		*lemin;
 	int			c_bonus;
+	int 		p_bonus;
 
 	lemin = init_lemin();
 	c_bonus = 0;
-	if (argc == 2 && !ft_strcmp(argv[1], "-c"))
-		c_bonus = 1;
+	p_bonus = 0;
+	ft_bonus(argc, argv, &c_bonus, &p_bonus);
 	if (!ft_parse(lemin, c_bonus))
 		return (ft_free_error(lemin));
 	if (ft_markup_bfs(lemin))
@@ -63,6 +79,8 @@ int main(int argc, char **argv)
 		return (ft_free_error(lemin));
 	ft_map_show(lemin->map);
 	ft_printf("\n");
+	if (p_bonus)
+		print_pathes(lemin->pathes);
 	perform_pathes(lemin);
 	ft_free_lemin(lemin);
 	return (0);

@@ -56,7 +56,8 @@ static int	ft_rooms_extension(t_lemin *lemin, char *buffer, int signal, int bonu
 	ft_map_add(&(lemin->map), ft_strdup(buffer));
 	parts = ft_strsplit(buffer, ' ');
 	free(buffer);
-	if (find_room_by_name(lemin->rooms, parts[0]) || find_room_by_coordinates(lemin->rooms, ft_atoi(parts[1]), ft_atoi(parts[2])))
+	if (find_room_by_name(lemin->rooms, parts[0]) ||
+		find_room_by_coordinates(lemin->rooms, ft_atoi(parts[1]), ft_atoi(parts[2])))
 	{
 		ft_freesplit(parts);
 		return (1);
