@@ -44,12 +44,16 @@ void ft_beautify_rooms(t_lemin *lemin)
 
 }
 
-int main()
+int main(int argc, char **argv)
 {
-	t_lemin	*lemin;
+	t_lemin		*lemin;
+	int			c_bonus;
 
 	lemin = init_lemin();
-	if (!ft_parse(lemin))
+	c_bonus = 0;
+	if (argc == 2 && !ft_strcmp(argv[1], "-c"))
+		c_bonus = 1;
+	if (!ft_parse(lemin, c_bonus))
 		return (ft_free_error(lemin));
 	if (ft_markup_bfs(lemin))
 		return (ft_free_error(lemin));

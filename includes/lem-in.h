@@ -136,7 +136,7 @@ int		ft_islinks(char *str);
 /*
  * ft_parse.c
  */
-int	 		ft_parse(t_lemin *lemin);
+int	 		ft_parse(t_lemin *lemin, int bonus);
 
 /*
  * ft_delete_elem.c
