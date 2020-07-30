@@ -46,12 +46,13 @@ static int  ft_links(t_lemin *lemin, char *buffer)
 	return (1);
 }
 
-static int	ft_rooms_extension(t_lemin *lemin, char *buffer, int signal)
+static int	ft_rooms_extension(t_lemin *lemin, char *buffer, int signal, int bonus)
 {
 	char	**parts;
 	t_room	*room;
 
-	ft_clean_rooms(&buffer);
+	if (bonus == 1)
+		ft_clean_rooms(&buffer);
 	ft_map_add(&(lemin->map), ft_strdup(buffer));
 	parts = ft_strsplit(buffer, ' ');
 	free(buffer);
@@ -79,7 +80,7 @@ static int	ft_rooms_extension(t_lemin *lemin, char *buffer, int signal)
 	return (0);
 }
 
-static int  ft_rooms(t_lemin *lemin)
+static int  ft_rooms(t_lemin *lemin, int bonus)
 {
 	char	*buffer;
 	int		signal;
@@ -99,7 +100,7 @@ static int  ft_rooms(t_lemin *lemin)
 		}
 		else if (ft_isrooms(buffer))
 		{
-			if (ft_rooms_extension(lemin, buffer, signal))
+			if (ft_rooms_extension(lemin, buffer, signal, bonus))
 				return (0);
 			signal = 0;
 		}
@@ -114,7 +115,7 @@ static int  ft_rooms(t_lemin *lemin)
 	return (1);
 }
 
-static int  ft_ants(t_map **map)
+static int  ft_ants(t_map **map, int bonus)
 {
 	char	*buffer;
 	int 	num_ants;
@@ -128,7 +129,8 @@ static int  ft_ants(t_map **map)
 		}
 		else if (ft_isants(buffer))
 		{
-			ft_clean_ants(&buffer);
+			if (bonus == 1)
+				ft_clean_ants(&buffer);
 			ft_map_add(map, ft_strdup(buffer));
 			num_ants = ft_atoi(buffer);
 			free(buffer);
@@ -140,14 +142,13 @@ static int  ft_ants(t_map **map)
 			return (0);
 		}
 	free(buffer);
-	ft_printf("12\n");
 	return (0);
 }
 
-int	 		ft_parse(t_lemin *lemin)
+int	 		ft_parse(t_lemin *lemin, int bonus)
 {
-	lemin->num_ants = ft_ants(&(lemin->map));
-	if (lemin->num_ants && ft_rooms(lemin))
+	lemin->num_ants = ft_ants(&(lemin->map), bonus);
+	if (lemin->num_ants && ft_rooms(lemin, bonus))
 		return (1);
 	return (0);
 }
