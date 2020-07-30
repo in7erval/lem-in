@@ -10,11 +10,11 @@ t_room	*new_room(char *name, int x, int y)
 	room->name = name;
 	room->next = NULL;
 	room->prev = NULL;
-	room->union_room = NULL;
+	//room->union_room = NULL;
 	room->bfs_level = -1;
 	room->status = COMMON;
-	room->bfs_status = NOT_USED;
-	room->aligned_union_room = NULL;
+	//room->bfs_status = NOT_USED;
+	//room->aligned_union_room = NULL;
 	room->count_input = 0;
 	room->count_output = 0;
 	return (room);
@@ -47,8 +47,8 @@ void	free_rooms(t_room **rooms)
 		while (buf)
 		{
 			kill = buf;
-			free_rooms_list(&(kill->union_room));
-			free_rooms_list(&(kill->aligned_union_room));
+			//free_rooms_list(&(kill->union_room));
+			//free_rooms_list(&(kill->aligned_union_room));
 			free(kill->name);
 			buf = buf->next;
 			free(kill);
@@ -56,7 +56,7 @@ void	free_rooms(t_room **rooms)
 		*rooms = NULL;
 	}
 }
-
+/*
 t_rooms *new_element_rooms(t_room *room)
 {
 	t_rooms *elem;
@@ -96,7 +96,7 @@ int 	list_contains(t_rooms *head, t_rooms *elem)
 	}
 	return (0);
 }
-
+*/
 void	free_list(t_list **list)
 {
 	t_list *kill;

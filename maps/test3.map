@@ -1,0 +1,28 @@
+10
+##start
+room_0 10 0
+room_1 10 5
+room_2 15 5
+room_3 5 10
+room_4 10 10
+room_5 20 10
+room_6 0 15
+room_7 5 17
+room_8 0 20
+##end
+room_9 10 25
+room_10 15 25
+room_0-room_1
+room_0-room_2
+room_2-room_5
+room_2-room_4
+room_1-room_3
+room_1-room_4
+room_4-room_3
+room_3-room_6
+room_3-room_7
+room_4-room_9
+room_6-room_8
+room_8-room_9
+room_7-room_9
+room_9-room_10

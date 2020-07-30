@@ -1,5 +1,5 @@
 #include "lem-in.h"
-
+/*
 int 	count_elems_list(t_rooms *head)
 {
 	int	i;
@@ -12,33 +12,34 @@ int 	count_elems_list(t_rooms *head)
 	}
 	return i;
 }
+*/
 
-void	count_input_links(t_room *room)
+void	count_input_output_links(t_lemin *lemin, t_room *room)
 {
-	t_rooms	*all_links;
-	t_rooms	*output_links;
+	t_link	*link;
 
-	all_links = room->union_room;
-	output_links = room->aligned_union_room;
 	room->count_input = 0;
-	while (all_links)
+	room->count_output = 0;
+	link = lemin->links;
+	while (link)
 	{
-		if (list_contains(output_links, all_links) == 0)
+		if (link->to == room)
 			room->count_input++;
-		all_links = all_links->next;
+		if (link->from == room)
+			room->count_output++;
+		link = link->next;
 	}
 }
 
-void count_all_input_output_links(t_room *rooms)
+void count_all_input_output_links(t_lemin *lemin)
 {
-	t_room *buf;
+	t_room *room;
 
-	buf = rooms;
-	while (buf)
+	room = lemin->rooms;
+	while (room)
 	{
-		count_input_links(buf);
-		buf->count_output = count_elems_list(buf->aligned_union_room);
-		buf = buf->next;
+		count_input_output_links(lemin, room);
+		room = room->next;
 	}
 }
 

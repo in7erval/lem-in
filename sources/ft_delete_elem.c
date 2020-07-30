@@ -1,89 +1,111 @@
 #include "lem-in.h"
 
-int 	check_one_level(t_room *room, t_rooms *buf)
+int 	check_one_level(t_link *link)
 {
-	t_room *r;
-
-	r = buf->room;
-	if (r->bfs_level == room->bfs_level || r->bfs_level == -1 || room->bfs_level == -1)
+	if (link->to->bfs_level == link->from->bfs_level
+		|| link->to->bfs_level == -1 || link->from->bfs_level == -1)
 		return (1);
 	return (0);
 }
 
-int 	check_less_level(t_room *room, t_rooms *buf)
+int 	check_dead_end(t_link *link)
 {
-	t_room *r;
-
-	r = buf->room;
-	if (r->bfs_level < room->bfs_level)
+	if (link->from->status != START &&
+		link->from->count_input == 0 && link->from->count_output > 0)
+		return (1);
+	if (link->to->status != END &&
+		link->to->count_output == 0 && link->to->count_input > 0)
 		return (1);
 	return (0);
 }
 
-int 	input_fork_delete(t_room *to_room, t_rooms *buf)
+int		ft_delete_links(t_lemin *lemin, int (*f)(t_link *link))
 {
-	if (buf->room == to_room)
-		return (1);
-	return (0);
-}
+	t_link *buf;
+	t_link *prev;
 
-int 	not_equal_room(t_room *room, t_rooms *buf)
-{
-	if (buf->room != room)
-		return (1);
-	return (0);
-}
-
-int 	check_dead_end(t_room *room, t_rooms *buf)
-{
-	t_room *r;
-
-	r = buf->room;
-	if (r->count_output == 0 && r->status != END && r->status != START)
-	{
-		//ft_printf("{cyan}DEAD_END IN {red}%s {cyan}FROM {red}%s{eoc}\n", r->name, room->name);
-		return (1);
-	}
-	if (room->count_output <= 0 && room->status != END && room->status != START)
-	{
-		//ft_printf("{cyan}DEAD_END IN {red}%s {cyan}FROM {red}%s{eoc}\n", room->name, r->name);
-		return (1);
-	}
-	return (0);
-}
-
-int	ft_delete_elem(t_rooms **list, t_room *r, int (*f)(t_room *room, t_rooms *buf))
-{
-	t_rooms *buf;
-	t_rooms *kill;
-	t_rooms *prev;
-	int 	flag;
-
-	flag = 0;
 	prev = NULL;
-	buf = *list;
+	buf = lemin->links;
+	while (buf && f(buf) != 1)
+	{
+		prev = buf;
+		buf = buf->next;
+	}
+	if (buf)
+	{
+		if (prev == NULL)
+			lemin->links = lemin->links->next;
+		else
+			prev->next = buf->next;
+		if (buf->from->count_output > 0)
+			buf->from->count_output--;
+		if (buf->to->count_input > 0)
+			buf->to->count_input--;
+		free(buf);
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_delete_link(t_lemin *lemin, t_link *link)
+{
+	t_link *buf;
+	t_link *prev;
+
+	prev = NULL;
+	buf = lemin->links;
+	while (buf && buf != link)
+	{
+		prev = buf;
+		buf = buf->next;
+	}
+	if (buf)
+	{
+		if (prev == NULL)
+			lemin->links = lemin->links->next;
+		else
+			prev->next = buf->next;
+		if (buf->from->count_output > 0)
+			buf->from->count_output--;
+		if (buf->to->count_input > 0)
+			buf->to->count_input--;
+		free(buf);
+	}
+}
+
+void	ft_delete_input_except(t_lemin *lemin, t_link *link)
+{
+	t_link	*buf;
+	t_link	*del;
+
+	buf = lemin->links;
 	while (buf)
 	{
-		if (f(r, buf) == 1)
-		{
-			flag = 1;
-			kill = buf;
-			if (prev == NULL)
-				*list = (*list)->next;
-			else
-			{
-				prev->next = buf->next;
-				if (buf->next != NULL)
-					buf->next->prev = prev;
-			}
-			buf = buf->next;
-			free(kill);
-		}
-		else
-		{
-			prev = buf;
-			buf = buf->next;
-		}
+		del = buf;
+		buf = buf->next;
+		if (del->to == link->to && del != link)
+			ft_delete_link(lemin, del);
 	}
-	return (flag);
+}
+
+void	ft_delete_links_from_path(t_lemin *lemin, t_path *path)
+{
+	t_link	*buf;
+	t_link	*del;
+	t_path	*p;
+
+	p = path;
+	while (p)
+	{
+		buf = lemin->links;
+		while (buf)
+		{
+			del = buf;
+			buf = buf->next;
+			if (p->next && del->from == p->room
+				&& del->to == p->next->room)
+				ft_delete_link(lemin, del);
+		}
+		p = p->next;
+	}
 }
