@@ -219,7 +219,7 @@ t_lemin	*init_lemin(void);
 t_link	*ft_create_link(t_room *room1, t_room *room2);
 void	ft_pb_link(t_link **links, t_link *link);
 void	free_links(t_link **links);
-
+void	print_links(t_link *links);
 
 /*
  * ft_print_rooms.c

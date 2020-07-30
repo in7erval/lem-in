@@ -1,18 +1,4 @@
 #include "lem-in.h"
-/*
-int 	count_elems_list(t_rooms *head)
-{
-	int	i;
-
-	i = 0;
-	while (head)
-	{
-		i++;
-		head = head->next;
-	}
-	return i;
-}
-*/
 
 void	count_input_output_links(t_lemin *lemin, t_room *room)
 {
@@ -42,5 +28,3 @@ void count_all_input_output_links(t_lemin *lemin)
 		room = room->next;
 	}
 }
-
-

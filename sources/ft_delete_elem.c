@@ -26,8 +26,10 @@ int		ft_delete_links(t_lemin *lemin, int (*f)(t_link *link))
 
 	prev = NULL;
 	buf = lemin->links;
-	while (buf && f(buf) != 1)
+	while (buf)
 	{
+		if (f(buf) == 1)
+			break;
 		prev = buf;
 		buf = buf->next;
 	}
@@ -59,18 +61,15 @@ void	ft_delete_link(t_lemin *lemin, t_link *link)
 		prev = buf;
 		buf = buf->next;
 	}
-	if (buf)
-	{
-		if (prev == NULL)
+	if (buf && prev == NULL)
 			lemin->links = lemin->links->next;
-		else
+	else if (buf)
 			prev->next = buf->next;
-		if (buf->from->count_output > 0)
-			buf->from->count_output--;
-		if (buf->to->count_input > 0)
-			buf->to->count_input--;
-		free(buf);
-	}
+	if (link->from->count_output > 0)
+		link->from->count_output--;
+	if (link->to->count_input > 0)
+		link->to->count_input--;
+	free(link);
 }
 
 void	ft_delete_input_except(t_lemin *lemin, t_link *link)

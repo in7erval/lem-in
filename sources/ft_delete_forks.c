@@ -37,6 +37,7 @@ void	delete_input_forks(t_lemin *lemin, t_room *room)
 				ft_delete_link(lemin, check_link);
 			else
 				ft_delete_input_except(lemin, check_link);
+			delete_all_dead_ends(lemin);
 		}
 	}
 }

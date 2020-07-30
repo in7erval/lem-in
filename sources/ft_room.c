@@ -47,8 +47,6 @@ void	free_rooms(t_room **rooms)
 		while (buf)
 		{
 			kill = buf;
-			//free_rooms_list(&(kill->union_room));
-			//free_rooms_list(&(kill->aligned_union_room));
 			free(kill->name);
 			buf = buf->next;
 			free(kill);
@@ -56,47 +54,7 @@ void	free_rooms(t_room **rooms)
 		*rooms = NULL;
 	}
 }
-/*
-t_rooms *new_element_rooms(t_room *room)
-{
-	t_rooms *elem;
 
-	elem = (t_rooms *)malloc(sizeof(t_rooms));
-	elem->room = room;
-	elem->next = NULL;
-	elem->prev = NULL;
-	return (elem);
-}
-
-void	free_rooms_list(t_rooms **list)
-{
-	t_rooms *kill;
-	t_rooms *buf;
-
-	if (list && *list)
-	{
-		buf = *list;
-		while (buf)
-		{
-			kill = buf;
-			buf = buf->next;
-			free(kill);
-		}
-		*list = NULL;
-	}
-}
-
-int 	list_contains(t_rooms *head, t_rooms *elem)
-{
-	while (head)
-	{
-		if (head->room == elem->room)
-			return (1);
-		head = head->next;
-	}
-	return (0);
-}
-*/
 void	free_list(t_list **list)
 {
 	t_list *kill;
