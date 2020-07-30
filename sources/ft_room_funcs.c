@@ -1,5 +1,5 @@
 #include "lem-in.h"
-
+/*
 void	add_room_to_rooms_union(t_rooms **union_rooms, t_room *room)
 {
 	t_rooms *new;
@@ -32,7 +32,7 @@ void	add_room_to_rooms_union_back(t_rooms **rooms_union, t_room *room)
 		tmp->next = new;
 	}
 }
-
+*/
 t_room *find_room_by_name(t_room *rooms, char *name)
 {
 	t_room *buf;
@@ -74,4 +74,5 @@ t_room *find_room_by_coordinates(t_room *rooms, int x, int y)
 	}
 	return (NULL);
 }
+
 

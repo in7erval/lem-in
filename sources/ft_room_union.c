@@ -1,34 +1,33 @@
 #include "lem-in.h"
 
-int 	is_in_union(t_room *room, t_room *check_room)
+int 	is_in_union(t_lemin *lemin, t_room *room, t_room *check_room)
 {
-	t_rooms *head;
+	t_link *head;
 
 	if (room == NULL || check_room == NULL || room == check_room)
 		return (0);
-	head = room->union_room;
+	head = lemin->links;
 	while (head)
 	{
-		if (head->room == check_room)
+		if ((head->from == room && head->to == check_room)
+			|| (head->from == check_room && head->to == room))
 			return (1);
 		head = head->next;
 	}
 	return (0);
 }
 
-int	add_union(t_room *rooms, char *room1_name, char *room2_name)
+int	add_union(t_lemin *lemin, char *room1_name, char *room2_name)
 {
 	t_room *room1;
 	t_room *room2;
 
-	room1 = find_room_by_name(rooms, room1_name);
-	room2 = find_room_by_name(rooms, room2_name);
+	room1 = find_room_by_name(lemin->rooms, room1_name);
+	room2 = find_room_by_name(lemin->rooms, room2_name);
 	if (room1 == NULL || room2 == NULL || (room1 == room2))
 		return (1);
-	if (!is_in_union(room1, room2))
-		add_room_to_rooms_union(&(room1->union_room), room2);
-	if (!is_in_union(room2, room1))
-		add_room_to_rooms_union(&(room2->union_room), room1);
+	if (!is_in_union(lemin, room1, room2))
+		ft_pb_link(&(lemin->links), ft_create_link(room1, room2));
 	return (0);
 }
 

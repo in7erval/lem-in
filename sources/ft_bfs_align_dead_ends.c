@@ -1,46 +1,63 @@
 #include "lem-in.h"
 
-void	bfs(t_room *rooms, t_queue *queue)
+void	bfs(t_lemin *lemin, t_queue *queue)
 {
-	t_rooms *buf;
+	t_link *buf;
 	t_queue *q;
 
 	q = poll_elem_queue(&queue);
 	if (q == NULL)
 		return ;
-	q->room->bfs_status = PAINTED;
 	if (q->room->status != END)
 	{
-		buf = q->room->union_room;
+		buf = lemin->links;
 		while (buf)
 		{
-			if (buf->room->bfs_status == NOT_USED)
+			if (buf->from == q->room)
 			{
-				buf->room->bfs_status = POINTED;
-				buf->room->bfs_level = q->room->bfs_level + 1;
-				add_elem_queue(&queue, buf->room);
+				if (buf->to->bfs_level == -1)
+				{
+					buf->to->bfs_level = q->room->bfs_level + 1;
+					add_elem_queue(&queue, buf->to);
+				}
+			}
+			else if (buf->to == q->room)
+			{
+				if (buf->from->bfs_level == -1)
+				{
+					buf->from->bfs_level = q->room->bfs_level + 1;
+					add_elem_queue(&queue, buf->from);
+				}
 			}
 			buf = buf->next;
 		}
+		lemin->bfs_level = q->room->bfs_level;
 	}
 	else
-		q->room->bfs_level = MAX_INT;
+		lemin->end->bfs_level = MAX_INT;
 	free(q);
-	bfs(rooms, queue);
+	bfs(lemin, queue);
 }
 
-void	delete_useless_links(t_room* rooms)
+void	delete_useless_links(t_lemin* lemin)
 {
-	t_room *buf;
+	int flag;
 
-	buf = rooms;
-	while (buf)
-	{
-		ft_delete_elem(&(buf->union_room), buf, check_one_level);
-		buf = buf->next;
-	}
+	flag = 1;
+	while (flag)
+		flag = ft_delete_links(lemin, check_one_level);
 }
 
+void	delete_all_dead_ends(t_lemin *lemin)
+{
+	int 	flag;
+
+	flag = 1;
+	while (flag)
+		flag = ft_delete_links(lemin, check_dead_end);
+}
+
+/*
 t_rooms	*copy_links(t_rooms *links)
 {
 	t_rooms *copy;
@@ -53,45 +70,22 @@ t_rooms	*copy_links(t_rooms *links)
 	}
 	return copy;
 }
+*/
 
-void	align_all_links(t_room *rooms)
+void	align_all_links(t_lemin *lemin)
 {
-	t_room *buf;
+	t_link *link;
+	t_room *buf_room;
 
-	buf = rooms;
-	while (buf)
+	link = lemin->links;
+	while (link)
 	{
-		buf->aligned_union_room = copy_links(buf->union_room);
-		buf = buf->next;
-	}
-	buf = rooms;
-	while (buf)
-	{
-		ft_delete_elem(&(buf->aligned_union_room), buf, check_less_level);
-		buf = buf->next;
-	}
-}
-
-void	delete_all_dead_ends(t_room *rooms)
-{
-	t_room *buf;
-	int 	flag;
-
-	flag = 1;
-	while (flag)
-	{
-		flag = 0;
-		buf = rooms;
-		while (buf)
+		if (link->from->bfs_level > link->to->bfs_level)
 		{
-			if (ft_delete_elem(&(buf->union_room), buf, check_dead_end) == 1)
-				flag = 1;
-			if (ft_delete_elem(&(buf->aligned_union_room), buf, check_dead_end) == 1)
-				flag = 1;
-			buf = buf->next;
+			buf_room = link->from;
+			link->from = link->to;
+			link->to = buf_room;
 		}
-		count_all_input_output_links(rooms);
+		link = link->next;
 	}
 }
-
-

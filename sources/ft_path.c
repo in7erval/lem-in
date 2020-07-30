@@ -50,17 +50,19 @@ void free_path(t_path **path)
 		{
 			kill = buf;
 			buf = buf->next;
-			free_ants(&(kill->ants));
+			if (kill->ants)
+				free_ants(&(kill->ants));
 			free(kill);
 		}
 		*path = NULL;
 	}
 }
 
-t_path *get_path_to_end(t_room *room)
+t_path *get_path_to_end(t_lemin *lemin, t_room *room)
 {
-	t_path *path;
-	t_room *buf;
+	t_path	*path;
+	t_room	*buf;
+	t_link	*link;
 
 	path = NULL;
 	buf = room;
@@ -69,15 +71,25 @@ t_path *get_path_to_end(t_room *room)
 		add_elem_path(&path, buf);
 		if (buf->status == END)
 			break ;
-		if (buf->aligned_union_room == NULL)
+		if (buf->count_output == 0)
 		{
 			free_path(&path);
 			return (NULL);
 		}
-		buf = buf->aligned_union_room->room;
+		link = lemin->links;
+		while (link)
+		{
+			if (link->from == buf)
+			{
+				buf = link->to;
+				break;
+			}
+			link = link->next;
+		}
 	}
 	return (path);
 }
+
 
 void	print_path(t_path *path)
 {
