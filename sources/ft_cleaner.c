@@ -38,6 +38,8 @@ size_t 			ft_strlen_number(char *number)
 	}
 	while (*number == '0')
 		number++;
+	if (*number == '\0')
+		return (1);
 	while (*number)
 	{
 		size++;
@@ -62,6 +64,11 @@ char 			*ft_clean_number(char *number)
 	}
 	while (*number == '0')
 		number++;
+	if (*number == '\0')
+	{
+		free(start);
+		return (ft_strdup("0"));
+	}
 	while (*number)
 	{
 		*pure = *number;
