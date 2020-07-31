@@ -145,7 +145,7 @@ int 	check_one_level(t_link *link);
 int 	check_dead_end(t_link *link);
 int		ft_delete_links(t_lemin *lemin, int (*f)(t_link *link));
 void	ft_delete_link(t_lemin *lemin, t_link *link);
-void	ft_delete_input_except(t_lemin *lemin, t_link *link);
+int		ft_delete_input_except(t_lemin *lemin, t_link *link);
 void	ft_delete_links_from_path(t_lemin *lemin, t_path *path);
 
 /*

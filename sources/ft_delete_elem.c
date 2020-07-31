@@ -72,19 +72,25 @@ void	ft_delete_link(t_lemin *lemin, t_link *link)
 	free(link);
 }
 
-void	ft_delete_input_except(t_lemin *lemin, t_link *link)
+int		ft_delete_input_except(t_lemin *lemin, t_link *link)
 {
 	t_link	*buf;
 	t_link	*del;
+	int 	flag;
 
+	flag = 0;
 	buf = lemin->links;
 	while (buf)
 	{
 		del = buf;
 		buf = buf->next;
 		if (del->to == link->to && del != link)
+		{
+			flag = 1;
 			ft_delete_link(lemin, del);
+		}
 	}
+	return (flag);
 }
 
 void	ft_delete_links_from_path(t_lemin *lemin, t_path *path)

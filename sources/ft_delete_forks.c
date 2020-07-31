@@ -25,8 +25,10 @@ void	delete_input_forks(t_lemin *lemin, t_room *room)
 {
 	t_link	*check_link;
 	t_link	*cur;
+	int		flag;
 
 	cur = lemin->links;
+	flag = 1;
 	while (cur)
 	{
 		check_link = cur;
@@ -36,8 +38,11 @@ void	delete_input_forks(t_lemin *lemin, t_room *room)
 			if (check_output_fork(lemin, check_link->from))
 				ft_delete_link(lemin, check_link);
 			else
-				ft_delete_input_except(lemin, check_link);
+				flag = ft_delete_input_except(lemin, check_link);
 			delete_all_dead_ends(lemin);
+			if (!flag)
+				break;
+			cur = lemin->links;
 		}
 	}
 }
