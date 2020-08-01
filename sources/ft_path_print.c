@@ -37,8 +37,8 @@ void	print_pathes(t_list *pathes)
 	{
 		if (path->content != NULL)
 		{
-			ft_printf("Path{green}%02d{eoc}"
-	"length: {blue}%3d{eoc} {black_bg}|||{eoc}\t",
+			ft_printf("Path{green}%02d{eoc}\t"
+	"length: {blue}{white_bg}%3d{eoc} {black_bg}|||{eoc}\t",
 	num, path->content_size);
 			print_path(path->content);
 			num++;

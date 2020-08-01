@@ -47,7 +47,7 @@ static void		markup_ants(t_lemin *lemin)
 {
 	t_list	*bp;
 	t_list	*bnp;
-	int		i;
+	size_t	i;
 
 	null_all_ants(lemin->pathes);
 	bp = lemin->pathes;
@@ -71,7 +71,7 @@ static void		markup_ants(t_lemin *lemin)
 }
 
 static int		perform_and_print(t_list *buf, int *first,
-								int *count_finish_ants, int num_ants)
+								size_t *count_finish_ants, size_t num_ants)
 {
 	t_path	*buf_p;
 	int		room_number;
@@ -87,7 +87,7 @@ static int		perform_and_print(t_list *buf, int *first,
 		if (!ant)
 			break ;
 		*first = (*first == 0) ? ft_printf(" ") * 0 : 0;
-		ft_printf("L%d-%s", ant->number, room->name);
+		ft_printf("L%lu-%s", ant->number, room->name);
 		ant->room_number = (room->status == END) ? -1 : ant->room_number + 1;
 		if (room->status == END)
 			(*count_finish_ants)++;
@@ -101,12 +101,12 @@ static int		perform_and_print(t_list *buf, int *first,
 void			perform_pathes(t_lemin *lemin)
 {
 	t_list	*buf;
-	int		count_finish_ants;
+	size_t	count_finish_ants;
 	int		first;
 
 	markup_ants(lemin);
+
 	count_finish_ants = 0;
-	buf = lemin->pathes;
 	while (count_finish_ants < lemin->num_ants)
 	{
 		buf = lemin->pathes;

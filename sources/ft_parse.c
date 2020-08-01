@@ -52,7 +52,6 @@ static int	ft_ants(t_map **map, int bonus)
 		else
 			return (0);
 	}
-	free(buffer);
 	return (0);
 }
 

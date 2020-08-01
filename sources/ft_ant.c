@@ -12,7 +12,7 @@
 
 #include "lem-in.h"
 
-t_ant	*new_ant(int number)
+t_ant	*new_ant(size_t number)
 {
 	t_ant	*ant;
 

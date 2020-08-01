@@ -44,8 +44,8 @@ typedef struct		s_queue
 
 typedef struct		s_ant
 {
-	int				number;
-	int				room_number;
+	size_t			number;
+	int			room_number;
 	struct s_ant	*next;
 }					t_ant;
 
@@ -63,7 +63,7 @@ typedef struct 		s_lemin
 	t_room 			*start;
 	t_list 			*pathes;
 	t_room 			*end;
-	int 			num_ants;
+	size_t			num_ants;
 	t_map 			*map;
 	int 			bfs_level;
 }					t_lemin;
@@ -214,7 +214,7 @@ void	delete_all_dead_ends(t_lemin *lemin);
 /*
  * ft_ant.c
  */
-t_ant 	*new_ant(int number);
+t_ant 	*new_ant(size_t number);
 void	push_back_ant(t_ant **ants, t_ant *ant);
 t_ant 	*get_ant_by_room_number(t_path *path, int number);
 void	null_all_ants(t_list *list);

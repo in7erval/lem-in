@@ -59,7 +59,7 @@ void	ft_bonus(int argc, char **argv, int *c_bonus, int *p_bonus)
 	}
 }
 
-int main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_lemin		*lemin;
 	int			c_bonus;
