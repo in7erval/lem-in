@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
-int 	check_output_fork(t_lemin *lemin, t_room *room)
+int		check_output_fork(t_lemin *lemin, t_room *room)
 {
 	t_link *link;
 
@@ -41,17 +53,16 @@ void	delete_input_forks(t_lemin *lemin, t_room *room)
 				flag = ft_delete_input_except(lemin, check_link);
 			delete_all_dead_ends(lemin);
 			if (!flag)
-				break;
+				break ;
 			cur = lemin->links;
 		}
 	}
 }
 
-
 void	delete_all_input_forks(t_lemin *lemin)
 {
 	t_room	*room;
-	int 	level;
+	int		level;
 
 	level = 1;
 	while (level <= lemin->bfs_level)
@@ -88,7 +99,7 @@ void	delete_output_forks(t_lemin *lemin, t_room *room)
 void	delete_all_output_forks(t_lemin *lemin)
 {
 	t_room	*room;
-	int 	level;
+	int		level;
 
 	level = lemin->bfs_level;
 	while (level > 0)

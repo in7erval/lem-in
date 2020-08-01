@@ -12,75 +12,21 @@
 
 #include "lem-in.h"
 
-t_ant	*new_ant(int number)
+int		check_one_level(t_link *link)
 {
-	t_ant	*ant;
-
-	ant = (t_ant *)malloc(sizeof(t_ant));
-	if (ant)
-	{
-		ant->number = number;
-		ant->next = NULL;
-		ant->room_number = 0;
-	}
-	return (ant);
+	if (link->to->bfs_level == link->from->bfs_level
+		|| link->to->bfs_level == -1 || link->from->bfs_level == -1)
+		return (1);
+	return (0);
 }
 
-void	push_back_ant(t_ant **ants, t_ant *ant)
+int		check_dead_end(t_link *link)
 {
-	t_ant *buf;
-
-	if (*ants == NULL)
-		*ants = ant;
-	else
-	{
-		buf = *ants;
-		while (buf->next)
-			buf = buf->next;
-		buf->next = ant;
-	}
-}
-
-t_ant	*get_ant_by_room_number(t_path *path, int number)
-{
-	t_ant *ants;
-
-	ants = path->ants;
-	while (ants)
-	{
-		if (ants->room_number == number)
-			return (ants);
-		ants = ants->next;
-	}
-	return (NULL);
-}
-
-void	null_all_ants(t_list *list)
-{
-	t_path *p;
-
-	while (list)
-	{
-		p = (t_path *)(list->content);
-		p->ants = NULL;
-		list = list->next;
-	}
-}
-
-void	free_ants(t_ant **ants)
-{
-	t_ant *buf;
-	t_ant *kill;
-
-	if (ants && *ants)
-	{
-		buf = *ants;
-		while (buf)
-		{
-			kill = buf;
-			buf = buf->next;
-			free(kill);
-		}
-		*ants = NULL;
-	}
+	if (link->from->status != START &&
+		link->from->count_input == 0 && link->from->count_output > 0)
+		return (1);
+	if (link->to->status != END &&
+		link->to->count_output == 0 && link->to->count_input > 0)
+		return (1);
+	return (0);
 }

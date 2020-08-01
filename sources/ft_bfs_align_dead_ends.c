@@ -1,9 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
-void	bfs(t_lemin *lemin, t_queue *queue)
+static void	check_and_add(t_queue **queue, t_link *buf, t_room *room)
 {
-	t_link *buf;
-	t_queue *q;
+	if (buf->from == room && buf->to->bfs_level == -1)
+	{
+		buf->to->bfs_level = room->bfs_level + 1;
+		add_elem_queue(queue, buf->to);
+	}
+	else if (buf->to == room && buf->from->bfs_level == -1)
+	{
+		buf->from->bfs_level = room->bfs_level + 1;
+		add_elem_queue(queue, buf->from);
+	}
+}
+
+void		bfs(t_lemin *lemin, t_queue *queue)
+{
+	t_link	*buf;
+	t_queue	*q;
 
 	q = poll_elem_queue(&queue);
 	if (q == NULL)
@@ -13,22 +39,7 @@ void	bfs(t_lemin *lemin, t_queue *queue)
 		buf = lemin->links;
 		while (buf)
 		{
-			if (buf->from == q->room)
-			{
-				if (buf->to->bfs_level == -1)
-				{
-					buf->to->bfs_level = q->room->bfs_level + 1;
-					add_elem_queue(&queue, buf->to);
-				}
-			}
-			else if (buf->to == q->room)
-			{
-				if (buf->from->bfs_level == -1)
-				{
-					buf->from->bfs_level = q->room->bfs_level + 1;
-					add_elem_queue(&queue, buf->from);
-				}
-			}
+			check_and_add(&queue, buf, q->room);
 			buf = buf->next;
 		}
 		lemin->bfs_level = q->room->bfs_level;
@@ -39,7 +50,7 @@ void	bfs(t_lemin *lemin, t_queue *queue)
 	bfs(lemin, queue);
 }
 
-void	delete_useless_links(t_lemin* lemin)
+void		delete_useless_links(t_lemin *lemin)
 {
 	int flag;
 
@@ -48,31 +59,16 @@ void	delete_useless_links(t_lemin* lemin)
 		flag = ft_delete_links(lemin, check_one_level);
 }
 
-void	delete_all_dead_ends(t_lemin *lemin)
+void		delete_all_dead_ends(t_lemin *lemin)
 {
-	int 	flag;
+	int	flag;
 
 	flag = 1;
 	while (flag)
 		flag = ft_delete_links(lemin, check_dead_end);
 }
 
-/*
-t_rooms	*copy_links(t_rooms *links)
-{
-	t_rooms *copy;
-
-	copy = NULL;
-	while (links)
-	{
-		add_room_to_rooms_union_back(&copy, links->room);
-		links = links->next;
-	}
-	return copy;
-}
-*/
-
-void	align_all_links(t_lemin *lemin)
+void		align_all_links(t_lemin *lemin)
 {
 	t_link *link;
 	t_room *buf_room;

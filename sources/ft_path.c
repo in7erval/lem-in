@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "lem-in.h"
 
-t_path *new_elem_path(t_room *room)
+t_path	*new_elem_path(t_room *room)
 {
 	t_path *path;
 
@@ -12,7 +23,7 @@ t_path *new_elem_path(t_room *room)
 	return (path);
 }
 
-void add_elem_path(t_path **path, t_room *room)
+void	add_elem_path(t_path **path, t_room *room)
 {
 	t_path *elem;
 	t_path *buf;
@@ -29,7 +40,7 @@ void add_elem_path(t_path **path, t_room *room)
 	}
 }
 
-void add_elem_path_start(t_path **path, t_room *room)
+void	add_elem_path_start(t_path **path, t_room *room)
 {
 	t_path *elem;
 
@@ -38,7 +49,7 @@ void add_elem_path_start(t_path **path, t_room *room)
 	(*path) = elem;
 }
 
-void free_path(t_path **path)
+void	free_path(t_path **path)
 {
 	t_path *buf;
 	t_path *kill;
@@ -57,73 +68,6 @@ void free_path(t_path **path)
 		*path = NULL;
 	}
 }
-
-t_path *get_path_to_end(t_lemin *lemin, t_room *room)
-{
-	t_path	*path;
-	t_room	*buf;
-	t_link	*link;
-
-	path = NULL;
-	buf = room;
-	while (buf)
-	{
-		add_elem_path(&path, buf);
-		if (buf->status == END)
-			break ;
-		if (buf->count_output == 0)
-		{
-			free_path(&path);
-			return (NULL);
-		}
-		link = lemin->links;
-		while (link)
-		{
-			if (link->from == buf)
-			{
-				buf = link->to;
-				break;
-			}
-			link = link->next;
-		}
-	}
-	return (path);
-}
-
-
-void	print_path(t_path *path)
-{
-	t_path *buf;
-
-	buf = path;
-	while (buf->next)
-	{
-		ft_printf("{yellow}%s->", buf->room->name);
-		buf = buf->next;
-	}
-	ft_printf("%s{eoc}", buf->room->name);
-	ft_printf("\n");
-}
-
-void	print_pathes(t_list *pathes)
-{
-	t_list	*path;
-	int		num;
-
-	path = pathes;
-	num = 1;
-	while (path)
-	{
-		if (path->content != NULL)
-		{
-			ft_printf("Path{green}%02d{eoc} length: {blue}%3d{eoc} {black_bg}|||{eoc}\t", num, path->content_size);
-			print_path(path->content);
-			num++;
-		}
-		path = path->next;
-	}
-}
-
 
 size_t	get_length_path(t_path *path)
 {

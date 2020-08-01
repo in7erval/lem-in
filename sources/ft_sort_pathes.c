@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
-static	t_list *get_min_len_path_list(t_list *pathes)
+static t_list	*get_min_len_path_list(t_list *pathes)
 {
 	size_t	min_len;
 	t_list	*buf;
@@ -23,14 +35,15 @@ static	t_list *get_min_len_path_list(t_list *pathes)
 	return (min_path);
 }
 
-static int	ft_equals_list(t_list *list1, t_list *list2)
+static int		ft_equals_list(t_list *list1, t_list *list2)
 {
 	if (list1 == list2)
 		return (1);
-	return(0);
+	return (0);
 }
 
-static void	ft_del_lst_elem(t_list **list, t_list *list1, int (*f)(t_list *list1, t_list *list2))
+static void		ft_del_lst_elem(t_list **list, t_list *list1,
+						int (*f)(t_list *list1, t_list *list2))
 {
 	t_list *buf;
 	t_list *prev;
@@ -52,7 +65,7 @@ static void	ft_del_lst_elem(t_list **list, t_list *list1, int (*f)(t_list *list1
 	}
 }
 
-t_list 	*sort_pathes(t_list *pathes)
+t_list			*sort_pathes(t_list *pathes)
 {
 	t_list *sorted_path;
 	t_list *min_len;
@@ -61,10 +74,9 @@ t_list 	*sort_pathes(t_list *pathes)
 	while (pathes != NULL)
 	{
 		min_len = get_min_len_path_list(pathes);
-		ft_lstadd_back(&sorted_path, ft_lstnew(min_len->content, min_len->content_size));
+		ft_lstadd_back(&sorted_path, ft_lstnew(min_len->content,
+				min_len->content_size));
 		ft_del_lst_elem(&pathes, min_len, ft_equals_list);
 	}
 	return (sorted_path);
 }
-
-

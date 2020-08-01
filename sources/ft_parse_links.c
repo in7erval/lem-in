@@ -12,75 +12,48 @@
 
 #include "lem-in.h"
 
-t_ant	*new_ant(int number)
+static int	ft_links_extension(t_lemin *lemin, char *buffer)
 {
-	t_ant	*ant;
+	char	**parts;
+	t_room	*room1;
+	t_room	*room2;
 
-	ant = (t_ant *)malloc(sizeof(t_ant));
-	if (ant)
+	ft_map_add(&(lemin->map), ft_strdup(buffer));
+	parts = ft_strsplit(buffer, '-');
+	free(buffer);
+	room1 = find_room_by_name(lemin->rooms, parts[0]);
+	room2 = find_room_by_name(lemin->rooms, parts[1]);
+	if (!room1 || !room2 || is_in_union(lemin, room1, room2))
 	{
-		ant->number = number;
-		ant->next = NULL;
-		ant->room_number = 0;
+		ft_freesplit(parts);
+		return (1);
 	}
-	return (ant);
+	add_union(lemin, parts[0], parts[1]);
+	ft_freesplit(parts);
+	return (0);
 }
 
-void	push_back_ant(t_ant **ants, t_ant *ant)
+int			ft_links(t_lemin *lemin, char *buffer)
 {
-	t_ant *buf;
-
-	if (*ants == NULL)
-		*ants = ant;
-	else
-	{
-		buf = *ants;
-		while (buf->next)
-			buf = buf->next;
-		buf->next = ant;
-	}
-}
-
-t_ant	*get_ant_by_room_number(t_path *path, int number)
-{
-	t_ant *ants;
-
-	ants = path->ants;
-	while (ants)
-	{
-		if (ants->room_number == number)
-			return (ants);
-		ants = ants->next;
-	}
-	return (NULL);
-}
-
-void	null_all_ants(t_list *list)
-{
-	t_path *p;
-
-	while (list)
-	{
-		p = (t_path *)(list->content);
-		p->ants = NULL;
-		list = list->next;
-	}
-}
-
-void	free_ants(t_ant **ants)
-{
-	t_ant *buf;
-	t_ant *kill;
-
-	if (ants && *ants)
-	{
-		buf = *ants;
-		while (buf)
+	if (ft_links_extension(lemin, buffer))
+		return (0);
+	while (get_next_line(0, &buffer) > 0)
+		if (ft_iscomment(buffer))
 		{
-			kill = buf;
-			buf = buf->next;
-			free(kill);
+			ft_map_add(&(lemin->map), ft_strdup(buffer));
+			free(buffer);
+			continue;
 		}
-		*ants = NULL;
-	}
+		else if (ft_islinks(buffer))
+		{
+			if (ft_links_extension(lemin, buffer))
+				return (0);
+		}
+		else
+		{
+			free(buffer);
+			return (0);
+		}
+	free(buffer);
+	return (1);
 }

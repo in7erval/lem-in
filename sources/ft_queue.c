@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
-t_queue *new_queue_elem(t_room *room)
+t_queue	*new_queue_elem(t_room *room)
 {
 	t_queue *queue;
 
@@ -8,10 +20,10 @@ t_queue *new_queue_elem(t_room *room)
 	queue->room = room;
 	queue->next = NULL;
 	queue->prev = NULL;
-	return queue;
+	return (queue);
 }
 
-void add_elem_queue(t_queue **queue, t_room *room)
+void	add_elem_queue(t_queue **queue, t_room *room)
 {
 	t_queue *buf;
 	t_queue *elem;
@@ -29,7 +41,7 @@ void add_elem_queue(t_queue **queue, t_room *room)
 	}
 }
 
-t_queue *poll_elem_queue(t_queue **queue)
+t_queue	*poll_elem_queue(t_queue **queue)
 {
 	t_queue *elem;
 
@@ -37,10 +49,10 @@ t_queue *poll_elem_queue(t_queue **queue)
 		return (NULL);
 	elem = *queue;
 	*queue = (*queue)->next;
-	return elem;
+	return (elem);
 }
 
-void print_queue(t_queue *queue)
+void	print_queue(t_queue *queue)
 {
 	t_queue *x;
 

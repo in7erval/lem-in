@@ -94,14 +94,18 @@ t_path *new_elem_path(t_room *room);
 void add_elem_path(t_path **path, t_room *room);
 void add_elem_path_start(t_path **path, t_room *room);
 void free_path(t_path **path);
-t_path *get_path_to_end(t_lemin *lemin, t_room *room);
+size_t	get_length_path(t_path *path);
+
+/*
+ * ft_path_print.c
+ */
 void	print_path(t_path *path);
 void	print_pathes(t_list *pathes);
-size_t	get_length_path(t_path *path);
 
 /*
  * ft_path_funcs.c
  */
+t_path *get_path_to_end(t_lemin *lemin, t_room *room);
 t_list	*get_pathes(t_lemin *lemin, t_room *room);
 void 	free_pathes(t_list **pathes);
 t_path	*get_min_len_path(t_list *pathes);
@@ -139,14 +143,28 @@ int		ft_islinks(char *str);
 int	 		ft_parse(t_lemin *lemin, int bonus);
 
 /*
- * ft_delete_elem.c
+ * ft_parse_links.c
  */
-int 	check_one_level(t_link *link);
-int 	check_dead_end(t_link *link);
+int			ft_links(t_lemin *lemin, char *buffer);
+
+/*
+ * ft_parse_rooms.c
+ */
+int			ft_rooms(t_lemin *lemin, int bonus);
+
+/*
+ * ft_delete_links.c
+ */
 int		ft_delete_links(t_lemin *lemin, int (*f)(t_link *link));
 void	ft_delete_link(t_lemin *lemin, t_link *link);
 int		ft_delete_input_except(t_lemin *lemin, t_link *link);
 void	ft_delete_links_from_path(t_lemin *lemin, t_path *path);
+
+/*
+ * ft_for_delete_links.c
+ */
+int 	check_one_level(t_link *link);
+int 	check_dead_end(t_link *link);
 
 /*
  * ft_room_union.c
@@ -207,6 +225,7 @@ void	free_ants(t_ant **ants);
  * utils.c
  */
 void	error_exit(char *str);
+int		count_of_words(const char *str, char c);
 
 /*
  * ft_init.c
@@ -219,6 +238,7 @@ t_lemin	*init_lemin(void);
 t_link	*ft_create_link(t_room *room1, t_room *room2);
 void	ft_pb_link(t_link **links, t_link *link);
 void	free_links(t_link **links);
+t_room 	*get_room_link_from(t_link *links, t_room *from);
 void	print_links(t_link *links);
 
 /*

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
 t_list	*get_pathes(t_lemin *lemin, t_room *room)
 {
-	t_list *pathes;
-	t_path *path;
+	t_list	*pathes;
+	t_path	*path;
 	t_link	*link;
 
 	pathes = NULL;
@@ -24,8 +36,7 @@ t_list	*get_pathes(t_lemin *lemin, t_room *room)
 	return (pathes);
 }
 
-
-void 	free_pathes(t_list **pathes)
+void	free_pathes(t_list **pathes)
 {
 	t_list *buf;
 
@@ -38,7 +49,7 @@ void 	free_pathes(t_list **pathes)
 	free_list(pathes);
 }
 
-t_path *get_min_len_path(t_list *pathes)
+t_path	*get_min_len_path(t_list *pathes)
 {
 	size_t	min_len;
 	t_list	*buf;
@@ -61,7 +72,7 @@ t_path *get_min_len_path(t_list *pathes)
 	return (min_path);
 }
 
-t_room *get_room_by_roomnumber(t_path *path, int room_number)
+t_room	*get_room_by_roomnumber(t_path *path, int room_number)
 {
 	int i;
 
@@ -74,4 +85,26 @@ t_room *get_room_by_roomnumber(t_path *path, int room_number)
 		path = path->next;
 	}
 	return (path->room);
+}
+
+t_path	*get_path_to_end(t_lemin *lemin, t_room *room)
+{
+	t_path	*path;
+	t_room	*buf;
+
+	path = NULL;
+	buf = room;
+	while (buf)
+	{
+		add_elem_path(&path, buf);
+		if (buf->status == END)
+			break ;
+		if (buf->count_output == 0)
+		{
+			free_path(&path);
+			return (NULL);
+		}
+		buf = get_room_link_from(lemin->links, buf);
+	}
+	return (path);
 }

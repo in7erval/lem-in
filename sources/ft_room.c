@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
 t_room	*new_room(char *name, int x, int y)
@@ -10,11 +22,8 @@ t_room	*new_room(char *name, int x, int y)
 	room->name = name;
 	room->next = NULL;
 	room->prev = NULL;
-	//room->union_room = NULL;
 	room->bfs_level = -1;
 	room->status = COMMON;
-	//room->bfs_status = NOT_USED;
-	//room->aligned_union_room = NULL;
 	room->count_input = 0;
 	room->count_output = 0;
 	return (room);
@@ -72,4 +81,3 @@ void	free_list(t_list **list)
 		*list = NULL;
 	}
 }
-

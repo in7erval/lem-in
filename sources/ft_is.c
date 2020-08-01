@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem-in.h"
 
-int		ft_isknowncommand(char *str)
+int				ft_isknowncommand(char *str)
 {
 	if (!ft_strcmp(str, "##start"))
 		return (START);
@@ -9,58 +21,29 @@ int		ft_isknowncommand(char *str)
 	return (0);
 }
 
-int		ft_iscomment(const char *str)
+int				ft_iscomment(const char *str)
 {
 	if (*str == '#')
 		return (COMMON);
 	return (0);
 }
 
-int		ft_isants(char *str)				// 0037 +15
+int				ft_isants(char *str)
 {
 	if (ft_isinteger(str) && ft_atoi(str) > 0)
 		return (1);
 	return (0);
-	/*int		length;
-
-	length = 0;
-	while (*str)
-	{
-		if (*str < '0' || *str > '9')
-			return (0);
-		str++;
-		length++;
-	}
-	str--;
-	if (length == 0 || (length == 1 && *str == '0'))
-		return (0);
-	return (1);*/
 }
 
-static int		count_of_words(const char *str, char c)
-{
-	int		i;
-
-	i = 0;
-	if (str == NULL)
-		return (0);
-	while (*str)
-	{
-		if (*str != c && (*(str + 1) == c || *(str + 1) == '\0'))
-				i++;
-		str++;
-	}
-	return (i);
-}
-
-int		ft_isrooms(char *str)
+int				ft_isrooms(char *str)
 {
 	char	**parts;
 
 	if (count_of_words(str, ' ') != 3)
 		return (0);
 	parts = ft_strsplit(str, ' ');
-	if (parts[0][0] == 'L' || !ft_isinteger(parts[1]) || !ft_isinteger(parts[2]))
+	if (parts[0][0] == 'L' ||
+		!ft_isinteger(parts[1]) || !ft_isinteger(parts[2]))
 	{
 		ft_freesplit(parts);
 		return (0);
@@ -69,14 +52,15 @@ int		ft_isrooms(char *str)
 	return (1);
 }
 
-int		ft_islinks(char *str)
+int				ft_islinks(char *str)
 {
 	char	**parts;
 
 	if (count_of_words(str, '-') != 2)
 		return (0);
 	parts = ft_strsplit(str, '-');
-	if (parts[0][0] == 'L' || parts[1][0] == 'L' || !ft_strcmp(parts[0], parts[1]))
+	if (parts[0][0] == 'L' || parts[1][0] == 'L'
+		|| !ft_strcmp(parts[0], parts[1]))
 	{
 		ft_freesplit(parts);
 		return (0);
