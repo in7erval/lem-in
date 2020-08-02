@@ -93,6 +93,10 @@ SOURCES_LIST = ft_atoi.c \
     ft_tolower.c \
     ft_toupper.c \
     ft_utoa_base.c \
+    ft_list_add.c \
+    ft_list_create.c \
+    ft_list_delete.c \
+    ft_list_find.c \
     get_next_line.c \
     ft_printf/color.c \
     ft_printf/flags.c \
