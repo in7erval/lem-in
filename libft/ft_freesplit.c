@@ -23,4 +23,3 @@ void	ft_freesplit(char **split)
 		free(split[i++]);
 	free(split);
 }
-

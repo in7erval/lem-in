@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 static void	check_and_add(t_queue **queue, t_link *buf, t_room *room)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 void	error_exit(char *str)
 {
@@ -32,4 +32,27 @@ int		count_of_words(const char *str, char c)
 		str++;
 	}
 	return (i);
+}
+
+void	ft_free_lemin(t_lemin *lemin)
+{
+	if (lemin)
+	{
+		if (lemin->map)
+			ft_map_clean(&(lemin->map));
+		if (lemin->rooms)
+			free_rooms(&(lemin->rooms));
+		if (lemin->pathes)
+			free_pathes(&(lemin->pathes));
+		if (lemin->links)
+			free_links(&(lemin->links));
+		free(lemin);
+	}
+}
+
+int		ft_free_error(t_lemin *lemin)
+{
+	ft_free_lemin(lemin);
+	ft_putstr_fd("ERROR\n", 2);
+	return (1);
 }

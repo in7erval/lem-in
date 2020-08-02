@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int		get_number_ants_in_path(t_path *path)
 {
@@ -105,7 +105,6 @@ void			perform_pathes(t_lemin *lemin)
 	int		first;
 
 	markup_ants(lemin);
-
 	count_finish_ants = 0;
 	while (count_finish_ants < lemin->num_ants)
 	{

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int	ft_check_signal(t_lemin *lemin, int signal, t_room *room)
 {
@@ -89,7 +89,7 @@ int			ft_rooms(t_lemin *lemin)
 	char	*buffer;
 	int		signal;
 	int		check;
-	int 	has_links;
+	int		has_links;
 
 	has_links = 0;
 	signal = 0;

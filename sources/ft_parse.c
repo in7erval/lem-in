@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 static int	ft_ants_check(t_map **map, char *buffer, int *num_ants, int bonus)
 {

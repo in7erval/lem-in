@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 int		is_in_union(t_lemin *lemin, t_room *room, t_room *check_room)
 {
