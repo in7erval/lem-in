@@ -26,5 +26,7 @@ t_lemin		*init_lemin(void)
 	lemin->map = NULL;
 	lemin->bfs_level = 0;
 	lemin->pathes = NULL;
+	lemin->c_bonus = 0;
+	lemin->p_bonus = 0;
 	return (lemin);
 }

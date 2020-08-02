@@ -23,6 +23,8 @@ int				ft_isknowncommand(char *str)
 
 int				ft_iscomment(const char *str)
 {
+	if (ft_isknowncommand((char *)str) != 0)
+		return (0);
 	if (*str == '#')
 		return (COMMON);
 	return (0);

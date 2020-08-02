@@ -1,6 +1,6 @@
 #include "lem-in.h"
 
-void perform_test(int num, t_room **rooms);
+void perform_test(int num, t_lemin *lemin);
 
 void ft_free_lemin(t_lemin *lemin)
 {
@@ -44,34 +44,30 @@ void ft_beautify_rooms(t_lemin *lemin)
 
 }
 
-void	ft_bonus(int argc, char **argv, int *c_bonus, int *p_bonus)
+void	ft_bonus(int argc, char **argv, t_lemin *lemin)
 {
 	if (argc == 2 && !ft_strcmp(argv[1], "-c"))
-		*c_bonus = 1;
+		lemin->c_bonus = 1;
 	else if (argc == 2 && !ft_strcmp(argv[1], "-p"))
-		*p_bonus = 1;
+		lemin->p_bonus = 1;
 	else if ((argc == 2 && (!ft_strcmp(argv[1], "-cp") || !ft_strcmp(argv[1], "-pc"))) ||
 		(argc == 3 && ((!ft_strcmp(argv[1], "-c") && !ft_strcmp(argv[2], "-p"))
 		|| (!ft_strcmp(argv[1], "-p") && !ft_strcmp(argv[2], "-c")))))
 	{
-		*c_bonus = 1;
-		*p_bonus = 1;
+		lemin->c_bonus = 1;
+		lemin->p_bonus = 1;
 	}
 }
 
 int		main(int argc, char **argv)
 {
 	t_lemin		*lemin;
-	int			c_bonus;
-	int 		p_bonus;
 
 	lemin = init_lemin();
-	c_bonus = 0;
-	p_bonus = 0;
-	ft_bonus(argc, argv, &c_bonus, &p_bonus);
-	if (!ft_parse(lemin, c_bonus))
+	ft_bonus(argc, argv, lemin);
+	if (!ft_parse(lemin))
 		return (ft_free_error(lemin));
-	if (ft_markup_bfs(lemin))
+	if (ft_markup_bfs(lemin) == 1)
 		return (ft_free_error(lemin));
 	ft_beautify_rooms(lemin);
 	lemin->pathes = sort_pathes(get_pathes(lemin, lemin->start));
@@ -79,7 +75,7 @@ int		main(int argc, char **argv)
 		return (ft_free_error(lemin));
 	ft_map_show(lemin->map);
 	ft_printf("\n");
-	if (p_bonus)
+	if (lemin->p_bonus)
 		print_pathes(lemin->pathes);
 	perform_pathes(lemin);
 	ft_free_lemin(lemin);
@@ -88,25 +84,29 @@ int		main(int argc, char **argv)
 /*
 void	perform_test(int num, t_lemin *lemin)
 {
+	t_room **rooms = &(lemin->rooms);
 	if (num == 1)
 	{
-		push_back_room(lemin->rooms, new_room("room_0", 10, 0));
+		lemin->num_ants = 10;
+		push_back_room(rooms, new_room("room_0", 10, 0));
 		push_back_room(rooms, new_room("room_1", 10, 0));
 		push_back_room(rooms, new_room("room_2", 10, 0));
 		push_back_room(rooms, new_room("room_3", 10, 0));
 		push_back_room(rooms, new_room("room_4", 10, 0));
 		push_back_room(rooms, new_room("room_5", 10, 0));
+		lemin->start = 	find_room_by_name(*rooms, "room_0");
+		lemin->end = find_room_by_name(*rooms, "room_5");
 		find_room_by_name(*rooms, "room_0")->status = START;
 		find_room_by_name(*rooms, "room_5")->status = END;
-		add_union(*rooms, "room_0", "room_1");
-		add_union(*rooms, "room_0", "room_2");
-		add_union(*rooms, "room_0", "room_3");
-		add_union(*rooms, "room_2", "room_1");
-		add_union(*rooms, "room_2", "room_3");
-		add_union(*rooms, "room_4", "room_1");
-		add_union(*rooms, "room_3", "room_4");
-		add_union(*rooms, "room_2", "room_4");
-		add_union(*rooms, "room_4", "room_5");
+		add_union(lemin, "room_0", "room_1");
+		add_union(lemin, "room_0", "room_2");
+		add_union(lemin, "room_0", "room_3");
+		add_union(lemin, "room_2", "room_1");
+		add_union(lemin, "room_2", "room_3");
+		add_union(lemin, "room_4", "room_1");
+		add_union(lemin, "room_3", "room_4");
+		add_union(lemin, "room_2", "room_4");
+		add_union(lemin, "room_4", "room_5");
 	}
 	if (num == 2)
 	{

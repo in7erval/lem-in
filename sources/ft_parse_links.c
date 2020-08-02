@@ -33,8 +33,9 @@ static int	ft_links_extension(t_lemin *lemin, char *buffer)
 	return (0);
 }
 
-int			ft_links(t_lemin *lemin, char *buffer)
+int			ft_links(t_lemin *lemin, char *buffer, int *has_links)
 {
+	*has_links = 1;
 	if (ft_links_extension(lemin, buffer))
 		return (0);
 	while (get_next_line(0, &buffer) > 0)
@@ -54,6 +55,5 @@ int			ft_links(t_lemin *lemin, char *buffer)
 			free(buffer);
 			return (0);
 		}
-	free(buffer);
 	return (1);
 }

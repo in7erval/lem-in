@@ -66,6 +66,8 @@ typedef struct 		s_lemin
 	size_t			num_ants;
 	t_map 			*map;
 	int 			bfs_level;
+	int 			c_bonus;
+	int 			p_bonus;
 }					t_lemin;
 
 #define START 1
@@ -140,17 +142,17 @@ int		ft_islinks(char *str);
 /*
  * ft_parse.c
  */
-int	 		ft_parse(t_lemin *lemin, int bonus);
+int	 		ft_parse(t_lemin *lemin);
 
 /*
  * ft_parse_links.c
  */
-int			ft_links(t_lemin *lemin, char *buffer);
+int			ft_links(t_lemin *lemin, char *buffer, int *has_links);
 
 /*
  * ft_parse_rooms.c
  */
-int			ft_rooms(t_lemin *lemin, int bonus);
+int			ft_rooms(t_lemin *lemin);
 
 /*
  * ft_delete_links.c
