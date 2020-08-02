@@ -66,7 +66,7 @@ static int	ft_rooms_check(t_lemin *lemin, char *buf,
 	{
 		ft_map_add(&(lemin->map), ft_strdup(buf));
 		free(buf);
-		//return (2);
+		return (2);
 	}
 	else if (ft_isrooms(buf))
 	{
@@ -81,7 +81,7 @@ static int	ft_rooms_check(t_lemin *lemin, char *buf,
 		free(buf);
 		return (0);
 	}
-	return (2);
+	return (1);
 }
 
 int			ft_rooms(t_lemin *lemin, int bonus)
@@ -96,9 +96,9 @@ int			ft_rooms(t_lemin *lemin, int bonus)
 		check = ft_rooms_check(lemin, buffer, &signal, bonus);
 		if (check == 2)
 			continue;
-		else if (check == 1)
-			return (1);
+		else if (check == 0)
+			return (0);
 	}
 	free(buffer);
-	return (0);
+	return (1);
 }
