@@ -3,122 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hcaterpi <hcaterpi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/31 12:45:30 by htrent            #+#    #+#             */
-/*   Updated: 2019/10/31 12:51:14 by htrent           ###   ########.fr       */
+/*   Created: 2019/09/11 12:43:51 by hcaterpi          #+#    #+#             */
+/*   Updated: 2019/09/18 16:54:55 by hcaterpi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_find_fd(t_list *head, const int fd)
+static int	check_buffer(t_list_gnl **head, t_list_gnl *curr, char **line)
 {
-	t_list *ptr;
+	char	*trash;
+	int		i;
 
-	ptr = head;
-	while (ptr)
+	i = 0;
+	while (curr->str[i] != '\n')
 	{
-		if (ptr->content_size == (size_t)fd)
-			return (ptr);
-		ptr = ptr->next;
+		if (!curr->str[i])
+			return (0);
+		i++;
 	}
-	return (NULL);
-}
-
-int		ft_free_node_fd(t_list **head, const int fd)
-{
-	t_list	*node;
-	t_list	*prev;
-	t_list	*to_del;
-
-	prev = NULL;
-	node = *head;
-	while (node)
-	{
-		if (node->content_size == (size_t)fd)
-		{
-			to_del = node;
-			if (!prev)
-				*head = (*head)->next;
-			else
-				prev->next = node->next;
-			free(to_del);
-			return (1);
-		}
-		prev = node;
-		node = node->next;
-	}
+	curr->str[i] = '\0';
+	*line = ft_strdup(curr->str);
+	trash = curr->str;
+	curr->str = ft_strsub(curr->str, i + 1, ft_strlen(&curr->str[i + 1]));
+	free(trash);
+	if (ft_strlen(curr->str) == 0)
+		ft_list_delete(head, curr->fd);
 	return (1);
 }
 
-int		ft_check_and_pull(t_list *node, char **line)
+static int	read_file(t_list_gnl **head, t_list_gnl *curr, char **line)
 {
-	char *newline;
-	char *to_del;
+	char	*buffer;
+	char	*trash;
+	int		byte_read;
 
-	if (node)
-	{
-		newline = ft_strchr(node->content, '\n');
-		if (newline)
-		{
-			*(newline++) = '\0';
-			*line = ft_strdup(node->content);
-			to_del = node->content;
-			node->content = ft_strdup(newline);
-			free(to_del);
-			return (1);
-		}
-	}
-	return (0);
-}
-
-void	ft_write_line(char *newline, char **line, t_list *node)
-{
-	char	*to_del;
-
-	if (newline)
-	{
-		*(newline++) = '\0';
-		*line = ft_strdup(node->content);
-		to_del = node->content;
-		node->content = ft_strdup(newline);
-		free(to_del);
-	}
-	else
-	{
-		*line = ft_strdup(node->content);
-		to_del = node->content;
-		free(to_del);
-		node->content = NULL;
-	}
-}
-
-int		get_next_line(const int fd, char **line)
-{
-	static t_list	*list;
-	int				rt;
-	char			buf[BUFF_SIZE + 1];
-	char			*newline;
-	t_list			*node;
-
-	if (fd < 0 || read(fd, buf, 0) == -1 || !line)
+	buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
+	if (!buffer)
 		return (-1);
-	newline = NULL;
-	if (ft_check_and_pull(node = ft_find_fd(list, fd), line))
-		return (1);
-	while (!newline && (rt = read(fd, buf, BUFF_SIZE)) > 0)
+	while ((byte_read = read(curr->fd, buffer, BUFF_SIZE)) > 0)
 	{
-		buf[rt] = '\0';
-		if (!node)
-			ft_lstadd(&list, node = ft_create_node(ft_strdup(buf), fd));
-		else
-			node->content = ft_strjoin(node->content, buf);
-		newline = ft_strchr(node->content, '\n');
+		buffer[byte_read] = '\0';
+		trash = curr->str;
+		curr->str = ft_strjoin(curr->str, buffer);
+		free(trash);
+		if (check_buffer(head, curr, line))
+			break ;
 	}
-	if ((!node || (rt == 0 && ft_strlen(node->content) == 0
-				   && ft_free_node_fd(&list, fd))) && !(*line = NULL))
-		return (0);
-	ft_write_line(newline, line, node);
+	free(buffer);
+	if (byte_read > 0)
+		byte_read = 1;
+	return (byte_read);
+}
+
+int			get_next_line(const int fd, char **line)
+{
+	static t_list_gnl	*descriptors;
+	t_list_gnl			*curr;
+	int					sygnal;
+
+	if (fd < 0 || !line)
+		return (-1);
+	if ((curr = ft_list_find(descriptors, fd)) == NULL)
+		curr = ft_list_add(&descriptors, fd, ft_strnew(0));
+	else if (check_buffer(&descriptors, curr, line))
+		return (1);
+	sygnal = read_file(&descriptors, curr, line);
+	if (sygnal != 0 || curr->str[0] == '\0')
+		return (sygnal);
+	*line = ft_strdup(curr->str);
+	ft_list_delete(&descriptors, curr->fd);
 	return (1);
 }
