@@ -41,7 +41,7 @@ int				ft_isrooms(char *str)
 {
 	char	**parts;
 
-	if (*(str + ft_strlen(str) - 1) == ' ' || count_of_words(str, ' ') != 3)
+	if (ft_strlen(str) == 0 || *(str + ft_strlen(str) - 1) == ' ' || count_of_words(str, ' ') != 3)
 		return (0);
 	parts = ft_strsplit(str, ' ');
 	if (parts[0][0] == 'L' ||
