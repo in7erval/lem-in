@@ -14,23 +14,31 @@
 
 static int	ft_links_extension(t_lemin *lemin, char *buffer)
 {
-	char	**parts;
+	char	*first_part;
+	char	*second_part;
+	char	*current_dash;
 	t_room	*room1;
 	t_room	*room2;
 
 	ft_map_add(&(lemin->map), ft_strdup(buffer));
-	parts = ft_strsplit(buffer, '-');
-	free(buffer);
-	room1 = find_room_by_name(lemin->rooms, parts[0]);
-	room2 = find_room_by_name(lemin->rooms, parts[1]);
-	if (!room1 || !room2 || is_in_union(lemin, room1, room2))
+	current_dash = buffer;
+	while ((current_dash = ft_strchr(current_dash + 1, '-')))
 	{
-		ft_freesplit(parts);
-		return (1);
+		first_part = ft_strsub(buffer, 0, current_dash - buffer);
+		second_part = ft_strsub(current_dash + 1, 0, ft_strlen(current_dash + 1));
+		room1 = find_room_by_name(lemin->rooms, first_part);
+		room2 = find_room_by_name(lemin->rooms, second_part);
+		if (room1 && room2 && !is_in_union(lemin, room1, room2))
+		{
+			add_union(lemin, first_part, second_part);
+			free(first_part);
+			free(second_part);
+			return (0);
+		}
+		free(first_part);
+		free(second_part);
 	}
-	add_union(lemin, parts[0], parts[1]);
-	ft_freesplit(parts);
-	return (0);
+	return (1);
 }
 
 int			ft_links(t_lemin *lemin, char *buffer, int *has_links)

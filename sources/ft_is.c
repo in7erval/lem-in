@@ -56,17 +56,16 @@ int				ft_isrooms(char *str)
 
 int				ft_islinks(char *str)
 {
-	char	**parts;
+	int		dash;
 
-	if (count_of_words(str, '-') != 2)
-		return (0);
-	parts = ft_strsplit(str, '-');
-	if (parts[0][0] == 'L' || parts[1][0] == 'L'
-		|| !ft_strcmp(parts[0], parts[1]))
+	dash = 0;
+	while (*str)
 	{
-		ft_freesplit(parts);
-		return (0);
+		if (*str == ' ')
+			return (0);
+		else if (*str == '-')
+			dash = 1;
+		str++;
 	}
-	ft_freesplit(parts);
-	return (1);
+	return (dash);
 }
