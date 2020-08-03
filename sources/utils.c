@@ -20,19 +20,17 @@ void	error_exit(char *str)
 
 int		count_of_words(const char *str, char c)
 {
-	int	i;
+	int		i;
 
-	i = 1;
+	i = 0;
+	*a = 0;
 	if (str == NULL)
 		return (0);
 	while (*str)
 	{
-		if (*str == c)
-		{
-			if (*(str+1) == c)
-				return (0);
-			i++;
-		}
+		if (*str != c)
+			if (*(str + 1) == c || *(str + 1) == '\0')
+				i++;
 		str++;
 	}
 	return (i);
