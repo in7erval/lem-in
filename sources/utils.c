@@ -23,7 +23,8 @@ int		count_of_words(const char *str, char c)
 	int		i;
 
 	i = 0;
-	if (str == NULL)
+	if (str == NULL || *str == c ||
+		ft_strlen(str) == 0 || *(str + ft_strlen(str) - 1) == c)
 		return (0);
 	while (*str)
 	{
