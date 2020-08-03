@@ -182,6 +182,8 @@ int					is_in_union(t_lemin *lemin, t_room *room,
 					t_room *check_room);
 int					add_union(t_lemin *lemin, char *room1_name,
 					char *room2_name);
+int					add_union_by_rooms(t_lemin *lemin, t_room *room1,
+					t_room *room2);
 
 /*
 ** ft_room.c
