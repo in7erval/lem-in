@@ -28,16 +28,16 @@ static int	ft_links_extension(t_lemin *lemin, char *buffer)
 		second_part = ft_strsub(curr_dash + 1, 0, ft_strlen(curr_dash + 1));
 		room1 = find_room_by_name(lemin->rooms, first_part);
 		room2 = find_room_by_name(lemin->rooms, second_part);
-		if (room1 && room2 && !is_in_union(lemin, room1, room2))
-		{
-			add_union(lemin, first_part, second_part);
-			free(first_part);
-			free(second_part);
-			return (0);
-		}
 		free(first_part);
 		free(second_part);
+		if (room1 && room2 && !is_in_union(lemin, room1, room2))
+		{
+			add_union_by_rooms(lemin, room1, room2);
+			free(buffer);
+			return (0);
+		}
 	}
+	free(buffer);
 	return (1);
 }
 

@@ -42,3 +42,12 @@ int		add_union(t_lemin *lemin, char *room1_name, char *room2_name)
 		ft_pb_link(&(lemin->links), ft_create_link(room1, room2));
 	return (0);
 }
+
+int		add_union_by_rooms(t_lemin *lemin, t_room *room1, t_room *room2)
+{
+	if (room1 == NULL || room2 == NULL || (room1 == room2))
+		return (1);
+	if (!is_in_union(lemin, room1, room2))
+		ft_pb_link(&(lemin->links), ft_create_link(room1, room2));
+	return (0);
+}
