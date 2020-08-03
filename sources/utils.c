@@ -22,12 +22,12 @@ int		count_of_words(const char *str, char c)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	if (str == NULL)
 		return (0);
 	while (*str)
 	{
-		if (*str != c && (*(str + 1) == c || *(str + 1) == '\0'))
+		if (*str == c)
 			i++;
 		str++;
 	}
