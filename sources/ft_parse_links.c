@@ -16,16 +16,16 @@ static int	ft_links_extension(t_lemin *lemin, char *buffer)
 {
 	char	*first_part;
 	char	*second_part;
-	char	*current_dash;
+	char	*curr_dash;
 	t_room	*room1;
 	t_room	*room2;
 
 	ft_map_add(&(lemin->map), ft_strdup(buffer));
-	current_dash = buffer;
-	while ((current_dash = ft_strchr(current_dash + 1, '-')))
+	curr_dash = buffer;
+	while ((curr_dash = ft_strchr(curr_dash + 1, '-')))
 	{
-		first_part = ft_strsub(buffer, 0, current_dash - buffer);
-		second_part = ft_strsub(current_dash + 1, 0, ft_strlen(current_dash + 1));
+		first_part = ft_strsub(buffer, 0, curr_dash - buffer);
+		second_part = ft_strsub(curr_dash + 1, 0, ft_strlen(curr_dash + 1));
 		room1 = find_room_by_name(lemin->rooms, first_part);
 		room2 = find_room_by_name(lemin->rooms, second_part);
 		if (room1 && room2 && !is_in_union(lemin, room1, room2))
