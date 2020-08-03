@@ -33,11 +33,13 @@ static int	ft_links_extension(t_lemin *lemin, char *buffer)
 			add_union(lemin, first_part, second_part);
 			free(first_part);
 			free(second_part);
+			free(buffer);
 			return (0);
 		}
 		free(first_part);
 		free(second_part);
 	}
+	free(buffer);
 	return (1);
 }
 

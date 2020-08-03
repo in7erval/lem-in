@@ -22,7 +22,6 @@ int		main(int argc, char **argv)
 	ft_bonus(argc, argv, lemin);
 	if (!ft_parse(lemin))
 		return (ft_free_error(lemin));
-	ft_printf("parsing\n");
 	if (ft_markup_bfs(lemin) == 1)
 		return (ft_free_error(lemin));
 	ft_beautify_rooms(lemin);
