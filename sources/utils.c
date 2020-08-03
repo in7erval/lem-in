@@ -6,7 +6,7 @@
 /*   By: hcaterpi <hcaterpi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/08/03 13:34:10 by hcaterpi         ###   ########.fr       */
+/*   Updated: 2020/08/03 13:38:14 by hcaterpi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ int		count_of_words(const char *str, char c)
 	while (*str)
 	{
 		if (*str == c)
+		{
+			if (*(str+1) == c)
+				return (0);
 			i++;
-		if (*(str+1) == c)
-			return (0);
+		}
 		str++;
 	}
 	return (i);
