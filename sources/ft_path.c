@@ -52,19 +52,3 @@ void	free_path(t_path *path)
 	ft_lstdel(&path->rooms, NULL);
 	free(path);
 }
-/*
-size_t	get_length_path(t_path *path)
-{
-	t_path	*buf;
-	size_t	i;
-
-	i = 0;
-	buf = path;
-	while (buf)
-	{
-		i++;
-		buf = buf->next;
-	}
-	return (i);
-}
-*/

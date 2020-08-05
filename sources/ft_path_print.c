@@ -16,8 +16,12 @@ void	print_path(t_path *path)
 {
 	t_room	*buf;
 	t_list	*rooms;
+	int 	flag;
 
+	flag = 0;
 	if (((t_room *)(path->rooms->content))->status == END)
+		flag = 1;
+	if (flag)
 		ft_lstrev(&(path->rooms));
 	rooms = path->rooms;
 	while (rooms->next)
@@ -29,4 +33,6 @@ void	print_path(t_path *path)
 	buf = (t_room *)(rooms->content);
 	ft_printf("%s{eoc}", buf->name);
 	ft_printf("\n");
+	if (flag)
+		ft_lstrev(&(path->rooms));
 }

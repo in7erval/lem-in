@@ -28,5 +28,6 @@ t_lemin		*init_lemin(void)
 	lemin->c_bonus = 0;
 	lemin->p_bonus = 0;
 	lemin->max_paths = 0;
+	lemin->group = NULL;
 	return (lemin);
 }

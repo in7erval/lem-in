@@ -274,7 +274,6 @@ t_group	*create_group(t_lemin *lemin)
 			break;
 		rebuild_paths(traverse);
 		cur = group_build(lemin);
-		print_group(cur);
 		free_path(traverse);
 		if (!best)
 			best = cur;
@@ -287,16 +286,19 @@ t_group	*create_group(t_lemin *lemin)
 			free_group(cur);
 		count++;
 	}
-	return (NULL);
+	return (best);
 }
 
-void	solve(t_lemin *lemin)
+int	ft_solve(t_lemin *lemin)
 {
-	t_group	*paths;
+	t_group	*group;
 
 	lemin->max_paths = max_paths(lemin);
-	ft_printf("Max_paths: %d\n", lemin->max_paths);
-	paths = create_group(lemin);
+	group = create_group(lemin);
+	if (group == NULL || group->paths == NULL)
+		return (0);
+	lemin->group = group;
+	return (1);
 }
 
 void	ft_bonus(int argc, char **argv, t_lemin *lemin)

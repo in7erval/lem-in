@@ -51,7 +51,6 @@ static int group_rounds(t_group *group)
 
 	ret = 0;
 	i = 0;
-	buf = 0;
 	while (i < group->path_count)
 	{
 		if (group->ants[i] > 0)
@@ -65,6 +64,21 @@ static int group_rounds(t_group *group)
 	return (ret);
 }
 
+void	check_and_rev(t_group *group)
+{
+	int		i;
+	t_path	*path;
+
+	i = 0;
+	while (i < group->path_count)
+	{
+		path = group->paths[i];
+		if (((t_room *)(path->rooms->content))->status == END)
+			ft_lstrev(&(path->rooms));
+		i++;
+	}
+}
+
 t_group	*group_build(t_lemin *lemin)
 {
 	t_group *group;
@@ -72,7 +86,7 @@ t_group	*group_build(t_lemin *lemin)
 	group = (t_group *)malloc(sizeof(t_group));
 	group->path_count = paths_count(lemin);
 	group->paths = (t_path **)malloc(sizeof(t_path *) * group->path_count);
-	group->ants = (int *)malloc(sizeof(int) * group->path_count);
+	group->ants = ft_memalloc(sizeof(int) * group->path_count);
 	create_paths(lemin, group);
 	sort_array((void **)group->paths, group->path_count, cmp_path_len);
 	perform_ants(group, lemin->num_ants);

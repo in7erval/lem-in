@@ -24,6 +24,10 @@ t_room	*new_room(char *name, int x, int y)
 	room->prev = NULL;
 	room->status = COMMON;
 	room->visited = 0;
+	room->visited2 = 0;
+	room->ants = 0;
+	room->ant_number = 0;
+	room->count_links = 0;
 	return (room);
 }
 

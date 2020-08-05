@@ -22,7 +22,6 @@ typedef struct		s_map
 	struct s_map	*next;
 }					t_map;
 
-
 typedef	struct		s_room
 {
 	char			*name;
@@ -34,6 +33,8 @@ typedef	struct		s_room
 	int 			visited;
 	int 			visited2;
 	int 			count_links;
+	size_t 			ants;
+	int 			ant_number;
 }					t_room;
 
 typedef struct		s_tree
@@ -52,20 +53,6 @@ typedef struct		s_link
 	struct s_link	*next;
 }					t_link;
 
-typedef struct		s_queue
-{
-	t_room			*room;
-	struct s_queue	*next;
-	struct s_queue	*prev;
-}					t_queue;
-
-typedef struct		s_ant
-{
-	size_t			number;
-	int				room_number;
-	struct s_ant	*next;
-}					t_ant;
-
 typedef struct		s_path
 {
 	t_list			*rooms;
@@ -81,6 +68,25 @@ typedef	struct		s_group
 	t_path			**paths;
 }					t_group;
 
+typedef	struct		s_move
+{
+	int 			path_number;
+	int 			ant_number;
+	t_room			*dest;
+}					t_move;
+
+typedef	struct		s_round
+{
+	t_list			*moves;
+}					t_round;
+
+typedef	struct		s_answer
+{
+	int 			round;
+	int 			path;
+	t_list			*rounds;
+}					t_answer;
+
 typedef struct		s_lemin
 {
 	t_list			*rooms;
@@ -94,6 +100,8 @@ typedef struct		s_lemin
 	int				c_bonus;
 	int				p_bonus;
 	int 			max_paths;
+	t_group			*group;
+	t_answer		*answer;
 }					t_lemin;
 
 # define START 1
@@ -101,6 +109,13 @@ typedef struct		s_lemin
 # define COMMON 3
 # define MAX_INT 2147483647
 # define MALLOC_ERROR "MALLOC_ERROR"
+
+/*
+** ft_answer.c
+*/
+t_answer	*ft_init_answer(void);
+void		ft_answer_add_round(t_answer *answer);
+void		ft_answer_add_move(t_answer *answer, t_room *to);
 
 /*
 ** ft_cleaner.c
@@ -114,19 +129,12 @@ void				ft_clean_rooms(char **str);
 void	sort_array(void **array, size_t size, int (*cmp)(void *, void *));
 
 /*
-** ft_queue.c
-*/
-void				add_elem_queue(t_queue **queue, t_room *room);
-t_queue				*new_queue_elem(t_room *room);
-t_queue				*poll_elem_queue(t_queue **queue);
-void				print_queue(t_queue *queue);
-
-/*
 ** ft_group.c
 */
 t_group	*group_build(t_lemin *lemin);
 void	print_group(t_group *group);
 void	free_group(t_group *group);
+void	check_and_rev(t_group *group);
 
 /*
 ** ft_solve.c
@@ -141,10 +149,8 @@ void	visit(t_tree *tree);
 */
 t_path				*ft_path_new(void);
 t_path				*ft_build_path(t_room *from, t_room *to);
-t_path				*new_elem_path(t_room *room);
 void				add_elem_path(t_path *path, t_room *room);
 void				free_path(t_path *path);
-size_t				get_length_path(t_path *path);
 
 /*
 ** ft_path_print.c
@@ -153,18 +159,10 @@ void				print_path(t_path *path);
 void				print_pathes(t_list *pathes);
 
 /*
-** ft_path_funcs.c
+** ft_perform_paths.c
 */
-t_path				*get_path_to_end(t_lemin *lemin, t_room *room);
-t_list				*get_pathes(t_lemin *lemin, t_room *room);
-void				free_pathes(t_list **pathes);
-t_path				*get_min_len_path(t_list *pathes);
-t_room				*get_room_by_roomnumber(t_path *path, int room_number);
+void	perform_paths(t_lemin *lemin);
 
-/*
-** ft_sort_pathes.c
-*/
-t_list				*sort_pathes(t_list *pathes);
 
 /*
 ** ft_perform_ants.c
@@ -203,18 +201,14 @@ int					ft_links(t_lemin *lemin, char *buffer, int *has_links);
 int					ft_rooms(t_lemin *lemin);
 
 /*
-** ft_delete_links.c
+* ft_optimize.c
 */
-int					ft_delete_links(t_lemin *lemin, int (*f)(t_link *link));
-void				ft_delete_link(t_lemin *lemin, t_link *link);
-int					ft_delete_input_except(t_lemin *lemin, t_link *link);
-void				ft_delete_links_from_path(t_lemin *lemin, t_path *path);
+void				ft_optimize(t_lemin *lemin);
 
 /*
-** ft_for_delete_links.c
+* ft_count.c
 */
-int					check_one_level(t_link *link);
-int					check_dead_end(t_link *link);
+void				count_links(t_lemin *lemin);
 
 /*
 ** ft_room_union.c
@@ -242,39 +236,6 @@ t_room				*find_room_by_signal(t_list *rooms, int signal);
 t_room				*find_room_by_coordinates(t_list *rooms, int x, int y);
 
 /*
-** ft_count.c
-*/
-void				count_all_links(t_lemin *lemin);
-void				count_input_output_links(t_lemin *lemin, t_room *room);
-void				count_all_input_output_links(t_lemin *lemin);
-
-/*
-** ft_delete_forks.c
-*/
-int					check_output_fork(t_lemin *lemin, t_room *room);
-void				delete_input_forks(t_lemin *lemin, t_room *room);
-void				delete_all_input_forks(t_lemin *lemin);
-void				delete_output_forks(t_lemin *lemin, t_room *room);
-void				delete_all_output_forks(t_lemin *lemin);
-
-/*
-** ft_bfs_align_dead_ends.c
-*/
-void				bfs(t_lemin *lemin, t_queue *queue);
-void				delete_useless_links(t_lemin *lemin);
-void				align_all_links(t_lemin *lemin);
-void				delete_all_dead_ends(t_lemin *lemin);
-
-/*
-** ft_ant.c
-*/
-t_ant				*new_ant(size_t number);
-void				push_back_ant(t_ant **ants, t_ant *ant);
-t_ant				*get_ant_by_room_number(t_path *path, int number);
-void				null_all_ants(t_list *list);
-void				free_ants(t_ant **ants);
-
-/*
 ** utils.c
 */
 void				error_exit(char *str);
@@ -300,9 +261,8 @@ void				print_links(t_link *links);
 /*
 ** ft_solve.c
 */
-void				solve(t_lemin *lemin);
+int					ft_solve(t_lemin *lemin);
 int					ft_markup_bfs(t_lemin *lemin);
-void				ft_solve(t_lemin *lemin);
 void				ft_bonus(int argc, char **argv, t_lemin *lemin);
 int					check_usage(int argc, char **argv);
 
