@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 static void	ft_delete_links_extention(t_link *buf)
 {
 	if (buf->from->count_output > 0)
@@ -112,3 +112,4 @@ void		ft_delete_links_from_path(t_lemin *lemin, t_path *path)
 		p = p->next;
 	}
 }
+*/

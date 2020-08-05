@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 void	count_input_output_links(t_lemin *lemin, t_room *room)
 {
 	t_link	*link;
@@ -38,5 +38,34 @@ void	count_all_input_output_links(t_lemin *lemin)
 	{
 		count_input_output_links(lemin, room);
 		room = room->next;
+	}
+}
+*/
+
+static void	count_links(t_lemin *lemin, t_room *room)
+{
+	t_link *link;
+
+	room->count_links = 0;
+	link = lemin->links;
+	while (link)
+	{
+		if (link->to == room || link->from == room)
+			room->count_links++;
+		link = link->next;
+	}
+}
+
+void		count_all_links(t_lemin *lemin)
+{
+	t_list	*buf;
+	t_room	*room;
+
+	buf = lemin->rooms;
+	while (buf)
+	{
+		room = (t_room *)(buf->content);
+		count_links(lemin, room);
+		buf = buf->next;
 	}
 }

@@ -22,10 +22,8 @@ t_room	*new_room(char *name, int x, int y)
 	room->name = name;
 	room->next = NULL;
 	room->prev = NULL;
-	room->bfs_level = -1;
 	room->status = COMMON;
-	room->count_input = 0;
-	room->count_output = 0;
+	room->visited = 0;
 	return (room);
 }
 

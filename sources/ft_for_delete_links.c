@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 int		check_one_level(t_link *link)
 {
 	if (link->to->bfs_level == link->from->bfs_level
@@ -30,3 +30,4 @@ int		check_dead_end(t_link *link)
 		return (1);
 	return (0);
 }
+*/

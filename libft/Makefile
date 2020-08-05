@@ -42,6 +42,7 @@ SOURCES_LIST = ft_atoi.c \
     ft_lstiter.c \
     ft_lstmap.c \
     ft_lstnew.c \
+    ft_lstrev.c \
     ft_memalloc.c \
     ft_memccpy.c \
     ft_memchr.c \

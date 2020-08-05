@@ -48,7 +48,7 @@ static int	ft_rooms_extension(t_lemin *lemin, char *buffer,
 	room = new_room(ft_strdup(parts[0]),
 					ft_atoi(parts[1]), ft_atoi(parts[2]));
 	ft_freesplit(parts);
-	push_back_room(&(lemin->rooms), room);
+	ft_lstadd(&(lemin->rooms), ft_lstnew(room, sizeof(t_room)));
 	if (ft_check_signal(lemin, signal, room))
 		return (1);
 	return (0);

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 t_list	*get_pathes(t_lemin *lemin, t_room *room)
 {
 	t_list	*pathes;
@@ -35,7 +35,8 @@ t_list	*get_pathes(t_lemin *lemin, t_room *room)
 	}
 	return (pathes);
 }
-
+*/
+/*
 void	free_pathes(t_list **pathes)
 {
 	t_list *buf;
@@ -86,7 +87,8 @@ t_room	*get_room_by_roomnumber(t_path *path, int room_number)
 	}
 	return (path->room);
 }
-
+ */
+/*
 t_path	*get_path_to_end(t_lemin *lemin, t_room *room)
 {
 	t_path	*path;
@@ -108,3 +110,4 @@ t_path	*get_path_to_end(t_lemin *lemin, t_room *room)
 	}
 	return (path);
 }
+*/

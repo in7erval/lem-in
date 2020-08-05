@@ -12,6 +12,45 @@
 
 #include "lem_in.h"
 
+static int 	rounds_for_path(t_group *group, int i)
+{
+	int	ants;
+
+	ants = group->ants[i] + 1;
+	return (group->paths[i]->len + ants - 1);
+}
+
+static void	perform_ant(t_group *group)
+{
+	int i;
+	int rounds;
+	int next_rounds;
+
+	i = 0;
+	while (i < group->path_count - 1)
+	{
+		rounds = rounds_for_path(group, i);
+		next_rounds = rounds_for_path(group, i + 1);
+		if (rounds < next_rounds)
+			break;
+		i++;
+	}
+	group->ants[i]++;
+}
+
+void	perform_ants(t_group *group, int num_ants)
+{
+	int	count;
+
+	count = num_ants;
+	while (count > 0)
+	{
+		perform_ant(group);
+		count--;
+	}
+}
+
+/*
 static int		get_number_ants_in_path(t_path *path)
 {
 	t_ant	*ant;
@@ -120,3 +159,4 @@ void			perform_pathes(t_lemin *lemin)
 		ft_printf("\n");
 	}
 }
+*/

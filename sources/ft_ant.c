@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 t_ant	*new_ant(size_t number)
 {
 	t_ant	*ant;
@@ -84,3 +84,4 @@ void	free_ants(t_ant **ants)
 		*ants = NULL;
 	}
 }
+*/

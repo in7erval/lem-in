@@ -12,43 +12,43 @@
 
 #include "lem_in.h"
 
-t_room	*find_room_by_name(t_room *rooms, char *name)
+t_room	*find_room_by_name(t_list *rooms, char *name)
 {
-	t_room *buf;
+	t_list *buf;
 
 	buf = rooms;
 	while (buf)
 	{
-		if (ft_strcmp(buf->name, name) == 0)
-			return (buf);
+		if (ft_strcmp(((t_room *)(buf->content))->name, name) == 0)
+			return (((t_room *)(buf->content)));
 		buf = buf->next;
 	}
 	return (NULL);
 }
 
-t_room	*find_room_by_signal(t_room *rooms, int signal)
+t_room	*find_room_by_signal(t_list *rooms, int signal)
 {
-	t_room *buf;
+	t_list *buf;
 
 	buf = rooms;
 	while (buf)
 	{
-		if (buf->status == signal)
-			return (buf);
+		if (((t_room *)(buf->content))->status == signal)
+			return ((t_room *)(buf->content));
 		buf = buf->next;
 	}
 	return (NULL);
 }
 
-t_room	*find_room_by_coordinates(t_room *rooms, int x, int y)
+t_room	*find_room_by_coordinates(t_list *rooms, int x, int y)
 {
-	t_room *buf;
+	t_list *buf;
 
 	buf = rooms;
 	while (buf)
 	{
-		if (buf->x == x && buf->y == y)
-			return (buf);
+		if (((t_room *)(buf->content))->x == x && ((t_room *)(buf->content))->y == y)
+			return ((t_room *)(buf->content));
 		buf = buf->next;
 	}
 	return (NULL);

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 int		check_output_fork(t_lemin *lemin, t_room *room)
 {
 	t_link *link;
@@ -38,8 +38,11 @@ void	delete_input_forks(t_lemin *lemin, t_room *room)
 	t_link	*check_link;
 	t_link	*cur;
 	int		flag;
+	t_link	*best_links;
+
 
 	cur = lemin->links;
+	best_links = ;
 	flag = 1;
 	while (cur)
 	{
@@ -50,11 +53,7 @@ void	delete_input_forks(t_lemin *lemin, t_room *room)
 			if (check_output_fork(lemin, check_link->from))
 				ft_delete_link(lemin, check_link);
 			else
-				flag = ft_delete_input_except(lemin, check_link);
-			delete_all_dead_ends(lemin);
-			if (!flag)
-				break ;
-			cur = lemin->links;
+				ft_pb_link(&best_links)
 		}
 	}
 }
@@ -114,3 +113,4 @@ void	delete_all_output_forks(t_lemin *lemin)
 		level--;
 	}
 }
+*/

@@ -14,35 +14,19 @@
 
 void	print_path(t_path *path)
 {
-	t_path *buf;
+	t_room	*buf;
+	t_list	*rooms;
 
-	buf = path;
-	while (buf->next)
+	if (((t_room *)(path->rooms->content))->status == END)
+		ft_lstrev(&(path->rooms));
+	rooms = path->rooms;
+	while (rooms->next)
 	{
-		ft_printf("{yellow}%s->", buf->room->name);
-		buf = buf->next;
+		buf = (t_room *)(rooms->content);
+		ft_printf("{yellow}%s->", buf->name);
+		rooms = rooms->next;
 	}
-	ft_printf("%s{eoc}", buf->room->name);
+	buf = (t_room *)(rooms->content);
+	ft_printf("%s{eoc}", buf->name);
 	ft_printf("\n");
-}
-
-void	print_pathes(t_list *pathes)
-{
-	t_list	*path;
-	int		num;
-
-	path = pathes;
-	num = 1;
-	while (path)
-	{
-		if (path->content != NULL)
-		{
-			ft_printf("Path{green}%02d{eoc}\t"
-	"length: {blue}{white_bg}%3d{eoc} {black_bg}|||{eoc}\t",
-	num, path->content_size);
-			print_path(path->content);
-			num++;
-		}
-		path = path->next;
-	}
 }

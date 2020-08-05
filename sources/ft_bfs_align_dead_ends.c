@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 static void	check_and_add(t_queue **queue, t_link *buf, t_room *room)
 {
 	if (buf->from == room && buf->to->bfs_level == -1)
@@ -85,3 +85,4 @@ void		align_all_links(t_lemin *lemin)
 		link = link->next;
 	}
 }
+*/

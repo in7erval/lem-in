@@ -45,9 +45,9 @@ void	ft_free_lemin(t_lemin *lemin)
 		if (lemin->map)
 			ft_map_clean(&(lemin->map));
 		if (lemin->rooms)
-			free_rooms(&(lemin->rooms));
-		if (lemin->pathes)
-			free_pathes(&(lemin->pathes));
+			free_list(&(lemin->rooms));
+		//if (lemin->pathes)
+		//	free_pathes(&(lemin->pathes));
 		if (lemin->links)
 			free_links(&(lemin->links));
 		free(lemin);
@@ -59,4 +59,9 @@ int		ft_free_error(t_lemin *lemin)
 	ft_free_lemin(lemin);
 	ft_putstr_fd("ERROR\n", 2);
 	return (1);
+}
+
+int 	ft_min(int a, int b)
+{
+	return ((a > b) ? b : a);
 }

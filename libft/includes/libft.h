@@ -105,6 +105,7 @@ void					ft_lstadd(t_list **alst, t_list *new);
 void					ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list					*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void					ft_lstadd_back(t_list **alst, t_list *new);
+void					ft_lstrev(t_list **list);
 t_list					*ft_create_node(char *content, size_t content_size);
 t_list_gnl				*ft_list_add(t_list_gnl **begin_list,
 						int fd, char *str);

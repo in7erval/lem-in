@@ -12,63 +12,47 @@
 
 #include "lem_in.h"
 
-t_path	*new_elem_path(t_room *room)
+t_path	*ft_path_new(void)
 {
-	t_path *path;
+	t_path		*path;
+	static int	id;
 
 	path = (t_path *)malloc(sizeof(t_path));
-	path->room = room;
-	path->next = NULL;
-	path->ants = NULL;
+	path->id = id;
+	path->len = -1;
+	path->rooms = NULL;
+	id++;
 	return (path);
 }
 
-void	add_elem_path(t_path **path, t_room *room)
+t_path	*ft_build_path(t_room *from, t_room *to)
 {
-	t_path *elem;
-	t_path *buf;
+	t_path	*path;
+	t_room 	*cur;
 
-	elem = new_elem_path(room);
-	if (*path == NULL)
-		*path = elem;
-	else
+	path = ft_path_new();
+	add_elem_path(path, from);
+	cur = to;
+	while (cur)
 	{
-		buf = *path;
-		while (buf->next)
-			buf = buf->next;
-		buf->next = elem;
+		add_elem_path(path, cur);
+		cur = cur->next;
 	}
+	return (path);
 }
 
-void	add_elem_path_start(t_path **path, t_room *room)
+void	add_elem_path(t_path *path, t_room *room)
 {
-	t_path *elem;
-
-	elem = new_elem_path(room);
-	elem->next = (*path);
-	(*path) = elem;
+	ft_lstadd(&path->rooms, ft_lstnew(room, sizeof(t_room)));
+	path->len++;
 }
 
-void	free_path(t_path **path)
+void	free_path(t_path *path)
 {
-	t_path *buf;
-	t_path *kill;
-
-	if (path && *path)
-	{
-		buf = *path;
-		while (buf)
-		{
-			kill = buf;
-			buf = buf->next;
-			if (kill->ants)
-				free_ants(&(kill->ants));
-			free(kill);
-		}
-		*path = NULL;
-	}
+	ft_lstdel(&path->rooms, NULL);
+	free(path);
 }
-
+/*
 size_t	get_length_path(t_path *path)
 {
 	t_path	*buf;
@@ -83,3 +67,4 @@ size_t	get_length_path(t_path *path)
 	}
 	return (i);
 }
+*/
