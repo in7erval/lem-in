@@ -40,6 +40,9 @@ static int 	check_correct_params(int argc, char **argv, t_options *options)
 
 int		check_usage(int argc, char **argv, t_options *options)
 {
+	options->r_bonus = 0;
+	options->p_bonus = 0;
+	options->c_bonus = 0;
 	if (!check_correct_params(argc, argv, options))
 	{
 		ft_printf("{white}{bold}Usage:{eoc} ./lemin [-{red}c{yellow}"
