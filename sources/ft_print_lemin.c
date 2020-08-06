@@ -3,7 +3,7 @@
 void	print_room(t_lemin *lemin, t_room *room)
 {
 	char *status;
-	t_link *link;
+	t_list *link;
 
 	if (room == lemin->end)
 		status = "END";
@@ -14,13 +14,10 @@ void	print_room(t_lemin *lemin, t_room *room)
 
 	ft_printf("{cyan}{bold}-------- name: {eoc}{green}{black_bg}{underline}{bold}%s{eoc}{cyan}{bold} --------{eoc}\nstatus: {blue}{bold}%s{eoc}\nx: %d y: %d count_links:%d\n", room->name, status, room->x, room->y, room->count_links);
 	ft_printf("{red}{bold}  UNION{eoc} with: ");
-	link = lemin->links;
+	link = room->links;
 	while (link)
 	{
-		if (link->to == room)
-			ft_printf("{yellow}{bold}%s {eoc}", link->from->name);
-		if (link->from == room)
-			ft_printf("{yellow}{bold}%s {eoc}", link->to->name);
+		ft_printf("{yellow}{bold}%s {eoc}", ((t_room *)link->content)->name);
 		link = link->next;
 	}
 	ft_printf("\n");

@@ -14,29 +14,13 @@
 #include "../libft/includes/libft.h"
 #include "../includes/lem_in.h"
 
-int 	ft_count_links(t_lemin *lemin, t_room *room)
-{
-	t_link	*link;
-	int		count;
-
-	count = 0;
-	link = lemin->links;
-	while (link)
-	{
-		if (link->from == room || link->to == room)
-			count++;
-		link = link->next;
-	}
-	return (count);
-}
-
 int 	max_paths(t_lemin *lemin)
 {
 	int start_links;
 	int end_links;
 
-	start_links = ft_count_links(lemin, lemin->start);
-	end_links = ft_count_links(lemin, lemin->end);
+	start_links = lemin->start->count_links;
+	end_links = lemin->end->count_links;
 	return (ft_min(ft_min(start_links, end_links), lemin->num_ants));
 }
 
@@ -114,7 +98,7 @@ t_path	*extend_node(t_lemin *lemin, t_tree *node, t_list **next_nodes)
 {
 	t_tree	*new_node;
 	t_path	*path;
-	t_link	*link;
+	t_list	*cur;
 
 	visit(node);
 	new_node = NULL;
@@ -128,19 +112,13 @@ t_path	*extend_node(t_lemin *lemin, t_tree *node, t_list **next_nodes)
 			ft_lstadd(next_nodes, ft_lstnew(new_node, sizeof(t_tree)));
 		return (NULL);
 	}
-	link = lemin->links;
-	while (link)
+	cur = node->room->links;
+	while (cur)
 	{
-		if (link->from == node->room || link->to == node->room)
-		{
-			if (link->from == node->room)
-				new_node = traverse(node, link->to);
-			else if (link->to == node->room)
-				new_node = traverse(node, link->from);
-			if (new_node)
-				ft_lstadd(next_nodes, ft_lstnew(new_node, sizeof(t_tree)));
-		}
-		link = link->next;
+		new_node = traverse(node, (t_room *)cur->content);
+		if (new_node)
+			ft_lstadd(next_nodes, ft_lstnew(new_node, sizeof(t_tree)));
+		cur = cur->next;
 	}
 	return (NULL);
 }

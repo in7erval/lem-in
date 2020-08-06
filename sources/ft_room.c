@@ -28,6 +28,7 @@ t_room	*new_room(char *name, int x, int y)
 	room->ants = 0;
 	room->ant_number = 0;
 	room->count_links = 0;
+	room->links = NULL;
 	return (room);
 }
 
@@ -82,4 +83,11 @@ void	free_list(t_list **list)
 		}
 		*list = NULL;
 	}
+}
+
+void	ft_free_room(t_room *room)
+{
+	free(room->name);
+	free_list(&room->links);
+	free(room);
 }

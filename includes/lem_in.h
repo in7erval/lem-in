@@ -36,6 +36,7 @@ typedef	struct		s_room
 	int 			count_links;
 	size_t 			ants;
 	int 			ant_number;
+	t_list 			*links;
 }					t_room;
 
 typedef struct		s_tree
@@ -46,14 +47,14 @@ typedef struct		s_tree
 	int 			length;
 	t_room			*intersect;
 }					t_tree;
-
+/*
 typedef struct		s_link
 {
 	t_room			*from;
 	t_room			*to;
 	struct s_link	*next;
 }					t_link;
-
+*/
 typedef struct		s_path
 {
 	t_list			*rooms;
@@ -91,7 +92,6 @@ typedef	struct		s_answer
 typedef struct		s_lemin
 {
 	t_list			*rooms;
-	t_link			*links;
 	t_room			*start;
 	t_list			*pathes;
 	t_room			*end;
@@ -135,7 +135,6 @@ void	sort_array(void **array, size_t size, int (*cmp)(void *, void *));
 t_group	*group_build(t_lemin *lemin);
 void	print_group(t_group *group);
 void	free_group(t_group *group);
-void	check_and_rev(t_group *group);
 
 /*
 ** ft_solve.c
@@ -206,28 +205,19 @@ int					ft_rooms(t_lemin *lemin);
 */
 void				ft_optimize(t_lemin *lemin);
 
-/*
-* ft_count.c
-*/
-void				count_links(t_lemin *lemin);
 
 /*
 ** ft_room_union.c
 */
-int					is_in_union(t_lemin *lemin, t_room *room,
-					t_room *check_room);
-int					add_union(t_lemin *lemin, char *room1_name,
-					char *room2_name);
-int					add_union_by_rooms(t_lemin *lemin, t_room *room1,
-					t_room *room2);
+int					is_in_union(t_room *room, t_room *check_room);
+int					add_union(t_room *room1, t_room *room2);
 
 /*
 ** ft_room.c
 */
 t_room				*new_room(char *name, int x, int y);
-void				push_back_room(t_room **head, t_room *room);
-void				free_rooms(t_room **rooms);
 void				free_list(t_list **list);
+void				ft_free_room(t_room *room);
 
 /*
 ** ft_room_funcs.c
@@ -250,20 +240,11 @@ int					ft_min(int a, int b);
 */
 t_lemin				*init_lemin(void);
 
-/*
-** ft_link.c
-*/
-t_link				*ft_create_link(t_room *room1, t_room *room2);
-void				ft_pb_link(t_link **links, t_link *link);
-void				free_links(t_link **links);
-t_room				*get_room_link_from(t_link *links, t_room *from);
-void				print_links(t_link *links);
 
 /*
 ** ft_solve.c
 */
 int					ft_solve(t_lemin *lemin);
-int					ft_markup_bfs(t_lemin *lemin);
 void				ft_bonus(int argc, char **argv, t_lemin *lemin);
 int					check_usage(int argc, char **argv);
 

@@ -23,7 +23,6 @@ int		main(int argc, char **argv)
 	ft_bonus(argc, argv, lemin);
 	if (!ft_parse(lemin))
 		return (ft_free_error(lemin));
-	count_links(lemin);
 	ft_optimize(lemin);
 	if (!ft_solve(lemin))
 		return (ft_free_error(lemin));

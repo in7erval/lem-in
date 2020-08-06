@@ -48,8 +48,6 @@ void	ft_free_lemin(t_lemin *lemin)
 			free_list(&(lemin->rooms));
 		//if (lemin->pathes)
 		//	free_pathes(&(lemin->pathes));
-		if (lemin->links)
-			free_links(&(lemin->links));
 		free(lemin);
 	}
 }

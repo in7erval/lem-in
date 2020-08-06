@@ -3,15 +3,15 @@
 static int paths_count(t_lemin *lemin)
 {
 	int 	count;
-	t_link	*cur;
+	t_list	*cur;
 
 	count = 0;
-	cur = lemin->links;
+	cur = lemin->start->links;
 	while (cur)
 	{
-		if (cur->from == lemin->start)
-			if (cur->to->next || cur->to->status == END)
-				count++;
+		if (((t_room *)cur->content)->next
+			|| ((t_room *)cur->content)->status == END)
+			count++;
 		cur = cur->next;
 	}
 	return (count);
@@ -19,21 +19,20 @@ static int paths_count(t_lemin *lemin)
 
 static void	create_paths(t_lemin *lemin, t_group *group)
 {
-	t_link	*cur;
+	t_list	*cur;
 	t_path	*path;
 	int 	i;
 
 	i = 0;
-	cur = lemin->links;
+	cur = lemin->start->links;
 	while (cur)
 	{
-		if (cur->from == lemin->start)
-			if (cur->to->next || cur->to->status == END)
-			{
-				path = ft_build_path(lemin->start, cur->to);
-				group->paths[i] = path;
-				i++;
-			}
+		if (((t_room *)cur->content)->next || ((t_room *)cur->content)->status == END)
+		{
+			path = ft_build_path(lemin->start, ((t_room *)cur->content));
+			group->paths[i] = path;
+			i++;
+		}
 		cur = cur->next;
 	}
 }
@@ -62,21 +61,6 @@ static int group_rounds(t_group *group)
 		i++;
 	}
 	return (ret);
-}
-
-void	check_and_rev(t_group *group)
-{
-	int		i;
-	t_path	*path;
-
-	i = 0;
-	while (i < group->path_count)
-	{
-		path = group->paths[i];
-		if (((t_room *)(path->rooms->content))->status == END)
-			ft_lstrev(&(path->rooms));
-		i++;
-	}
 }
 
 t_group	*group_build(t_lemin *lemin)

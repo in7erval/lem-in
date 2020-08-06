@@ -30,9 +30,9 @@ static int	ft_links_extension(t_lemin *lemin, char *buffer)
 		room2 = find_room_by_name(lemin->rooms, second_part);
 		free(first_part);
 		free(second_part);
-		if (room1 && room2 && !is_in_union(lemin, room1, room2))
+		if (room1 && room2 && !is_in_union(room1, room2))
 		{
-			add_union_by_rooms(lemin, room1, room2);
+			add_union(room1, room2);
 			free(buffer);
 			return (0);
 		}
