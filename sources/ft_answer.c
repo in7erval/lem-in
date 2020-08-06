@@ -29,7 +29,6 @@ void			ft_answer_add_move(t_answer *answer, t_room *to)
 	t_move	*move;
 
 	move = ft_memalloc(sizeof(t_move));
-	move->path_number = answer->path;
 	move->ant_number = to->ant_number;
 	move->dest = to;
 	new = ft_lstnew(move, sizeof(t_move));

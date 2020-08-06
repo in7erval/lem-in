@@ -65,7 +65,6 @@ typedef	struct		s_group
 
 typedef	struct		s_move
 {
-	int 			path_number;
 	int 			ant_number;
 	t_room			*dest;
 }					t_move;
