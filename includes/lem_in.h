@@ -16,6 +16,13 @@
 # include "libft.h"
 # include "ft_printf.h"
 
+typedef struct		s_options
+{
+	int				c_bonus;
+	int				p_bonus;
+	int 			r_bonus;
+}					t_options;
+
 typedef struct		s_map
 {
 	char			*str;
@@ -89,9 +96,8 @@ typedef struct		s_lemin
 	size_t			num_ants;
 	t_map			*map;
 	int				bfs_level;
-	int				c_bonus;
-	int				p_bonus;
 	int 			max_paths;
+	t_options		options;
 	t_group			*group;
 	t_answer		*answer;
 }					t_lemin;
@@ -225,14 +231,13 @@ t_room				*find_room_by_coordinates(t_list *rooms, int x, int y);
 /*
 ** ft_init.c
 */
-t_lemin				*init_lemin(void);
+t_lemin				*init_lemin(t_options options);
 
 
 /*
 ** ft_usage.c
 */
-void				ft_bonus(int argc, char **argv, t_lemin *lemin);
-int					check_usage(int argc, char **argv);
+int					check_usage(int argc, char **argv, t_options *options);
 
 /*
 ** ft_tree.c

@@ -1,32 +1,52 @@
 #include "lem_in.h"
 
-void	ft_bonus(int argc, char **argv, t_lemin *lemin)
+static int 	parse_arg(char *str, t_options *options)
 {
-	if (argc == 2 && !ft_strcmp(argv[1], "-c"))
-		lemin->c_bonus = 1;
-	else if (argc == 2 && !ft_strcmp(argv[1], "-p"))
-		lemin->p_bonus = 1;
-	else if ((argc == 2 && (!ft_strcmp(argv[1], "-cp") ||
-	!ft_strcmp(argv[1], "-pc"))) || (argc == 3 &&
-	((!ft_strcmp(argv[1], "-c") && !ft_strcmp(argv[2], "-p")) ||
-	(!ft_strcmp(argv[1], "-p") && !ft_strcmp(argv[2], "-c")))))
+	int i;
+
+	if (str[0] != '-')
+		return (0);
+	i = 1;
+	while (str[i])
 	{
-		lemin->c_bonus = 1;
-		lemin->p_bonus = 1;
+		if (str[i] == 'c')
+			options->c_bonus = 1;
+		else if (str[i] == 'p')
+			options->p_bonus = 1;
+		else if (str[i] == 'r')
+			options->r_bonus = 1;
+		else
+			return (0);
+		i++;
 	}
+	return (1);
+
 }
 
-int		check_usage(int argc, char **argv)
+static int 	check_correct_params(int argc, char **argv, t_options *options)
 {
-	if (argc > 3 || (argc == 2 && (ft_strcmp(argv[1], "-c") &&
-		ft_strcmp(argv[1], "-p") && ft_strcmp(argv[1], "-pc") &&
-		ft_strcmp(argv[1], "-cp"))) || (argc == 3 &&
-		!((!ft_strcmp(argv[1], "-c") || !ft_strcmp(argv[2], "-p"))
-		|| (!ft_strcmp(argv[1], "-p") && !ft_strcmp(argv[2], "-c")))))
+	int 	i;
+
+	i = 1;
+	while (argv[i] && i < argc)
 	{
-		ft_printf("{white}{bold}Usage:{eoc} ./lemin [-{red}c{eoc}{yellow}"
-				  "p{eoc}] < file_with_map\n{white}{bold}Options:{eoc}\n\t{red}-c\t"
-				  "Print cleaned map{eoc}\n\t{yellow}-p\tPrint paths{eoc}\n");
+		if (!parse_arg(argv[i], options))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
+int		check_usage(int argc, char **argv, t_options *options)
+{
+	if (!check_correct_params(argc, argv, options))
+	{
+		ft_printf("{white}{bold}Usage:{eoc} ./lemin [-{red}c{yellow}"
+					"p{cyan}r{eoc}] < file_with_map\n{white}{bold}Options:"
+					"{eoc}\n\t{red}-c\tPrint cleaned map{eoc}"
+					"\n\t{yellow}-p\tPrint paths{eoc}"
+					"\n\t{cyan}-r\tPrint rooms{eoc}\n");
 		return (1);
 	}
 	return (0);

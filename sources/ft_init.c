@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-t_lemin		*init_lemin(void)
+t_lemin		*init_lemin(t_options options)
 {
 	t_lemin *lemin;
 
@@ -23,9 +23,8 @@ t_lemin		*init_lemin(void)
 	lemin->end = NULL;
 	lemin->num_ants = 0;
 	lemin->map = NULL;
-	lemin->c_bonus = 0;
-	lemin->p_bonus = 0;
 	lemin->max_paths = 0;
 	lemin->group = NULL;
+	lemin->options = options;
 	return (lemin);
 }

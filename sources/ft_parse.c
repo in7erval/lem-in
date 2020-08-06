@@ -57,7 +57,7 @@ static int	ft_ants(t_map **map, int bonus)
 
 int			ft_parse(t_lemin *lemin)
 {
-	lemin->num_ants = ft_ants(&(lemin->map), lemin->c_bonus);
+	lemin->num_ants = ft_ants(&(lemin->map), lemin->options.c_bonus);
 	if (lemin->num_ants != 0 && ft_rooms(lemin) && lemin->end && lemin->start)
 		return (1);
 	return (0);

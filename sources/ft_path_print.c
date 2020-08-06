@@ -27,11 +27,11 @@ void	print_path(t_path *path)
 	while (rooms->next)
 	{
 		buf = (t_room *)(rooms->content);
-		ft_printf("{yellow}%s->", buf->name);
+		ft_printf("{yellow}%s{magenta}->{eoc}", buf->name);
 		rooms = rooms->next;
 	}
 	buf = (t_room *)(rooms->content);
-	ft_printf("%s{eoc}", buf->name);
+	ft_printf("{yellow}%s{eoc}", buf->name);
 	ft_printf("\n");
 	if (flag)
 		ft_lstrev(&(path->rooms));

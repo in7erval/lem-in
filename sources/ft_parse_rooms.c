@@ -33,7 +33,7 @@ static int	ft_rooms_extension(t_lemin *lemin, char *buffer,
 	char	**parts;
 	t_room	*room;
 
-	if (lemin->c_bonus == 1)
+	if (lemin->options.c_bonus == 1)
 		ft_clean_rooms(&buffer);
 	ft_map_add(&(lemin->map), ft_strdup(buffer));
 	parts = ft_strsplit(buffer, ' ');

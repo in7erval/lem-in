@@ -83,14 +83,15 @@ void	print_group(t_group *group)
 	int	i;
 
 	i = 0;
-	ft_printf("\tGroup\n");
-	ft_printf("Path_count: %d\tTotal_rounds: %d\n", group->path_count, group->total_rounds);
+	ft_printf("\n------------{underline}PATHES{eoc}------------\n");
+	ft_printf("{green}Path_count: {bold}%d\t{eoc}{green}Total_rounds: {bold}%d{eoc}\n", group->path_count, group->total_rounds);
 	while (i < group->path_count)
 	{
+		ft_printf("{white}{bold}Path{red}{bold}#%d{eoc}({cyan}{bold}len=%d{eoc}): ", (i + 1), group->paths[i]->len);
 		print_path(group->paths[i]);
 		i++;
 	}
-	ft_printf("\n");
+	ft_printf("---------------------------------\n");
 }
 
 void	free_group(t_group *group)
