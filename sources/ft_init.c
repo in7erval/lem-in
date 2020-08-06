@@ -23,7 +23,6 @@ t_lemin		*init_lemin(void)
 	lemin->end = NULL;
 	lemin->num_ants = 0;
 	lemin->map = NULL;
-	lemin->pathes = NULL;
 	lemin->c_bonus = 0;
 	lemin->p_bonus = 0;
 	lemin->max_paths = 0;

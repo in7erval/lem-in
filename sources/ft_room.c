@@ -48,10 +48,19 @@ void	push_back_room(t_room **head, t_room *room)
 	room->prev = buf;
 }
 
-void	free_rooms(t_room **rooms)
+
+
+void	ft_free_room(t_room *room)
 {
-	t_room *kill;
-	t_room *buf;
+	free(room->name);
+	free_list(&room->links);
+	free(room);
+}
+
+void	free_rooms(t_list **rooms)
+{
+	t_list *kill;
+	t_list *buf;
 
 	if (rooms && *rooms)
 	{
@@ -59,7 +68,7 @@ void	free_rooms(t_room **rooms)
 		while (buf)
 		{
 			kill = buf;
-			free(kill->name);
+			ft_free_room((t_room *)kill->content);
 			buf = buf->next;
 			free(kill);
 		}
@@ -83,11 +92,4 @@ void	free_list(t_list **list)
 		}
 		*list = NULL;
 	}
-}
-
-void	ft_free_room(t_room *room)
-{
-	free(room->name);
-	free_list(&room->links);
-	free(room);
 }

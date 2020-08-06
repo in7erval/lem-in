@@ -57,3 +57,12 @@ void	tree_del(t_tree *tree)
 		free(del);
 	}
 }
+
+void	tree_del_list(t_list **tree)
+{
+	while ((*tree))
+	{
+		tree_del((t_tree *)((*tree)->content));
+		ft_lstdelone(tree, NULL);
+	}
+}

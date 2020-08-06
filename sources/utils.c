@@ -45,9 +45,11 @@ void	ft_free_lemin(t_lemin *lemin)
 		if (lemin->map)
 			ft_map_clean(&(lemin->map));
 		if (lemin->rooms)
-			free_list(&(lemin->rooms));
-		//if (lemin->pathes)
-		//	free_pathes(&(lemin->pathes));
+			free_rooms(&(lemin->rooms));
+		if (lemin->group)
+			free_group(lemin->group);
+		if (lemin->answer)
+			free_answer(&(lemin->answer));
 		free(lemin);
 	}
 }

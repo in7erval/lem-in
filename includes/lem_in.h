@@ -47,14 +47,7 @@ typedef struct		s_tree
 	int 			length;
 	t_room			*intersect;
 }					t_tree;
-/*
-typedef struct		s_link
-{
-	t_room			*from;
-	t_room			*to;
-	struct s_link	*next;
-}					t_link;
-*/
+
 typedef struct		s_path
 {
 	t_list			*rooms;
@@ -93,7 +86,6 @@ typedef struct		s_lemin
 {
 	t_list			*rooms;
 	t_room			*start;
-	t_list			*pathes;
 	t_room			*end;
 	size_t			num_ants;
 	t_map			*map;
@@ -112,38 +104,37 @@ typedef struct		s_lemin
 # define MALLOC_ERROR "MALLOC_ERROR"
 
 /*
-** ft_answer.c
-*/
-t_answer	*ft_init_answer(void);
-void		ft_answer_add_round(t_answer *answer);
-void		ft_answer_add_move(t_answer *answer, t_room *to);
-
-/*
-** ft_cleaner.c
-*/
-void				ft_clean_ants(char **str);
-void				ft_clean_rooms(char **str);
-
-/*
-* ft_array.c
-*/
-void	sort_array(void **array, size_t size, int (*cmp)(void *, void *));
-
-/*
 ** ft_group.c
 */
-t_group	*group_build(t_lemin *lemin);
-void	print_group(t_group *group);
-void	free_group(t_group *group);
+t_group				*group_build(t_lemin *lemin);
+void				print_group(t_group *group);
+void				free_group(t_group *group);
+
+/*
+** ft_extend_nodes.c
+*/
+t_path 				*extend_nodes_list(t_lemin *lemin, t_list *nodes, t_list **next_nodes);
+
+/*
+** ft_bft.c
+*/
+t_path				*run_bft(t_lemin *lemin);
+t_tree				*go_to_start(t_lemin *lemin, t_tree *tree);
 
 /*
 ** ft_solve.c
 */
-void	reset_visit(t_lemin *lemin);
-int 	can_traverse(t_tree *node, t_room *to);
-int 	in_intersect(t_room *room1, t_room *room2);
-int 	out_intersect(t_room *room1, t_room *room2);
-void	visit(t_tree *tree);
+int					ft_solve(t_lemin *lemin);
+
+/*
+** ft_solve_utils.c
+*/
+void				reset_visit(t_lemin *lemin);
+int 				can_traverse(t_tree *node, t_room *to);
+int 				in_intersect(t_room *room1, t_room *room2);
+int 				out_intersect(t_room *room1, t_room *room2);
+void				visit(t_tree *tree);
+
 /*
 ** ft_path.c
 */
@@ -151,6 +142,11 @@ t_path				*ft_path_new(void);
 t_path				*ft_build_path(t_room *from, t_room *to);
 void				add_elem_path(t_path *path, t_room *room);
 void				free_path(t_path *path);
+
+/*
+** ft_path_funcs.c
+*/
+void				rebuild_paths(t_path *path);
 
 /*
 ** ft_path_print.c
@@ -161,7 +157,7 @@ void				print_pathes(t_list *pathes);
 /*
 ** ft_perform_paths.c
 */
-void	perform_paths(t_lemin *lemin);
+void				perform_paths(t_lemin *lemin);
 
 
 /*
@@ -218,6 +214,7 @@ int					add_union(t_room *room1, t_room *room2);
 t_room				*new_room(char *name, int x, int y);
 void				free_list(t_list **list);
 void				ft_free_room(t_room *room);
+void				free_rooms(t_list **rooms);
 
 /*
 ** ft_room_funcs.c
@@ -225,6 +222,46 @@ void				ft_free_room(t_room *room);
 t_room				*find_room_by_name(t_list *rooms, char *name);
 t_room				*find_room_by_signal(t_list *rooms, int signal);
 t_room				*find_room_by_coordinates(t_list *rooms, int x, int y);
+
+/*
+** ft_init.c
+*/
+t_lemin				*init_lemin(void);
+
+
+/*
+** ft_usage.c
+*/
+void				ft_bonus(int argc, char **argv, t_lemin *lemin);
+int					check_usage(int argc, char **argv);
+
+/*
+** ft_tree.c
+*/
+t_tree				*ft_new_tree(void);
+t_path				*ft_tree_to_path(t_tree *tree);
+t_tree				*tree_create_child(t_tree *tree, t_room *room);
+void				tree_del(t_tree *tree);
+void				tree_del_list(t_list **tree);
+
+/*
+* ft_array.c
+*/
+void				sort_array(void **array, size_t size, int (*cmp)(void *, void *));
+
+/*
+** ft_answer.c
+*/
+t_answer			*ft_init_answer(void);
+void				ft_answer_add_round(t_answer *answer);
+void				ft_answer_add_move(t_answer *answer, t_room *to);
+void				free_answer(t_answer **answer);
+
+/*
+** ft_cleaner.c
+*/
+void				ft_clean_ants(char **str);
+void				ft_clean_rooms(char **str);
 
 /*
 ** utils.c
@@ -235,28 +272,7 @@ int					ft_free_error(t_lemin *lemin);
 void				ft_free_lemin(t_lemin *lemin);
 int					ft_min(int a, int b);
 
-/*
-** ft_init.c
-*/
-t_lemin				*init_lemin(void);
-
-
-/*
-** ft_solve.c
-*/
-int					ft_solve(t_lemin *lemin);
-void				ft_bonus(int argc, char **argv, t_lemin *lemin);
-int					check_usage(int argc, char **argv);
-
-/*
-** ft_tree.c
-*/
-t_tree	*ft_new_tree(void);
-t_path	*ft_tree_to_path(t_tree *tree);
-t_tree	*tree_create_child(t_tree *tree, t_room *room);
-void	tree_del(t_tree *tree);
-
-void	print_lemin(t_lemin *lemin, char *str);
-void	print_room(t_lemin *lemin, t_room *room);
+void				print_lemin(t_lemin *lemin, char *str);
+void				print_room(t_lemin *lemin, t_room *room);
 
 #endif
