@@ -33,10 +33,12 @@ void			ft_map_show(t_map *head)
 	t_map	*current;
 
 	current = head;
+	while (current->next)
+		current = current->next;
 	while (current)
 	{
 		ft_printf("%s\n", current->str);
-		current = current->next;
+		current = current->prev;
 	}
 }
 
@@ -49,21 +51,22 @@ static t_map	*ft_map_create(char *str)
 	{
 		current->str = str;
 		current->next = NULL;
+		current->prev = NULL;
 	}
 	return (current);
 }
 
-void			ft_map_add(t_map **head, char *str)
+void 			ft_map_add(t_map **head, char *str)
 {
-	t_map	*current;
+	t_map	*new;
 
+	new = ft_map_create(str);
 	if (!(*head))
-		*head = ft_map_create(str);
+		*head = new;
 	else
 	{
-		current = *head;
-		while (current->next)
-			current = current->next;
-		current->next = ft_map_create(str);
+		new->next = (*head);
+		(*head)->prev = new;
+		*head = new;
 	}
 }

@@ -24,7 +24,7 @@ int		main(int argc, char **argv)
 	if (!ft_parse(lemin))
 		return (ft_free_error(lemin));
 	count_links(lemin);
-	ft_optimize(lemin);;
+	ft_optimize(lemin);
 	if (!ft_solve(lemin))
 		return (ft_free_error(lemin));
 	ft_map_show(lemin->map);

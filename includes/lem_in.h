@@ -20,6 +20,7 @@ typedef struct		s_map
 {
 	char			*str;
 	struct s_map	*next;
+	struct s_map	*prev;
 }					t_map;
 
 typedef	struct		s_room
