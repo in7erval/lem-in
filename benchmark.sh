@@ -30,6 +30,7 @@ if [ $# -eq 1 ]
     REPEATS="$2"
 fi
 
+TIMEFORMAT='%3R'
 
 for (( i=1; i <= $REPEATS; i++ ))
 do
@@ -37,10 +38,13 @@ do
         NUMBER_LEMIN="$(./lem-in < bench.map | grep -c '^L')"
 		if [ "$NUMBER_MAP" -lt "$NUMBER_LEMIN" ]
 			then
-            echo "$i KO: $(($NUMBER_LEMIN - NUMBER_MAP))"
-			cat test.map >> problems
+            echo -e "$i\tKO: $(($NUMBER_LEMIN - $NUMBER_MAP))\t"
+			#cat bench.map >> problems
+            echo -n "$(time ./lem-in < bench.map | tail -0)"
+            exit 1
 		    else
-            echo "$i OK"
+            echo -e "$i\tOK\t"
+            echo -n "$(time ./lem-in < bench.map | tail -0)"
 		fi
 done
 
