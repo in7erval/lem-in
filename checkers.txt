@@ -1,0 +1,5 @@
+https://github.com/apft/42_lem-in_tools
+https://github.com/TBouder/lem-in_test
+https://github.com/juliencsharp/42-lemin в oromis-corrector
+
+https://github.com/maxencejded/lem-in/blob/master/correction/correction.md актуальный чеклист
