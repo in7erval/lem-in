@@ -37,6 +37,7 @@ t_group	*create_group(t_lemin *lemin)
 	{
 		rebuild_paths(traverse);
 		cur = group_build(lemin);
+		print_group(cur, lemin->options.p_bonus);
 		free_path(traverse);
 		if (!best)
 			best = cur;

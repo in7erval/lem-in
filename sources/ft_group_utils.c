@@ -1,9 +1,11 @@
 #include "lem_in.h"
 
-void	print_group(t_group *group)
+void	print_group(t_group *group, int flag)
 {
 	int	i;
 
+	if (!flag)
+		return ;
 	i = 0;
 	ft_printf("\n------------{underline}PATHES{eoc}------------\n");
 	ft_printf("{green}Path_count: {bold}%d\t{eoc}{green}Total_rounds:"

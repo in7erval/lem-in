@@ -111,7 +111,7 @@ typedef struct		s_lemin
 ** ft_group.c
 */
 t_group				*group_build(t_lemin *lemin);
-void				print_group(t_group *group);
+void				print_group(t_group *group, int flag);
 void				free_group(t_group *group);
 
 /*
@@ -157,7 +157,6 @@ void				rebuild_paths(t_path *path);
 ** ft_path_print.c
 */
 void				print_path(t_path *path);
-void				print_pathes(t_list *pathes);
 
 /*
 ** ft_perform_paths.c

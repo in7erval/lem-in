@@ -30,8 +30,7 @@ int		main(int argc, char **argv)
 	perform_paths(lemin);
 	if (lemin->options.r_bonus)
 		print_lemin(lemin, "(After deleting dead ends)");
-	if (lemin->options.p_bonus)
-		print_group(lemin->group);
+	print_group(lemin->group, lemin->options.p_bonus);
 	ft_free_lemin(lemin);
 	return (0);
 }
