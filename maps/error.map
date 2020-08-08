@@ -1,9 +1,9 @@
 20
 ##start
-start
+start 1 1
 ##end
 end 0 0
-1 1 1
+1 1 0
 start-1
 1-end
 start-end

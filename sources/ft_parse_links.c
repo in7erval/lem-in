@@ -38,7 +38,7 @@ static int	ft_links_extension(t_lemin *lemin, char *buffer)
 		}
 	}
 	free(buffer);
-	return (0);
+	return (1);
 }
 
 int			ft_links(t_lemin *lemin, char *buffer, int *has_links)
