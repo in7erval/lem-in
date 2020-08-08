@@ -43,7 +43,7 @@ static int	ft_rooms_extension(t_lemin *lemin, char *buffer,
 	ft_atoi(parts[2])))
 	{
 		ft_freesplit(parts);
-		return (1);
+		return (!lemin->options.n_bonus);
 	}
 	room = new_room(ft_strdup(parts[0]),
 					ft_atoi(parts[1]), ft_atoi(parts[2]));

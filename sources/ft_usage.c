@@ -1,5 +1,13 @@
 #include "lem_in.h"
 
+static void	all_options(t_options *options)
+{
+	options->c_bonus = 1;
+	options->p_bonus = 1;
+	options->r_bonus = 1;
+	options->n_bonus = 1;
+}
+
 static int	parse_arg(char *str, t_options *options)
 {
 	int i;
@@ -15,12 +23,10 @@ static int	parse_arg(char *str, t_options *options)
 			options->p_bonus = 1;
 		else if (str[i] == 'r')
 			options->r_bonus = 1;
+		else if (str[i] == 'n')
+			options->n_bonus = 1;
 		else if (str[i] == 'd')
-		{
-			options->c_bonus = 1;
-			options->p_bonus = 1;
-			options->r_bonus = 1;
-		}
+			all_options(options);
 		else
 			return (0);
 		i++;
@@ -47,6 +53,7 @@ static void	init_options(t_options *options)
 	options->r_bonus = 0;
 	options->p_bonus = 0;
 	options->c_bonus = 0;
+	options->n_bonus = 0;
 }
 
 int			check_usage(int argc, char **argv, t_options *options)
@@ -55,11 +62,12 @@ int			check_usage(int argc, char **argv, t_options *options)
 	if (!check_correct_params(argc, argv, options))
 	{
 		ft_printf("\n{white}{bold}Usage:{eoc} ./lemin [-{red}c{yellow}"
-					"p{cyan}r{magenta}d{eoc}] < file_with_map\n"
+					"p{cyan}r{magenta}d{green}n{eoc}] < file_with_map\n"
 					"{white}{bold}Options:"
 					"{eoc}\n\t{red}-c\tPrint cleaned map{eoc}"
 					"\n\t{yellow}-p\tPrint paths{eoc}"
 					"\n\t{cyan}-r\tPrint rooms{eoc}"
+					"\n\t{green}-n\tNot strict parsing{eoc}"
 					"\n\t{magenta}-d\tDebug mode{eoc}\n\n");
 		return (1);
 	}

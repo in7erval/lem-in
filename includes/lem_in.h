@@ -21,6 +21,7 @@ typedef struct		s_options
 	int				c_bonus;
 	int				p_bonus;
 	int				r_bonus;
+	int 			n_bonus;
 }					t_options;
 
 typedef struct		s_map
