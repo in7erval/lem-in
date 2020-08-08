@@ -2,9 +2,9 @@
 
 t_answer		*ft_init_answer(void)
 {
-	t_answer *answer;
+	t_answer	*answer;
 
-	answer = (t_answer *) malloc(sizeof(t_answer));
+	answer = (t_answer *)malloc(sizeof(t_answer));
 	answer->round = 0;
 	answer->path = 0;
 	answer->rounds = NULL;

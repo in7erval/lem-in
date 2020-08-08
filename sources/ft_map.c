@@ -56,7 +56,7 @@ static t_map	*ft_map_create(char *str)
 	return (current);
 }
 
-void 			ft_map_add(t_map **head, char *str)
+void			ft_map_add(t_map **head, char *str)
 {
 	t_map	*new;
 

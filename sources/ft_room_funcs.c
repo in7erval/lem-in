@@ -47,7 +47,8 @@ t_room	*find_room_by_coordinates(t_list *rooms, int x, int y)
 	buf = rooms;
 	while (buf)
 	{
-		if (((t_room *)(buf->content))->x == x && ((t_room *)(buf->content))->y == y)
+		if (((t_room *)(buf->content))->x == x &&
+			((t_room *)(buf->content))->y == y)
 			return ((t_room *)(buf->content));
 		buf = buf->next;
 	}

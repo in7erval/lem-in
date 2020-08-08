@@ -20,7 +20,7 @@ typedef struct		s_options
 {
 	int				c_bonus;
 	int				p_bonus;
-	int 			r_bonus;
+	int				r_bonus;
 }					t_options;
 
 typedef struct		s_map
@@ -38,41 +38,41 @@ typedef	struct		s_room
 	struct s_room	*next;
 	struct s_room	*prev;
 	int				status;
-	int 			visited;
-	int 			visited2;
-	int 			count_links;
-	size_t 			ants;
-	int 			ant_number;
-	t_list 			*links;
+	int				visited;
+	int				visited2;
+	int				count_links;
+	size_t			ants;
+	int				ant_number;
+	t_list			*links;
 }					t_room;
 
 typedef struct		s_tree
 {
 	t_room			*room;
 	struct s_tree	*parent;
-	int 			child_count;
-	int 			length;
+	int				child_count;
+	int				length;
 	t_room			*intersect;
 }					t_tree;
 
 typedef struct		s_path
 {
 	t_list			*rooms;
-	int 			id;
-	int 			len;
+	int				id;
+	int				len;
 }					t_path;
 
 typedef	struct		s_group
 {
-	int 			path_count;
-	int 			total_rounds;
-	int 			*ants;
+	int				path_count;
+	int				total_rounds;
+	int				*ants;
 	t_path			**paths;
 }					t_group;
 
 typedef	struct		s_move
 {
-	int 			ant_number;
+	int				ant_number;
 	t_room			*dest;
 }					t_move;
 
@@ -83,8 +83,8 @@ typedef	struct		s_round
 
 typedef	struct		s_answer
 {
-	int 			round;
-	int 			path;
+	int				round;
+	int				path;
 	t_list			*rounds;
 }					t_answer;
 
@@ -95,8 +95,7 @@ typedef struct		s_lemin
 	t_room			*end;
 	size_t			num_ants;
 	t_map			*map;
-	int				bfs_level;
-	int 			max_paths;
+	int				max_paths;
 	t_options		options;
 	t_group			*group;
 	t_answer		*answer;
@@ -118,7 +117,8 @@ void				free_group(t_group *group);
 /*
 ** ft_extend_nodes.c
 */
-t_path 				*extend_nodes_list(t_lemin *lemin, t_list *nodes, t_list **next_nodes);
+t_path				*extend_nodes_list(t_lemin *lemin, t_list *nodes,
+										t_list **next_nodes);
 
 /*
 ** ft_bft.c
@@ -135,9 +135,9 @@ int					ft_solve(t_lemin *lemin);
 ** ft_solve_utils.c
 */
 void				reset_visit(t_lemin *lemin);
-int 				can_traverse(t_tree *node, t_room *to);
-int 				in_intersect(t_room *room1, t_room *room2);
-int 				out_intersect(t_room *room1, t_room *room2);
+int					can_traverse(t_tree *node, t_room *to);
+int					in_intersect(t_room *room1, t_room *room2);
+int					out_intersect(t_room *room1, t_room *room2);
 void				visit(t_tree *tree);
 
 /*
@@ -163,7 +163,6 @@ void				print_pathes(t_list *pathes);
 ** ft_perform_paths.c
 */
 void				perform_paths(t_lemin *lemin);
-
 
 /*
 ** ft_perform_ants.c
@@ -202,10 +201,9 @@ int					ft_links(t_lemin *lemin, char *buffer, int *has_links);
 int					ft_rooms(t_lemin *lemin);
 
 /*
-* ft_optimize.c
+** ft_optimize.c
 */
 void				ft_optimize(t_lemin *lemin);
-
 
 /*
 ** ft_room_union.c
@@ -233,7 +231,6 @@ t_room				*find_room_by_coordinates(t_list *rooms, int x, int y);
 */
 t_lemin				*init_lemin(t_options options);
 
-
 /*
 ** ft_usage.c
 */
@@ -249,9 +246,15 @@ void				tree_del(t_tree *tree);
 void				tree_del_list(t_list **tree);
 
 /*
-* ft_array.c
+** ft_array.c
 */
-void				sort_array(void **array, size_t size, int (*cmp)(void *, void *));
+void				sort_array(void **array, size_t size,
+					int (*cmp)(void *, void *));
+
+/*
+** ft_print.c
+*/
+void				print_answer(t_lemin *lemin);
 
 /*
 ** ft_answer.c

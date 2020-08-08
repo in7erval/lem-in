@@ -11,7 +11,7 @@ static void	swap(void **a, void **b)
 
 static int	sort(void **array, size_t size, int (*cmp)(void *, void *))
 {
-	int 	is_swap;
+	int		is_swap;
 	size_t	i;
 
 	is_swap = 1;
@@ -28,7 +28,7 @@ static int	sort(void **array, size_t size, int (*cmp)(void *, void *))
 	return (is_swap);
 }
 
-void	sort_array(void **array, size_t size, int (*cmp)(void *, void *))
+void		sort_array(void **array, size_t size, int (*cmp)(void *, void *))
 {
 	size_t	i;
 
@@ -40,4 +40,3 @@ void	sort_array(void **array, size_t size, int (*cmp)(void *, void *))
 		i++;
 	}
 }
-

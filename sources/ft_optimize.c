@@ -50,7 +50,7 @@ static void		ft_delete_room(t_lemin *lemin, t_room *room)
 	}
 }
 
-void		delete_dead_ends(t_lemin *lemin, t_room *dead_end)
+void			delete_dead_ends(t_lemin *lemin, t_room *dead_end)
 {
 	t_room	*next;
 	t_room	*cur;
@@ -69,7 +69,7 @@ void		delete_dead_ends(t_lemin *lemin, t_room *dead_end)
 	}
 }
 
-void		ft_optimize(t_lemin *lemin)
+void			ft_optimize(t_lemin *lemin)
 {
 	t_list	*cur;
 	t_room	*room;

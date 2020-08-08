@@ -1,10 +1,9 @@
 #include "lem_in.h"
 
-
-static t_tree		*traverse(t_tree *node, t_room *to)
+static t_tree	*traverse(t_tree *node, t_room *to)
 {
 	t_tree	*res;
-	int 	len;
+	int		len;
 	t_room	*intersect;
 
 	if (!can_traverse(node, to))
@@ -25,7 +24,6 @@ static t_tree		*traverse(t_tree *node, t_room *to)
 	res->length = len;
 	res->intersect = intersect;
 	return (res);
-
 }
 
 static t_path	*try_finalize_traverse(t_tree *tree)
@@ -71,7 +69,8 @@ static t_path	*extend_node(t_lemin *lemin, t_tree *node, t_list **next_nodes)
 	return (NULL);
 }
 
-t_path 		*extend_nodes_list(t_lemin *lemin, t_list *nodes, t_list **next_nodes)
+t_path			*extend_nodes_list(t_lemin *lemin, t_list *nodes,
+							t_list **next_nodes)
 {
 	t_list	*cur;
 	t_path	*path;
@@ -86,4 +85,3 @@ t_path 		*extend_nodes_list(t_lemin *lemin, t_list *nodes, t_list **next_nodes)
 	}
 	return (NULL);
 }
-

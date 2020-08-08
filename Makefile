@@ -23,12 +23,13 @@ SOURCES_LEMIN_LIST = main.c  ft_path.c ft_path_funcs.c \
 					ft_is.c ft_parse.c ft_parse_links.c \
 					ft_map.c ft_usage.c ft_bft.c \
 					ft_room.c ft_room_funcs.c ft_extend_nodes.c \
-					ft_room_union.c ft_cleaner.c \
+					ft_room_union.c ft_cleaner.c ft_print.c \
 					utils.c ft_init.c ft_solve.c \
 					ft_sort_pathes.c ft_parse_rooms.c ft_path_print.c \
 					ft_print_lemin.c ft_tree.c ft_group.c \
 					ft_perform_ants.c ft_solve_utils.c ft_array.c \
 					ft_perform_paths.c ft_answer.c ft_optimize.c \
+					ft_group_utils.c
 
 
 SOURCES_LEMIN = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LEMIN_LIST))

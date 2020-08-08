@@ -1,8 +1,8 @@
 #include "lem_in.h"
 
-static int paths_count(t_lemin *lemin)
+static int	paths_count(t_lemin *lemin)
 {
-	int 	count;
+	int		count;
 	t_list	*cur;
 
 	count = 0;
@@ -21,13 +21,14 @@ static void	create_paths(t_lemin *lemin, t_group *group)
 {
 	t_list	*cur;
 	t_path	*path;
-	int 	i;
+	int		i;
 
 	i = 0;
 	cur = lemin->start->links;
 	while (cur)
 	{
-		if (((t_room *)cur->content)->next || ((t_room *)cur->content)->status == END)
+		if (((t_room *)cur->content)->next ||
+			((t_room *)cur->content)->status == END)
 		{
 			path = ft_build_path(lemin->start, ((t_room *)cur->content));
 			group->paths[i] = path;
@@ -37,12 +38,12 @@ static void	create_paths(t_lemin *lemin, t_group *group)
 	}
 }
 
-static int cmp_path_len(void *a, void *b)
+static int	cmp_path_len(void *a, void *b)
 {
 	return (((t_path *)a)->len - ((t_path *)b)->len);
 }
 
-static int group_rounds(t_group *group)
+static int	group_rounds(t_group *group)
 {
 	int ret;
 	int i;
@@ -63,7 +64,7 @@ static int group_rounds(t_group *group)
 	return (ret);
 }
 
-t_group	*group_build(t_lemin *lemin)
+t_group		*group_build(t_lemin *lemin)
 {
 	t_group *group;
 
@@ -76,32 +77,4 @@ t_group	*group_build(t_lemin *lemin)
 	perform_ants(group, lemin->num_ants);
 	group->total_rounds = group_rounds(group);
 	return (group);
-}
-
-void	print_group(t_group *group)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("\n------------{underline}PATHES{eoc}------------\n");
-	ft_printf("{green}Path_count: {bold}%d\t{eoc}{green}Total_rounds: {bold}%d{eoc}\n", group->path_count, group->total_rounds);
-	while (i < group->path_count)
-	{
-		ft_printf("{white}{bold}Path{red}{bold}#%d{eoc}({cyan}{bold}len=%d{eoc}): ", (i + 1), group->paths[i]->len);
-		print_path(group->paths[i]);
-		i++;
-	}
-	ft_printf("---------------------------------\n");
-}
-
-void	free_group(t_group *group)
-{
-	int i;
-
-	i = 0;
-	while (i < group->path_count)
-		free_path(group->paths[i++]);
-	free(group->paths);
-	free(group->ants);
-	free(group);
 }

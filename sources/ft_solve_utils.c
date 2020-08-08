@@ -15,7 +15,7 @@ void	reset_visit(t_lemin *lemin)
 	}
 }
 
-int 	can_traverse(t_tree *node, t_room *to)
+int		can_traverse(t_tree *node, t_room *to)
 {
 	if (node->length > 0 && to->visited)
 		return (0);
@@ -25,7 +25,8 @@ int 	can_traverse(t_tree *node, t_room *to)
 		return (0);
 	if (node->intersect == to)
 		return (0);
-	if (node->intersect != NULL && node->room == node->intersect && to != node->room->next)
+	if (node->intersect != NULL && node->room == node->intersect
+		&& to != node->room->next)
 		return (0);
 	if (node->room->status == START && to->prev == node->room)
 		return (0);
@@ -34,7 +35,7 @@ int 	can_traverse(t_tree *node, t_room *to)
 	return (1);
 }
 
-int 	in_intersect(t_room *room1, t_room *room2)
+int		in_intersect(t_room *room1, t_room *room2)
 {
 	if (room1->next && room1->next == room2)
 		return (0);
@@ -45,14 +46,14 @@ int 	in_intersect(t_room *room1, t_room *room2)
 	return (1);
 }
 
-int 	out_intersect(t_room *room1, t_room *room2)
+int		out_intersect(t_room *room1, t_room *room2)
 {
 	return (room1->next && room1->next != room2);
 }
 
 void	visit(t_tree *tree)
 {
-	if (tree->room->status == COMMON && tree->room->next == NULL) //todo: WHATISIT?
+	if (tree->room->status == COMMON && tree->room->next == NULL)
 	{
 		if (tree->length > 0)
 			tree->room->visited = 1;
@@ -60,4 +61,3 @@ void	visit(t_tree *tree)
 			tree->room->visited2 = 1;
 	}
 }
-

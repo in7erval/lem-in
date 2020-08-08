@@ -61,7 +61,7 @@ int		ft_free_error(t_lemin *lemin)
 	return (1);
 }
 
-int 	ft_min(int a, int b)
+int		ft_min(int a, int b)
 {
 	return ((a > b) ? b : a);
 }

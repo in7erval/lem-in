@@ -17,7 +17,7 @@ static t_room	*path_start(t_room *room)
 
 static void		break_path(t_room *room)
 {
-	t_room 	*cur;
+	t_room	*cur;
 	t_room	*next;
 
 	cur = path_start(room);
@@ -61,4 +61,3 @@ void			rebuild_paths(t_path *path)
 		cur = cur->next;
 	}
 }
-

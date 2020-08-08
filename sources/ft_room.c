@@ -32,24 +32,6 @@ t_room	*new_room(char *name, int x, int y)
 	return (room);
 }
 
-void	push_back_room(t_room **head, t_room *room)
-{
-	t_room *buf;
-
-	buf = *head;
-	if (*head == NULL)
-	{
-		*head = room;
-		return ;
-	}
-	while (buf->next)
-		buf = buf->next;
-	buf->next = room;
-	room->prev = buf;
-}
-
-
-
 void	ft_free_room(t_room *room)
 {
 	free(room->name);

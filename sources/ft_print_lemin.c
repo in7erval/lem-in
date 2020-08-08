@@ -2,8 +2,8 @@
 
 void	print_room(t_lemin *lemin, t_room *room)
 {
-	char *status;
-	t_list *link;
+	char	*status;
+	t_list	*link;
 
 	if (room == lemin->end)
 		status = "END";
@@ -11,8 +11,10 @@ void	print_room(t_lemin *lemin, t_room *room)
 		status = "START";
 	else
 		status = "COMMON";
-
-	ft_printf("{cyan}{bold}-------- name: {eoc}{green}{black_bg}{underline}{bold}%s{eoc}{cyan}{bold} --------{eoc}\nstatus: {blue}{bold}%s{eoc}\nx: %d y: %d count_links:%d\n", room->name, status, room->x, room->y, room->count_links);
+	ft_printf("{cyan}{bold}-------- name: {eoc}{green}{black_bg}{underline}"
+		"{bold}%s{eoc}{cyan}{bold} --------{eoc}\nstatus: {blue}{bold}%s{eoc}\n"
+		"x: %d y: %d count_links:%d\n", room->name, status, room->x, room->y,
+		room->count_links);
 	ft_printf("{red}{bold}  UNION{eoc} with: ");
 	link = room->links;
 	while (link)
@@ -28,7 +30,8 @@ void	print_lemin(t_lemin *lemin, char *str)
 {
 	t_list	*buf;
 
-	ft_printf("\n%s\n––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n", str);
+	ft_printf("\n%s\n––––––––––––––––––––––––––"
+			"––––––––––––––––––––––––––––––––––––\n", str);
 	buf = lemin->rooms;
 	while (buf)
 	{
@@ -36,4 +39,3 @@ void	print_lemin(t_lemin *lemin, char *str)
 		buf = buf->next;
 	}
 }
-

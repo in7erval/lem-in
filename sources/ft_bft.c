@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-t_tree	*go_to_start(t_lemin *lemin, t_tree *tree)
+t_tree			*go_to_start(t_lemin *lemin, t_tree *tree)
 {
 	t_room	*room;
 	t_tree	*res;
@@ -53,4 +53,3 @@ t_path			*run_bft(t_lemin *lemin)
 		next_nodes = NULL;
 	}
 }
-

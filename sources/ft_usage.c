@@ -15,7 +15,7 @@ static int	parse_arg(char *str, t_options *options)
 			options->p_bonus = 1;
 		else if (str[i] == 'r')
 			options->r_bonus = 1;
-		else if	(str[i] == 'd')
+		else if (str[i] == 'd')
 		{
 			options->c_bonus = 1;
 			options->p_bonus = 1;
@@ -26,12 +26,11 @@ static int	parse_arg(char *str, t_options *options)
 		i++;
 	}
 	return (1);
-
 }
 
 static int	check_correct_params(int argc, char **argv, t_options *options)
 {
-	int 	i;
+	int	i;
 
 	i = 1;
 	while (argv[i] && i < argc)
@@ -50,14 +49,14 @@ static void	init_options(t_options *options)
 	options->c_bonus = 0;
 }
 
-
 int			check_usage(int argc, char **argv, t_options *options)
 {
 	init_options(options);
 	if (!check_correct_params(argc, argv, options))
 	{
 		ft_printf("\n{white}{bold}Usage:{eoc} ./lemin [-{red}c{yellow}"
-					"p{cyan}r{magenta}d{eoc}] < file_with_map\n{white}{bold}Options:"
+					"p{cyan}r{magenta}d{eoc}] < file_with_map\n"
+					"{white}{bold}Options:"
 					"{eoc}\n\t{red}-c\tPrint cleaned map{eoc}"
 					"\n\t{yellow}-p\tPrint paths{eoc}"
 					"\n\t{cyan}-r\tPrint rooms{eoc}"
@@ -66,4 +65,3 @@ int			check_usage(int argc, char **argv, t_options *options)
 	}
 	return (0);
 }
-

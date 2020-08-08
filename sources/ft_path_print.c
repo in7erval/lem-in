@@ -16,7 +16,7 @@ void	print_path(t_path *path)
 {
 	t_room	*buf;
 	t_list	*rooms;
-	int 	flag;
+	int		flag;
 
 	flag = 0;
 	if (((t_room *)(path->rooms->content))->status == END)

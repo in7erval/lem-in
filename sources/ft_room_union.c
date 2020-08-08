@@ -27,7 +27,6 @@ int		is_in_union(t_room *room, t_room *check_room)
 			return (1);
 		cur = cur->next;
 	}
-
 	return (0);
 }
 

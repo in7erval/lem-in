@@ -14,7 +14,7 @@
 #include "../libft/includes/libft.h"
 #include "../includes/lem_in.h"
 
-int 	max_paths(t_lemin *lemin)
+int		max_paths(t_lemin *lemin)
 {
 	int start_links;
 	int end_links;
@@ -28,16 +28,13 @@ t_group	*create_group(t_lemin *lemin)
 {
 	t_group	*best;
 	t_group	*cur;
-	int 	count;
+	int		count;
 	t_path	*traverse;
 
 	count = 0;
 	best = NULL;
-	while (count < lemin->max_paths)
+	while (count < lemin->max_paths && (traverse = run_bft(lemin)))
 	{
-		traverse = run_bft(lemin);
-		if (traverse == NULL)
-			break;
 		rebuild_paths(traverse);
 		cur = group_build(lemin);
 		free_path(traverse);
@@ -55,7 +52,7 @@ t_group	*create_group(t_lemin *lemin)
 	return (best);
 }
 
-int	ft_solve(t_lemin *lemin)
+int		ft_solve(t_lemin *lemin)
 {
 	t_group	*group;
 

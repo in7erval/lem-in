@@ -37,4 +37,3 @@ void		perform_ants(t_group *group, int total_ants)
 		left_ants--;
 	}
 }
-

@@ -28,7 +28,7 @@ t_path	*ft_path_new(void)
 t_path	*ft_build_path(t_room *from, t_room *to)
 {
 	t_path	*path;
-	t_room 	*cur;
+	t_room	*cur;
 
 	path = ft_path_new();
 	add_elem_path(path, from);
