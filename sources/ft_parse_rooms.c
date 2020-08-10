@@ -62,7 +62,7 @@ static int	ft_rooms_check(t_lemin *lemin, char *buf,
 		ft_map_add(&(lemin->map), ft_strdup(buf));
 		free(buf);
 	}
-	else if (ft_iscomment(buf))
+	else if (ft_iscomment(buf) && !(*s))
 	{
 		ft_map_add(&(lemin->map), ft_strdup(buf));
 		free(buf);
