@@ -6,7 +6,7 @@
 /*   By: hcaterpi <hcaterpi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/08/03 12:49:11 by hcaterpi         ###   ########.fr       */
+/*   Updated: 2020/08/10 15:50:55 by hcaterpi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_lemin		*init_lemin(t_options options)
 	lemin->map = NULL;
 	lemin->max_paths = 0;
 	lemin->group = NULL;
+	lemin->answer = NULL;
 	lemin->options = options;
 	return (lemin);
 }
