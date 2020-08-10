@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hcaterpi <hcaterpi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*   Updated: 2020/08/10 15:33:18 by hcaterpi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct		s_options
 	int				c_bonus;
 	int				p_bonus;
 	int				r_bonus;
-	int 			n_bonus;
+	int				n_bonus;
 }					t_options;
 
 typedef struct		s_map
